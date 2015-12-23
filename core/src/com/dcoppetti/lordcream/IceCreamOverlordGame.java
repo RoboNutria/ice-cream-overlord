@@ -10,11 +10,11 @@ import com.dcoppetti.lordcream.screens.PlayScreen;
  */
 public class IceCreamOverlordGame extends Game {
 	
-	public static final int W_WIDTH = 640;
-	public static final int W_HEIGHT = 480;
+	public static final int W_WIDTH = 800;
+	public static final int W_HEIGHT = 600;
 
-	public static final int V_WIDTH = 640;
-	public static final int V_HEIGHT = 480;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 600;
 
 	public static final float PPM = 100;
 	public static final int FPS = 60;
