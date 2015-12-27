@@ -1,5 +1,11 @@
 package com.dcoppetti.lordcream.screens;
 
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,7 +16,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,9 +26,6 @@ import com.dcoppetti.lordcream.CollisionHandler;
 import com.dcoppetti.lordcream.Hud;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.utils.TiledHandler;
-
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.*;
 
 /**
  * @author Diego Coppetti
@@ -68,7 +70,6 @@ public class PlayScreen implements Screen {
 		camHandler = new CameraHandler(cam);
 		
 		world = new World(gravity, true);
-		world.setContactListener(new CollisionHandler());
 		if(DEBUG_MODE) debugRenderer = new Box2DDebugRenderer();
 		
 		// load tiled map
@@ -87,6 +88,8 @@ public class PlayScreen implements Screen {
 		
 		// create the hud
 		hud = new Hud(batch);
+
+		world.setContactListener(new CollisionHandler(overlord));
 	}
 
 	@Override
@@ -98,7 +101,7 @@ public class PlayScreen implements Screen {
 		camHandler.update();
 		overlord.update(delta);
 		hud.update(overlord);
-		world.step(delta, velIter, posIter);
+		world.step(1f/60f, velIter, posIter);
 
 		// render all
 		tiledHandler.renderMap(cam);
