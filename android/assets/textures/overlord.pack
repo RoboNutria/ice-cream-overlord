@@ -1,0 +1,54 @@
+
+overlord.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+idle-1
+  rotate: false
+  xy: 392, 3
+  size: 128, 130
+  orig: 128, 130
+  offset: 0, 0
+  index: -1
+idle-2
+  rotate: false
+  xy: 522, 3
+  size: 128, 130
+  orig: 128, 130
+  offset: 0, 0
+  index: -1
+idle-3
+  rotate: false
+  xy: 392, 3
+  size: 128, 130
+  orig: 128, 130
+  offset: 0, 0
+  index: -1
+slide-1
+  rotate: false
+  xy: 652, 4
+  size: 128, 129
+  orig: 128, 129
+  offset: 0, 0
+  index: -1
+slide-2
+  rotate: false
+  xy: 261, 3
+  size: 129, 130
+  orig: 129, 130
+  offset: 0, 0
+  index: -1
+slide-3
+  rotate: false
+  xy: 130, 3
+  size: 129, 130
+  orig: 129, 130
+  offset: 0, 0
+  index: -1
+slide-4
+  rotate: false
+  xy: 1, 1
+  size: 127, 132
+  orig: 127, 132
+  offset: 0, 0
+  index: -1

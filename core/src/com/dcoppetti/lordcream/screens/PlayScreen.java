@@ -12,13 +12,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.CameraHandler;
@@ -51,8 +52,8 @@ public class PlayScreen implements Screen {
 
 	// player
 	private Overlord overlord;
-	private String overlordFile = "textures/test-player-sprite.png";
-	private Texture overlordTexture;
+	private String overlordFile = "textures/overlord.pack";
+	private TextureAtlas overlordAtlas;
 	
 	// hud
 	private Hud hud;
@@ -79,10 +80,41 @@ public class PlayScreen implements Screen {
 		tiledHandler.loadTmxMap(tmxFile, batch, world);
 
 		// create player
-		overlordTexture = new Texture(overlordFile);
-		overlordTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		// load player texture pack
+		overlordAtlas = new TextureAtlas(Gdx.files.internal(overlordFile));
+		String name;
+		int startIndex;
+		
+		// load idle regions
+		Array<TextureRegion> idleRegions = new Array<TextureRegion>();
+		startIndex = 1;
+		name = "idle-" + startIndex;
+		AtlasRegion idleRegion = overlordAtlas.findRegion(name);
+		while(idleRegion != null) {
+			idleRegions.add(idleRegion); 
+			startIndex++;
+			name = "idle-" + startIndex;
+			idleRegion = overlordAtlas.findRegion(name);
+		}
+
+		// load slide regions
+		Array<TextureRegion> slideRegions = new Array<TextureRegion>();
+		startIndex = 1;
+		name = "slide-" + startIndex;
+		AtlasRegion slideRegion = overlordAtlas.findRegion(name);
+		while(slideRegion != null) {
+			slideRegions.add(slideRegion); 
+			startIndex++;
+			name = "slide-" + startIndex;
+			slideRegion = overlordAtlas.findRegion(name);
+		}
+
+		//overlordTexture = new Texture(overlordFile);
+		//overlordTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Vector2 position = new Vector2(cam.position.x, cam.position.y);
-		overlord = new Overlord(world, new TextureRegion(overlordTexture), position);
+		overlord = new Overlord(world, new TextureRegion(idleRegions.get(0)), position);
+		overlord.setAnimationRegions(idleRegions, slideRegions);
 		
 		camHandler.setTarget(overlord.getBody(), true);
 		
@@ -143,8 +175,8 @@ public class PlayScreen implements Screen {
 		tiledHandler.dispose();
 		if(DEBUG_MODE) debugRenderer.dispose();
 		world.dispose();
-		overlordTexture.dispose();
 		hud.dispose();
+		overlordAtlas.dispose();
 	}
 
 }
