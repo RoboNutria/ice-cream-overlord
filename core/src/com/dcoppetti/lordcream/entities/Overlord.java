@@ -7,6 +7,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.dcoppetti.lordcream.handlers.PlayerInputHandler;
 
 /**
  * @author Diego Coppetti
@@ -36,6 +38,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public static final String PLAYER_SIDE = "PLAYER_SIDE";
 	public int playerFootContanct;
 	public boolean playerSideContact = false;
+	
+	private PlayerInputHandler input;
 
 	// box2d stuff
     private Body body;
@@ -54,7 +58,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
     private float jumpPower = 80f;
 	private float jumpLimit = 3f;
 	private float stickForce = 80f;
-	private float stickFallForce = -0f; // this force would pull you down when stick to walls, thsi could be changed in certain levels
+	private float stickFallForce = -5f; // this force pulls you down when stick to walls, this could be changed in certain levels
 	
 	// Animations
 	private Animation idleAnim;
@@ -70,6 +74,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
     public Overlord(World world, TextureRegion region, Vector2 position) {
         super(region);
+        input = new PlayerInputHandler();
         createBody(world, position);
     }
     
@@ -219,29 +224,30 @@ public class Overlord extends Box2DSprite implements GameEntity {
         switch (state) {
 		case OnWall:
 			// Stick to walls
-            if(!Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if(!input.jump) {
             	stickToWall();
             } else {
             	WallJump();
+            	input.jump = false;
             }
 			break;
 		case OnAir:
-            if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if(input.left) {
             	moveLeft();
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if(input.right) {
             	moveRight();
             }
             break;
 		case Idle:
 		case Sliding:
-            if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if(input.jump) {
             	jump();
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if(input.left) {
             	moveLeft();
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if(input.right) {
             	moveRight();
             }
             break;
@@ -250,15 +256,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
         }
 
         if(velX < -0.1f) {
-            //this.setFlip(true, false);
             facingLeft = true;
         } else if(velX > 0.1f){
-            //this.setFlip(false, false);
             facingLeft = false;
         }
-        // This would be the traditional way of moving at a fixed pace
-        //body.setLinearVelocity(x, y);
-        // This way im applying a force making it feel like it's "sliding"
+
         newX = MathUtils.floor(newX);
         newY = MathUtils.floor(newY);
         body.applyForceToCenter(newX, newY, true);
@@ -266,12 +268,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	
 	private void WallJump() {
 		if(leftSide != null) {
-			if(body.getLinearVelocity().y < jumpLimit ) {
-				body.applyForceToCenter(68, jumpPower, true);
+			if(body.getLinearVelocity().y <= 0.0f ) {
+				body.applyForceToCenter(138, jumpPower*3, true);
 			}
 		} else if(rightSide != null) {
-			if(body.getLinearVelocity().y < jumpLimit ) {
-				body.applyForceToCenter(-68, jumpPower, true);
+			if(body.getLinearVelocity().y <= 0.0f ) {
+				body.applyForceToCenter(-138, jumpPower*3, true);
 			}
 		}
 		
@@ -330,5 +332,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	
 	public Body getBody() {
 		return body;
+	}
+	
+	public InputAdapter getInputHandler() {
+		return input;
 	}
 }

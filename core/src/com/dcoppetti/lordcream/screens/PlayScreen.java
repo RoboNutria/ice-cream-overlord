@@ -22,10 +22,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dcoppetti.lordcream.CameraHandler;
-import com.dcoppetti.lordcream.CollisionHandler;
 import com.dcoppetti.lordcream.Hud;
 import com.dcoppetti.lordcream.entities.Overlord;
+import com.dcoppetti.lordcream.handlers.CameraHandler;
+import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.utils.TiledHandler;
 
 /**
@@ -122,6 +122,8 @@ public class PlayScreen implements Screen {
 		hud = new Hud(batch);
 
 		world.setContactListener(new CollisionHandler(overlord));
+		
+		Gdx.input.setInputProcessor(overlord.getInputHandler());
 	}
 
 	@Override

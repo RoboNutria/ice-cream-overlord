@@ -1,4 +1,4 @@
-package com.dcoppetti.lordcream;
+package com.dcoppetti.lordcream.handlers;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
