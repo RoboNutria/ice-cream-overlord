@@ -64,6 +64,15 @@ public class TiledHandler {
 		parser.load(world, layer);
 	}
 
+	public void renderMap(OrthographicCamera camera, int[] layers) {
+		mapRenderer.setView(camera);
+		mapRenderer.render(layers);
+	}
+
+	public void renderMap(int[] layers) {
+		mapRenderer.render(layers);
+	}
+
 	public void renderMap(OrthographicCamera camera) {
 		mapRenderer.setView(camera);
 		mapRenderer.render();

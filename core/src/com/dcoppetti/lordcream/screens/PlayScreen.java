@@ -12,6 +12,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -48,7 +49,9 @@ public class PlayScreen implements Screen {
 	private Vector2 gravity = new Vector2(0, -8.8f);
 	
 	private TiledHandler tiledHandler;
-	private String tmxFile = "maps/debug-level.tmx";
+	private String tmxFile = "maps/level1.tmx";
+	private String backgroundFile = "textures/planet.png";
+	private Texture background;
 
 	// player
 	private Overlord overlord;
@@ -67,7 +70,7 @@ public class PlayScreen implements Screen {
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
-		cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
+		cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()*2, 0);
 		camHandler = new CameraHandler(cam);
 		
 		world = new World(gravity, true);
@@ -118,6 +121,9 @@ public class PlayScreen implements Screen {
 		
 		camHandler.setTarget(overlord.getBody(), true);
 		
+		// the background
+		background = new Texture(Gdx.files.internal(backgroundFile));
+		
 		// create the hud
 		hud = new Hud(batch);
 
@@ -138,6 +144,10 @@ public class PlayScreen implements Screen {
 		world.step(1f/60f, velIter, posIter);
 
 		// render all
+		batch.setProjectionMatrix(cam.combined);
+		batch.begin();
+		batch.draw(background, cam.position.x-viewport.getWorldWidth()/2, cam.position.y-viewport.getWorldHeight()/2, viewport.getWorldWidth(), viewport.getWorldHeight());
+		batch.end();
 		tiledHandler.renderMap(cam);
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
@@ -179,6 +189,7 @@ public class PlayScreen implements Screen {
 		world.dispose();
 		hud.dispose();
 		overlordAtlas.dispose();
+		background.dispose();
 	}
 
 }
