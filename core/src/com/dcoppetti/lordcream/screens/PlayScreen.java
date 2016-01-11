@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.Hud;
+import com.dcoppetti.lordcream.Level;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
@@ -34,8 +35,9 @@ import com.dcoppetti.lordcream.utils.TiledHandler;
  *
  */
 public class PlayScreen implements Screen {
-	
+
 	private Game game;
+	private Level level;
 	private Color backColor = Color.DARK_GRAY;
 	
 	private SpriteBatch batch;
@@ -46,11 +48,9 @@ public class PlayScreen implements Screen {
 	private World world;
 	private final int velIter = 6, posIter = 2;
 	private Box2DDebugRenderer debugRenderer;
-	private Vector2 gravity = new Vector2(0, -8.8f);
+	private Vector2 gravity = new Vector2(0, -6.8f);
 	
 	private TiledHandler tiledHandler;
-	private String tmxFile = "maps/level1.tmx";
-	private String backgroundFile = "textures/planet.png";
 	private Texture background;
 
 	// player
@@ -61,8 +61,9 @@ public class PlayScreen implements Screen {
 	// hud
 	private Hud hud;
 
-	public PlayScreen(Game game) {
+	public PlayScreen(Game game, Level level) {
 		this.game = game;
+		this.level = level;
 	}
 
 	@Override
@@ -70,7 +71,6 @@ public class PlayScreen implements Screen {
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
-		cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()*2, 0);
 		camHandler = new CameraHandler(cam);
 		
 		world = new World(gravity, true);
@@ -80,8 +80,12 @@ public class PlayScreen implements Screen {
 		tiledHandler = new TiledHandler();
 		tiledHandler.setPpm(PPM);
 		// this already parses the box2d data
-		tiledHandler.loadTmxMap(tmxFile, batch, world);
+		tiledHandler.loadTmxMap(level.getTmxFile(), batch, world);
 
+		// load/parse entities from the map (including the player)
+		level.parseGameEntities(world, tiledHandler, "entities", PPM);
+
+		cam.position.set(level.getPlayerStartX(), tiledHandler.getMapHeight(), 0);
 		// create player
 		
 		// load player texture pack
@@ -113,16 +117,19 @@ public class PlayScreen implements Screen {
 			slideRegion = overlordAtlas.findRegion(name);
 		}
 
-		//overlordTexture = new Texture(overlordFile);
+		Texture overlordTexture = new Texture(Gdx.files.internal("textures/dummy.png"));
 		//overlordTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		Vector2 position = new Vector2(cam.position.x, cam.position.y);
-		overlord = new Overlord(world, new TextureRegion(idleRegions.get(0)), position);
-		overlord.setAnimationRegions(idleRegions, slideRegions);
+		Vector2 position = new Vector2(level.getPlayerStartX(), level.getPlayerStartY());
+		//overlord = new Overlord(world, new TextureRegion(idleRegions.get(0)), position);
+		overlord = new Overlord(world, new TextureRegion(overlordTexture), position);
+		//overlord.setAnimationRegions(idleRegions, slideRegions);
 		
 		camHandler.setTarget(overlord.getBody(), true);
+		camHandler.setBoundX(tiledHandler.getMapWidth());
+		camHandler.setBoundY(tiledHandler.getMapHeight());
 		
 		// the background
-		background = new Texture(Gdx.files.internal(backgroundFile));
+		background = new Texture(Gdx.files.internal(level.getBackgroundFile()));
 		
 		// create the hud
 		hud = new Hud(batch);

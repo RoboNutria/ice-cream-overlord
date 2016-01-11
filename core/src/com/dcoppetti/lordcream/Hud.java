@@ -25,7 +25,7 @@ public class Hud {
 	private Label playerXLabel;
 	private Label playerYLabel;
 	
-	private float scale = 1f;
+	private float scale = 2;
 	
 	public Hud(SpriteBatch batch) {
 

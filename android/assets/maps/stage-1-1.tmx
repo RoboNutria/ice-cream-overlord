@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="46">
  <tileset firstgid="1" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024">
   <image source="tiles-retro.png" width="256" height="256"/>
  </tileset>
@@ -135,7 +135,119 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,289,289,290,289,290,291,289,290,291,292,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="collisions"/>
+ <objectgroup name="collisions">
+  <object id="17" name="env" type="object" x="0" y="304" width="248" height="16"/>
+  <object id="18" name="ground" type="fixture" x="256" y="288" width="24" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="19" name="ground" type="fixture" x="288" y="280" width="24" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="20" name="ground" type="fixture" x="328" y="248" width="56" height="72">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="21" name="ground" type="fixture" x="432" y="176" width="48" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="22" name="ground" type="fixture" x="432" y="224" width="48" height="96">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="23" name="ground" type="fixture" x="464" y="200" width="16" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="24" name="ground" type="fixture" x="384" y="304" width="48" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="25" name="ground" type="fixture" x="408" y="224" width="8" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="29" name="ground" type="fixture" x="376" y="184">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 -192,0 -192,-16 -168,-16 -168,-8 -152,-8 -152,-16 -128,-16 -128,-8 -120,-8 -120,-16 -80,-16 -80,-8 -72,-8 -72,-16 -40,-16 -40,-32 0,-32 0,0"/>
+  </object>
+  <object id="30" name="ground" type="fixture" x="336" y="120" width="16" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="31" name="ground" type="fixture" x="168" y="152">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 208,0 208,64 216,64 216,-8 264,-8 264,8 272,8 272,-16 16,-16 16,-8 0,-8 0,0"/>
+  </object>
+  <object id="34" name="ground" type="fixture" x="472" y="0" width="8" height="176">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="35" name="ground" type="fixture" x="160" y="24" width="8" height="256">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="36" name="ground" type="fixture" x="168" y="224" width="72" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="37" name="ground" type="fixture" x="168" y="232" width="24" height="48">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="38" name="ground" type="fixture" x="88" y="56" width="72" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="39" name="ground" type="fixture" x="160" y="0" width="312" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="40" name="ground" type="fixture" x="472" y="104">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 -120,0 -120,-8 -72,-8 -72,-40 -64,-40 -64,-32 -48,-32 -48,-56 -40,-56 -40,-8 -24,-8 -24,-24 -16,-24 -16,-8 0,-8 0,0"/>
+  </object>
+  <object id="41" name="ground" type="fixture" x="280" y="48">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 0,24 -24,24 -24,32 -40,32 -40,24 -88,24 -88,56 56,56 56,48 16,48 16,-16 -112,-16 -112,0 0,0"/>
+  </object>
+  <object id="43" name="ground" type="fixture" x="296" y="240">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 -8,0 -8,-8 8,-8 8,8 0,8 0,0"/>
+  </object>
+  <object id="45" name="ground" type="fixture" x="264" y="232" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup name="entities">
   <object id="2" name="player pod" x="56" y="296" width="8" height="8"/>
   <object id="3" name="rescue" x="320" y="160" width="8" height="8"/>

@@ -53,9 +53,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
     private boolean canMove = true;
     private boolean facingLeft = false;
 
-    private float slideAccel = 6f;
+    //private float slideAccel = 6f;
+    private float slideAccel = 7.5f;
     private float maxSlideSpeed = 10f;
-    private float jumpPower = 80f;
+    private float jumpPower = 60f;
 	private float jumpLimit = 3f;
 	private float stickForce = 80f;
 	private float stickFallForce = -5f; // this force pulls you down when stick to walls, this could be changed in certain levels
@@ -90,6 +91,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
     private void createBody(World world, Vector2 position) {
 		colliderWidth = getWidth()/3.6f/PPM;
 		colliderHeight = getHeight()/4/PPM;
+		colliderWidth = 4/PPM;
+		colliderHeight = 4/PPM;
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -105,10 +108,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 		setUseOrigin(true);
 		setAdjustSize(false);
-		setOrigin(getWidth()/2, (getHeight()/2)+0.08f);
+		//setOrigin(getWidth()/2, (getHeight()/2)+0.08f);
+		setOriginCenter();
 		setX(-getWidth()/2 + Box2DUtils.width(body) / 2);
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX()/2/PPM, getScaleY()/2/PPM);
+		//setScale(getScaleX()/PPM, getScaleY()/PPM);
 
         body.setUserData(this);
         
@@ -160,21 +165,23 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	private void updateAnimations(float delta) {
 		TextureRegion region = null;
-		switch (state) {
-		case Idle:
-			slideAnimTimer = 0;
-			idleAnimTimer += delta;
-			region = idleAnim.getKeyFrame(idleAnimTimer);
-			setRegion(region);
-			break;
-		case Sliding:
-			idleAnimTimer = 0;
-			slideAnimTimer += delta;
-			region = slideAnim.getKeyFrame(slideAnimTimer);
-			setRegion(region);
-			break;
-		default:
-			break;
+		if(idleAnim != null) {
+			switch (state) {
+			case Idle:
+				slideAnimTimer = 0;
+				idleAnimTimer += delta;
+				region = idleAnim.getKeyFrame(idleAnimTimer);
+				setRegion(region);
+				break;
+			case Sliding:
+				idleAnimTimer = 0;
+				slideAnimTimer += delta;
+				region = slideAnim.getKeyFrame(slideAnimTimer);
+				setRegion(region);
+				break;
+			default:
+				break;
+			}
 		}
 		if(facingLeft) {
 			setFlip(true, false);
