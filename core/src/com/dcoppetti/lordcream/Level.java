@@ -1,11 +1,14 @@
 package com.dcoppetti.lordcream;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.utils.TiledHandler;
 
 import java.util.Iterator;
@@ -42,6 +45,12 @@ public class Level {
                 playerStartY = y;
             }
             if(object.getName().equals("rescue")) {
+            	// TODO: Tafok do we get the region from?
+            	// TIP: Just add Assets class from BaseGame to the utils and load the texture from there in PlayScreen
+            	// Then do something like Assets.getTexture here and create a new region
+
+            	//TextureRegion region = null;
+            	//new ChibiIceCream(region, world, new Vector2(x, y));
             }
             if(object.getName().equals("enemy 1")) {
             }
