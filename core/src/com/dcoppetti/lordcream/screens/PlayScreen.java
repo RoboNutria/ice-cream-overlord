@@ -28,6 +28,7 @@ import com.dcoppetti.lordcream.Level;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
+import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.TiledHandler;
 
 /**
@@ -89,40 +90,18 @@ public class PlayScreen implements Screen {
 		// create player
 		
 		// load player texture pack
-		overlordAtlas = new TextureAtlas(Gdx.files.internal(overlordFile));
-		String name;
-		int startIndex;
+		Assets.loadAtlas(overlordFile, true);
+		Array<TextureRegion> idleRegions = Assets.getAtlasRegions(overlordFile, "idle", "-", 1);
+		Array<TextureRegion> slideRegions = Assets.getAtlasRegions(overlordFile, "slide", "-", 1);
+		Array<TextureRegion> jumpRegions = Assets.getAtlasRegions(overlordFile, "jump", "-", 1);
+		Array<TextureRegion> wallRegions = Assets.getAtlasRegions(overlordFile, "wall", "-", 1);
 		
-		// load idle regions
-		Array<TextureRegion> idleRegions = new Array<TextureRegion>();
-		startIndex = 1;
-		name = "idle-" + startIndex;
-		AtlasRegion idleRegion = overlordAtlas.findRegion(name);
-		while(idleRegion != null) {
-			idleRegions.add(idleRegion); 
-			startIndex++;
-			name = "idle-" + startIndex;
-			idleRegion = overlordAtlas.findRegion(name);
-		}
-
-		// load slide regions
-		Array<TextureRegion> slideRegions = new Array<TextureRegion>();
-		startIndex = 1;
-		name = "slide-" + startIndex;
-		AtlasRegion slideRegion = overlordAtlas.findRegion(name);
-		while(slideRegion != null) {
-			slideRegions.add(slideRegion); 
-			startIndex++;
-			name = "slide-" + startIndex;
-			slideRegion = overlordAtlas.findRegion(name);
-		}
-
-		Texture overlordTexture = new Texture(Gdx.files.internal("textures/dummy.png"));
+		//Texture overlordTexture = new Texture(Gdx.files.internal("textures/dummy.png"));
 		//overlordTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Vector2 position = new Vector2(level.getPlayerStartX(), level.getPlayerStartY());
 		//overlord = new Overlord(world, new TextureRegion(idleRegions.get(0)), position);
-		overlord = new Overlord(world, new TextureRegion(overlordTexture), position);
-		//overlord.setAnimationRegions(idleRegions, slideRegions);
+		overlord = new Overlord(world, idleRegions.first(), position);
+		overlord.setAnimationRegions(idleRegions, slideRegions, jumpRegions, wallRegions);
 		
 		camHandler.setTarget(overlord.getBody(), true);
 		camHandler.setBoundX(tiledHandler.getMapWidth());
@@ -195,8 +174,8 @@ public class PlayScreen implements Screen {
 		if(DEBUG_MODE) debugRenderer.dispose();
 		world.dispose();
 		hud.dispose();
-		overlordAtlas.dispose();
 		background.dispose();
+		Assets.dispose();
 	}
 
 }

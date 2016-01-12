@@ -116,6 +116,10 @@ public class TiledHandler {
 	public float getMapWidth() {
 		return mapWidth;
 	}
+	
+	public float getTileSize() {
+		return tileSize;
+	}
 
 	public Rectangle getBounds() {
 		return null;

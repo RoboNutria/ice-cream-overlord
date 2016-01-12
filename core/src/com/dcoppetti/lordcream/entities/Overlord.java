@@ -64,8 +64,16 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	// Animations
 	private Animation idleAnim;
 	private Animation slideAnim;
+	private Animation jumpAnim;
+	private Animation wallAnim;
+	private float idleFPS = 4f;
+	private float slideFPS = 10f;
+	private float jumpFPS = 5f;
+	private float wallFPS = 2f;
 	private float idleAnimTimer = 0;
 	private float slideAnimTimer = 0;
+	private float jumpAnimTimer = 0;
+	private float wallAnimTimer = 0;
 	
 	// movement variables changed in the update movement method (don't touch here)
 	float velX;
@@ -79,13 +87,20 @@ public class Overlord extends Box2DSprite implements GameEntity {
         createBody(world, position);
     }
     
-    public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> slideRegions) {
-    	idleAnim = new Animation(0.35f, idleRegions);
+    public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> slideRegions,
+    		Array<TextureRegion> jumpRegions, Array<TextureRegion> wallRegions) {
+    	idleAnim = new Animation(1f/idleFPS, idleRegions);
     	idleAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     	setRegion(idleAnim.getKeyFrame(0));
     	
-    	slideAnim = new Animation(0.1f, slideRegions);
+    	slideAnim = new Animation(1f/slideFPS, slideRegions);
     	slideAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+    	jumpAnim = new Animation(1f/jumpFPS, jumpRegions);
+    	jumpAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+    	wallAnim = new Animation(1f/wallFPS, wallRegions);
+    	wallAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     }
 
     private void createBody(World world, Vector2 position) {
@@ -108,11 +123,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 		setUseOrigin(true);
 		setAdjustSize(false);
-		//setOrigin(getWidth()/2, (getHeight()/2)+0.08f);
-		setOriginCenter();
+		setOrigin(getWidth()/2, (getHeight()/2)+0.03f);
+		//setOriginCenter();
 		setX(-getWidth()/2 + Box2DUtils.width(body) / 2);
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
-		setScale(getScaleX()/2/PPM, getScaleY()/2/PPM);
+		setScale(getScaleX()/1.5f/PPM, getScaleY()/1.5f/PPM);
 		//setScale(getScaleX()/PPM, getScaleY()/PPM);
 
         body.setUserData(this);
@@ -169,14 +184,34 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			switch (state) {
 			case Idle:
 				slideAnimTimer = 0;
+				jumpAnimTimer = 0;
+				wallAnimTimer = 0;
 				idleAnimTimer += delta;
 				region = idleAnim.getKeyFrame(idleAnimTimer);
 				setRegion(region);
 				break;
 			case Sliding:
 				idleAnimTimer = 0;
+				jumpAnimTimer = 0;
+				wallAnimTimer = 0;
 				slideAnimTimer += delta;
 				region = slideAnim.getKeyFrame(slideAnimTimer);
+				setRegion(region);
+				break;
+			case OnAir:
+				idleAnimTimer = 0;
+				slideAnimTimer = 0;
+				wallAnimTimer = 0;
+				jumpAnimTimer += delta;
+				region = jumpAnim.getKeyFrame(jumpAnimTimer);
+				setRegion(region);
+				break;
+			case OnWall:
+				idleAnimTimer = 0;
+				slideAnimTimer = 0;
+				jumpAnimTimer = 0;
+				wallAnimTimer += delta;
+				region = wallAnim.getKeyFrame(wallAnimTimer);
 				setRegion(region);
 				break;
 			default:

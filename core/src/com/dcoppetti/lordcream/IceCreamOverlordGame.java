@@ -21,29 +21,30 @@ public class IceCreamOverlordGame extends Game {
 	public static final float PPM = 25;
 	public static final int FPS = 60;
 
-	public static boolean DEBUG_MODE = true;
+	public static boolean DEBUG_MODE = false;
 
 	public static HashMap<String, Level> levels;
 	
 	public static enum EnemyTypes {
-		enemey_standing_alien,
-		enemey_walking_alien,
-		enemey_tank_alien,
-		enemey_turret_floor,
-		enemey_turret_roof,
-		enemey_mutant_walking_rat,
-		enemey_mutant_floor_snail,
-		enemey_mutant_wall_snail,
-		enemey_flying_fish,
-		enemey_flying_firing_fish,
+		enemy_standing_alien,
+		enemy_walking_alien,
+		enemy_tank_alien,
+		enemy_turret_floor,
+		enemy_turret_roof,
+		enemy_mutant_walking_rat,
+		enemy_mutant_floor_snail,
+		enemy_mutant_wall_snail,
+		enemy_flying_fish,
+		enemy_flying_firing_fish,
 	};
 	
 	public static enum PlayerObjects {
 		player_ship
 	};
 	
-	public static enum Items {
-		chibi_ice_cream
+	public static enum Misc {
+		chibi_ice_cream,
+		death_zone,
 	};
 
 	@Override

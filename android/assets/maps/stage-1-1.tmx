@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="46">
- <tileset firstgid="1" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="48">
+ <tileset firstgid="1" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024" columns="32">
   <image source="tiles-retro.png" width="256" height="256"/>
  </tileset>
  <layer name="tiles 1" width="60" height="40">
@@ -262,5 +262,7 @@
   <object id="13" name="enemy_standing_alien" x="424" y="40" width="8" height="8"/>
   <object id="14" name="enemy_standing_alien" x="208" y="64" width="8" height="8"/>
   <object id="15" name="enemy_turret_floor" x="216" y="24" width="8" height="8"/>
+  <object id="46" name="enemy_standing_alien" x="208" y="216" width="8" height="8"/>
+  <object id="47" name="enemy_standing_alien" x="152" y="296" width="8" height="8"/>
  </objectgroup>
 </map>
