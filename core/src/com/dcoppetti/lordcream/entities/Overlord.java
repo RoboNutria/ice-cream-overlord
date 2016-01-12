@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -52,6 +53,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
     private PlayerState state = PlayerState.Idle;
     private boolean canMove = true;
     private boolean facingLeft = false;
+    private boolean dead = false;
+    private float respawnTime = 0.5f;
+    private float respawnTimer = 0f;
+    private float respawnX;
+    private float respawnY;
 
     //private float slideAccel = 6f;
     private float slideAccel = 7.5f;
@@ -84,6 +90,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
     public Overlord(World world, TextureRegion region, Vector2 position) {
         super(region);
         input = new PlayerInputHandler();
+        respawnX = position.x;
+        respawnY = position.y;
         createBody(world, position);
     }
     
@@ -172,11 +180,27 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
     public void update(float delta) {
-    	updateState();
-    	updateAnimations(delta);
-    	updateSideFixture();
-        updateMovement();
+		if(isDead()) {
+			checkRespawn(delta);
+		} else {
+			updateState();
+			updateAnimations(delta);
+			updateSideFixture();
+			updateMovement();
+		}
     }
+
+	private void checkRespawn(float delta) {
+		if(!isDead()) return;
+		body.setLinearVelocity(0, 0);
+		respawnTimer += delta;
+		if(respawnTimer >= respawnTime) {
+			// now we respawn it
+			body.setTransform(respawnX, respawnY, body.getAngle());
+			setIsDead(false);
+			respawnTimer = 0;
+		}
+	}
 
 	private void updateAnimations(float delta) {
 		TextureRegion region = null;
@@ -378,5 +402,13 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	
 	public InputAdapter getInputHandler() {
 		return input;
+	}
+
+	public void setIsDead(boolean dead) {
+		this.dead = dead;
+	}
+	
+	public boolean isDead() {
+		return this.dead;
 	}
 }

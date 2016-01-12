@@ -7,6 +7,10 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
@@ -47,8 +51,12 @@ public class Level {
         for(Iterator<RectangleMapObject> iterator = rectangleObjects.iterator(); iterator.hasNext(); ) {
             RectangleMapObject object = iterator.next();
             Rectangle rect = object.getRectangle();
-            float x = rect.x / ppm;
-            float y = rect.y / ppm;
+            rect.x = rect.x / ppm;
+            rect.y = rect.y / ppm;
+            rect.width = rect.width / ppm;
+            rect.height = rect.height / ppm;
+            float x = rect.x;
+            float y = rect.y;
             float offset = tileHandler.getTileSize()/2;
             y = y + offset;
             x = x + offset;
@@ -65,6 +73,18 @@ public class Level {
             	//new ChibiIceCream(region, world, new Vector2(x, y));
             }
             if(object.getName().equals(Misc.death_zone.name())) {
+            	BodyDef bdef = new BodyDef();
+            	bdef.position.set(new Vector2(rect.x + rect.width/2f, rect.y + rect.height/2f));
+            	bdef.fixedRotation = true;
+            	PolygonShape shape = new PolygonShape();
+            	shape.setAsBox(rect.width/2, rect.height/2);
+            	FixtureDef fdef = new FixtureDef();
+            	fdef.isSensor = true;
+            	fdef.shape = shape;
+            	Body b = world.createBody(bdef);
+            	b.setUserData(Misc.death_zone.name());
+            	b.createFixture(fdef);
+            	shape.dispose();
             }
             if(object.getName().equals(EnemyTypes.enemy_flying_firing_fish.name())) {
             }

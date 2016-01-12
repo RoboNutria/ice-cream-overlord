@@ -1,5 +1,6 @@
 package com.dcoppetti.lordcream.handlers;
 
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -57,10 +58,24 @@ public class CollisionHandler implements ContactListener {
 			player.playerSideContact = true;
 			return;
 		}
+		
 
 		// call their corresponding collision logic
 		if(fa.getBody().getUserData() != null && fb.getBody().getUserData() != null) {
+			// first check if it's the player colliding with a death zone
+			if(fa.getBody().getUserData().equals(Misc.death_zone.name()) && fb.getBody().getUserData() instanceof Overlord) {
+				Overlord overlord = (Overlord) fb.getBody().getUserData();
+				overlord.setIsDead(true);
+				return;
+			}
+			if(fb.getBody().getUserData().equals(Misc.death_zone.name()) && fa.getBody().getUserData() instanceof Overlord) {
+				Overlord overlord = (Overlord) fa.getBody().getUserData();
+				overlord.setIsDead(true);
+				return;
+			}
+			// else it's a collision within entities
 			checkCollision((GameEntity) fa.getBody().getUserData(), (GameEntity) fb.getBody().getUserData());
+			
 		}
 
 	}
