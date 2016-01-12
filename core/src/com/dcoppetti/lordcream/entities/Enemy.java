@@ -12,6 +12,15 @@ import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.ai.AiBehavior;
 
 public abstract class Enemy extends Box2DSprite implements GameEntity {
+
+    public enum EnemyStates {
+        Idle,
+        Sliding,
+        OnAir,
+        OnWall
+    }
+    
+    protected EnemyStates state;
 	
 	protected Body body;
 	private boolean lookingLeft = true;

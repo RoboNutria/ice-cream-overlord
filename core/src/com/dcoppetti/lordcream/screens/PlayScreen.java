@@ -2,6 +2,7 @@ package com.dcoppetti.lordcream.screens;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
@@ -14,8 +15,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -56,8 +55,6 @@ public class PlayScreen implements Screen {
 
 	// player
 	private Overlord overlord;
-	private String overlordFile = "textures/overlord.pack";
-	private TextureAtlas overlordAtlas;
 	
 	// hud
 	private Hud hud;
@@ -69,6 +66,9 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void show() {
+		// load player texture pack
+		Assets.loadAtlas(SPRITES_PACK_FILE, true);
+
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
@@ -89,17 +89,12 @@ public class PlayScreen implements Screen {
 		cam.position.set(level.getPlayerStartX(), tiledHandler.getMapHeight(), 0);
 		// create player
 		
-		// load player texture pack
-		Assets.loadAtlas(overlordFile, true);
-		Array<TextureRegion> idleRegions = Assets.getAtlasRegions(overlordFile, "idle", "-", 1);
-		Array<TextureRegion> slideRegions = Assets.getAtlasRegions(overlordFile, "slide", "-", 1);
-		Array<TextureRegion> jumpRegions = Assets.getAtlasRegions(overlordFile, "jump", "-", 1);
-		Array<TextureRegion> wallRegions = Assets.getAtlasRegions(overlordFile, "wall", "-", 1);
+		Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "idle", "-", 1);
+		Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slide", "-", 1);
+		Array<TextureRegion> jumpRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "jump", "-", 1);
+		Array<TextureRegion> wallRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "wall", "-", 1);
 		
-		//Texture overlordTexture = new Texture(Gdx.files.internal("textures/dummy.png"));
-		//overlordTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Vector2 position = new Vector2(level.getPlayerStartX(), level.getPlayerStartY());
-		//overlord = new Overlord(world, new TextureRegion(idleRegions.get(0)), position);
 		overlord = new Overlord(world, idleRegions.first(), position);
 		overlord.setAnimationRegions(idleRegions, slideRegions, jumpRegions, wallRegions);
 		
@@ -123,7 +118,7 @@ public class PlayScreen implements Screen {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		// update game entities and stuff
+		// TODO: update the whole world
 		camHandler.update();
 		overlord.update(delta);
 		hud.update(overlord);
@@ -137,7 +132,7 @@ public class PlayScreen implements Screen {
 		tiledHandler.renderMap(cam);
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		Box2DSprite.draw(batch, world);
+		Box2DSprite.draw(batch, world, true);
 		batch.end();
 		
 		hud.render();

@@ -1,5 +1,7 @@
 package com.dcoppetti.lordcream;
 
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
+
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +19,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
 import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
+import com.dcoppetti.lordcream.entities.SlugEnemy;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.TiledHandler;
 
@@ -86,15 +89,24 @@ public class Level {
             	b.createFixture(fdef);
             	shape.dispose();
             }
+            if(object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
+            	Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
+            	Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
+            	SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
+            }
+            if(object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
+            }
+            if(object.getName().equals(EnemyTypes.enemy_chobi.name())) {
+            }
             if(object.getName().equals(EnemyTypes.enemy_flying_firing_fish.name())) {
             }
             if(object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
             }
-            if(object.getName().equals(EnemyTypes.enemy_mutant_floor_snail.name())) {
+            if(object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
             }
             if(object.getName().equals(EnemyTypes.enemy_mutant_walking_rat.name())) {
             }
-            if(object.getName().equals(EnemyTypes.enemy_mutant_wall_snail.name())) {
+            if(object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
             }
             if(object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
             	TextureRegion region = new TextureRegion(Assets.getTexture("textures/dummy-8.png"));

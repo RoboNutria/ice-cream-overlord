@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="57">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="8" tileheight="8" nextobjectid="59">
  <tileset firstgid="1" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024" columns="32">
   <image source="tiles-retro.png" width="256" height="256"/>
  </tileset>
@@ -269,5 +269,7 @@
   <object id="54" name="death_zone" x="168" y="139.273" width="16" height="4.72727"/>
   <object id="55" name="death_zone" x="240" y="75.8182" width="16" height="4.18182"/>
   <object id="56" name="death_zone" x="432" y="84.3636" width="16" height="11.6364"/>
+  <object id="57" name="enemy_slug_floor" x="152" y="296" width="8" height="8"/>
+  <object id="58" name="enemy_slug_floor" x="272" y="280" width="8" height="8"/>
  </objectgroup>
 </map>

@@ -21,8 +21,9 @@ public class IceCreamOverlordGame extends Game {
 
 	public static final float PPM = 25;
 	public static final int FPS = 60;
-
 	public static boolean DEBUG_MODE = true;
+
+	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
 
 	public static HashMap<String, Level> levels;
 	
@@ -33,8 +34,9 @@ public class IceCreamOverlordGame extends Game {
 		enemy_turret_floor,
 		enemy_turret_roof,
 		enemy_mutant_walking_rat,
-		enemy_mutant_floor_snail,
-		enemy_mutant_wall_snail,
+		enemy_slug_floor,
+		enemy_slug_wall,
+		enemy_chobi,
 		enemy_flying_fish,
 		enemy_flying_firing_fish,
 	};

@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -54,7 +53,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
     private boolean canMove = true;
     private boolean facingLeft = false;
     private boolean dead = false;
-    private float respawnTime = 0.5f;
+    private float respawnTime = 0.8f;
     private float respawnTimer = 0f;
     private float respawnX;
     private float respawnY;
@@ -92,6 +91,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
         input = new PlayerInputHandler();
         respawnX = position.x;
         respawnY = position.y;
+        setZIndex(3);
         createBody(world, position);
     }
     
