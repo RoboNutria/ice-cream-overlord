@@ -19,6 +19,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
 import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
+import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.utils.Assets;
@@ -29,117 +30,135 @@ import com.dcoppetti.lordcream.utils.TiledHandler;
  */
 public class Level {
 
-    private String levelName;
-    private String tmxFile;
-    private String backgroundFile;
-    private float playerStartX;
-    private float playerStartY;
-    private int world;
+	private String levelName;
+	private String tmxFile;
+	private String backgroundFile;
+	private float playerStartX;
+	private float playerStartY;
+	private int world;
 
-    public Level(int world, String levelName, String tmxFile, String backgroundFile) {
-        this.world = world;
-        this.levelName = levelName;
-        this.tmxFile = tmxFile;
-        this.backgroundFile = backgroundFile;
-        loadLevelAssets();
-    }
+	public Level(int world, String levelName, String tmxFile,
+			String backgroundFile) {
+		this.world = world;
+		this.levelName = levelName;
+		this.tmxFile = tmxFile;
+		this.backgroundFile = backgroundFile;
+		loadLevelAssets();
+	}
 
-    // always load them, if they already exist they won't be reloaded so it's all good
+	// always load them, if they already exist they won't be reloaded so it's
+	// all good
 	private void loadLevelAssets() {
 		Assets.loadTexture("textures/dummy-8.png");
 	}
 
-	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
-        MapObjects objects = tileHandler.getMap().getLayers().get(layerName).getObjects();
-        Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
-        for(Iterator<RectangleMapObject> iterator = rectangleObjects.iterator(); iterator.hasNext(); ) {
-            RectangleMapObject object = iterator.next();
-            Rectangle rect = object.getRectangle();
-            rect.x = rect.x / ppm;
-            rect.y = rect.y / ppm;
-            rect.width = rect.width / ppm;
-            rect.height = rect.height / ppm;
-            float x = rect.x;
-            float y = rect.y;
-            float offset = tileHandler.getTileSize()/2;
-            y = y + offset;
-            x = x + offset;
-            if(object.getName().equals(PlayerObjects.player_ship.name())) {
-                playerStartX = x;
-                playerStartY = y;
-            }
-            if(object.getName().equals(Misc.chibi_ice_cream.name())) {
+	public void parseGameEntities(World world, TiledHandler tileHandler,
+			String layerName, float ppm) {
+		MapObjects objects = tileHandler.getMap().getLayers().get(layerName)
+				.getObjects();
+		Array<RectangleMapObject> rectangleObjects = objects
+				.getByType(RectangleMapObject.class);
+		for (Iterator<RectangleMapObject> iterator = rectangleObjects
+				.iterator(); iterator.hasNext();) {
+			RectangleMapObject object = iterator.next();
+			Rectangle rect = object.getRectangle();
+			rect.x = rect.x / ppm;
+			rect.y = rect.y / ppm;
+			rect.width = rect.width / ppm;
+			rect.height = rect.height / ppm;
+			float x = rect.x;
+			float y = rect.y;
+			float offset = tileHandler.getTileSize() / 2;
+			y = y + offset;
+			x = x + offset;
+			if (object.getName().equals(PlayerObjects.player_ship.name())) {
+				playerStartX = x;
+				playerStartY = y;
+			}
+			if (object.getName().equals(Misc.chibi_ice_cream.name())) {
+				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(
+						SPRITES_PACK_FILE, "chibi-idle", "-", 1);
+				ChibiIceCream chibiIcecream = new ChibiIceCream(world,
+						idleRegions.first(), new Vector2(x, y));
+				chibiIcecream.setAnimationRegions(idleRegions);
+				// TextureRegion region = null;
+				// new ChibiIceCream(region, world, new Vector2(x, y));
+			}
+			if (object.getName().equals(Misc.death_zone.name())) {
+				BodyDef bdef = new BodyDef();
+				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y
+						+ rect.height / 2f));
+				bdef.fixedRotation = true;
+				PolygonShape shape = new PolygonShape();
+				shape.setAsBox(rect.width / 2, rect.height / 2);
+				FixtureDef fdef = new FixtureDef();
+				fdef.isSensor = true;
+				fdef.shape = shape;
+				fdef.filter.categoryBits = CollisionHandler.CATEGORY_SCENARY;
+				fdef.filter.maskBits = CollisionHandler.MASK_SCENARY;
+				Body b = world.createBody(bdef);
+				b.setUserData(Misc.death_zone.name());
+				b.createFixture(fdef);
+				shape.dispose();
+			}
+			if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
+				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(
+						SPRITES_PACK_FILE, "slug-idle", "-", 1);
+				Array<TextureRegion> slideRegions = Assets.getAtlasRegions(
+						SPRITES_PACK_FILE, "slug-slide", "-", 1);
+				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(),
+						new Vector2(x, y));
+				slug.setAnimationRegions(idleRegions, slideRegions);
+			}
+			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_chobi.name())) {
+			}
+			if (object.getName().equals(
+					EnemyTypes.enemy_flying_firing_fish.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
+			}
+			if (object.getName().equals(
+					EnemyTypes.enemy_mutant_walking_rat.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
+				TextureRegion region = new TextureRegion(
+						Assets.getTexture("textures/dummy-8.png"));
+				new AlienSoldierEnemy(world, region, new Vector2(x, y));
+			}
+			if (object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_turret_floor.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
+			}
+			if (object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
+			}
+		}
+	}
 
-            	//TextureRegion region = null;
-            	//new ChibiIceCream(region, world, new Vector2(x, y));
-            }
-            if(object.getName().equals(Misc.death_zone.name())) {
-            	BodyDef bdef = new BodyDef();
-            	bdef.position.set(new Vector2(rect.x + rect.width/2f, rect.y + rect.height/2f));
-            	bdef.fixedRotation = true;
-            	PolygonShape shape = new PolygonShape();
-            	shape.setAsBox(rect.width/2, rect.height/2);
-            	FixtureDef fdef = new FixtureDef();
-            	fdef.isSensor = true;
-            	fdef.shape = shape;
-                fdef.filter.categoryBits = CollisionHandler.CATEGORY_SCENARY;
-                fdef.filter.maskBits = CollisionHandler.MASK_SCENARY;
-            	Body b = world.createBody(bdef);
-            	b.setUserData(Misc.death_zone.name());
-            	b.createFixture(fdef);
-            	shape.dispose();
-            }
-            if(object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
-            	Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
-            	Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
-            	SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
-            }
-            if(object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_chobi.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_flying_firing_fish.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_mutant_walking_rat.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
-            	TextureRegion region = new TextureRegion(Assets.getTexture("textures/dummy-8.png"));
-            	new AlienSoldierEnemy(world, region, new Vector2(x, y));
-            }
-            if(object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_turret_floor.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
-            }
-            if(object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
-            }
-        }
-    }
+	public String getTmxFile() {
+		return tmxFile;
+	}
 
-    public String getTmxFile() {
-        return tmxFile;
-    }
+	public String getBackgroundFile() {
+		return backgroundFile;
+	}
 
-    public String getBackgroundFile() {
-        return backgroundFile;
-    }
+	public String getLevelName() {
+		return levelName;
+	}
 
-    public String getLevelName() {
-        return levelName;
-    }
+	public float getPlayerStartX() {
+		return this.playerStartX;
+	}
 
-    public float getPlayerStartX() {
-        return this.playerStartX;
-    }
-
-    public float getPlayerStartY() {
-        return this.playerStartY;
-    }
+	public float getPlayerStartY() {
+		return this.playerStartY;
+	}
 }

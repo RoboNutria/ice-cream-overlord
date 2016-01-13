@@ -13,25 +13,23 @@ import com.dcoppetti.lordcream.ai.AiBehavior;
 
 public abstract class Enemy extends Box2DSprite implements GameEntity {
 
-    public enum EnemyStates {
-        Idle,
-        Sliding,
-        OnAir,
-        OnWall
-    }
-    
-    protected EnemyStates state;
-	
+	public enum EnemyStates {
+		Idle, Sliding, OnAir, OnWall
+	}
+
+	protected EnemyStates state;
+
 	protected Body body;
 	private boolean lookingLeft = true;
-	
+
 	private Array<AiBehavior> behavior;
 
-    public Enemy(World world, TextureRegion region, Vector2 position) {
-    	super(region);
-    	behavior = new Array<AiBehavior>();
-    	createBody(world, position);
-    }
+	public Enemy(World world, TextureRegion region, Vector2 position) {
+		super(region);
+		behavior = new Array<AiBehavior>();
+		createBody(world, position);
+		state = EnemyStates.Idle;
+	}
 
 	protected abstract void createBody(World world, Vector2 position);
 
@@ -45,12 +43,12 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 
 	private void updateBehavior(float delta) {
 		Iterator<AiBehavior> it = behavior.iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			AiBehavior ab = it.next();
 			ab.update(delta, this);
 		}
 	}
-	
+
 	public void addAiBehavior(AiBehavior aib) {
 		behavior.add(aib);
 	}
@@ -63,15 +61,15 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 	public void dispose() {
 		behavior.clear();
 	}
-	
+
 	public Body getBody() {
 		return body;
 	}
-	
+
 	public boolean isLookingLeft() {
 		return lookingLeft;
 	}
-	
+
 	public void setLookingLeft(boolean b) {
 		this.lookingLeft = b;
 	}
