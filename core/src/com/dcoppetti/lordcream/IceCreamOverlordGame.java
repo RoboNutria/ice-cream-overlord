@@ -21,7 +21,7 @@ public class IceCreamOverlordGame extends Game {
 
 	public static final float PPM = 25;
 	public static final int FPS = 60;
-	public static boolean DEBUG_MODE = true;
+	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
 
@@ -49,6 +49,10 @@ public class IceCreamOverlordGame extends Game {
 		chibi_ice_cream,
 		death_zone,
 	};
+	
+	public static enum EnemyTriggers {
+		bumper,
+	}
 
 	@Override
 	public void create() {

@@ -5,11 +5,14 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.ai.WalkBehavior;
+import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
 import com.dcoppetti.lordcream.entities.Enemy;
 import com.dcoppetti.lordcream.entities.GameEntity;
 import com.dcoppetti.lordcream.entities.Overlord;
+import com.dcoppetti.lordcream.entities.SlugEnemy;
 
 /**
  * @author Diego Coppetti
@@ -23,11 +26,14 @@ public class CollisionHandler implements ContactListener {
 	public static final short CATEGORY_PLAYER_SENSORS = 0x16;
 	public static final short CATEGORY_SCENARY = 0x32;
 	public static final short CATEGORY_ENEMY_SENSORS = 0x64;
+	public static final short CATEGORY_TILED_SENSOR = 0x128;
 
 	public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_COLLECTIBLE | CATEGORY_SCENARY;
-	public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENARY;
+	public static final short MASK_ENEMY = CATEGORY_TILED_SENSOR | CATEGORY_PLAYER | CATEGORY_SCENARY;
 	public static final short MASK_SENSOR = CATEGORY_SCENARY & ~CATEGORY_ENEMY & ~CATEGORY_PLAYER_SENSORS & ~CATEGORY_PLAYER & ~CATEGORY_COLLECTIBLE;
+	public static final short MASK_PLAYER_SENSOR = CATEGORY_SCENARY & ~CATEGORY_TILED_SENSOR;
 	public static final short MASK_COLLECTIBLE = CATEGORY_PLAYER | CATEGORY_SCENARY;
+	public static final short MASK_TILED_SENSOR = CATEGORY_ENEMY;
 	public static final short MASK_SCENARY = -1;
 	
 	public static final short GROUP_SENSOR = -1;
@@ -84,6 +90,19 @@ public class CollisionHandler implements ContactListener {
 			if (fbData.equals(Misc.death_zone.name()) && faData instanceof Overlord) {
 				Overlord overlord = (Overlord) faData;
 				overlord.setIsDead(true);
+				return;
+			}
+			// Check enemy triggers on tiled
+			if (faData.equals(EnemyTriggers.bumper.name()) && fbData instanceof SlugEnemy) {
+				SlugEnemy enemy = (SlugEnemy) fbData;
+				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
+				walkBump.bump();
+				return;
+			}
+			if (fbData.equals(EnemyTriggers.bumper.name()) && faData instanceof SlugEnemy) {
+				SlugEnemy enemy = (SlugEnemy) faData;
+				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
+				walkBump.bump();
 				return;
 			}
 			// else it's a collision within entities

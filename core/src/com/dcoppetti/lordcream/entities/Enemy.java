@@ -53,7 +53,7 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 		Iterator<AiBehavior> it = behavior.iterator();
 		while (it.hasNext()) {
 			AiBehavior ab = it.next();
-			ab.update(delta, this);
+			ab.update(delta);
 		}
 	}
 
@@ -63,6 +63,10 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 
 	public void removeAiBehavior(AiBehavior aib) {
 		behavior.removeValue(aib, false);
+	}
+	
+	public Array<AiBehavior> getAiBehavior() {
+		return this.behavior;
 	}
 
 	@Override

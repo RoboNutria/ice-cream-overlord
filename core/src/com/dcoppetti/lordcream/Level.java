@@ -16,11 +16,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
 import com.dcoppetti.lordcream.ai.AiBehavior;
 import com.dcoppetti.lordcream.ai.WalkBehavior;
+import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
 import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
 import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
@@ -111,9 +113,11 @@ public class Level {
 				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
 				slug.setAnimationRegions(idleRegions, slideRegions);
 				
-				WalkBehavior aiWalk = new WalkBehavior(-0.5f, true);
-				aiWalk.init(slug);
-				slug.addAiBehavior(aiWalk);
+				//WalkBehavior aiWalk = new WalkBehavior(-0.5f, true);
+				//aiWalk.init(slug);
+				//slug.addAiBehavior(aiWalk);
+				WalkBumpBehavior aiWalkBump = new WalkBumpBehavior(slug, -0.5f);
+				slug.addAiBehavior(aiWalkBump);
 			}
 			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
 			}
@@ -143,6 +147,23 @@ public class Level {
 			if (object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
 			}
 			if (object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
+			}
+			if (object.getName().equals(EnemyTriggers.bumper.name())) {
+				BodyDef bdef = new BodyDef();
+				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y
+						+ rect.height / 2f));
+				bdef.fixedRotation = true;
+				PolygonShape shape = new PolygonShape();
+				shape.setAsBox(rect.width / 2, rect.height / 2);
+				FixtureDef fdef = new FixtureDef();
+				fdef.isSensor = true;
+				fdef.shape = shape;
+				fdef.filter.categoryBits = CollisionHandler.CATEGORY_TILED_SENSOR;
+				fdef.filter.maskBits = CollisionHandler.MASK_TILED_SENSOR;
+				Body b = world.createBody(bdef);
+				Fixture f = b.createFixture(fdef);
+				f.setUserData(EnemyTriggers.bumper.name());
+				shape.dispose();
 			}
 		}
 	}

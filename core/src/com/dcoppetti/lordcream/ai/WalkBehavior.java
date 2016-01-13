@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.dcoppetti.lordcream.entities.Enemy;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 
-public class WalkBehavior implements AiBehavior {
+public class WalkBehavior extends AiBehavior {
 	
 	private boolean stayOnPlatform = false;
 	private float walkSpeed;
@@ -22,12 +22,12 @@ public class WalkBehavior implements AiBehavior {
 	
 	private Body body;
 	
-	public WalkBehavior(float walkSpeed, boolean stayOnPlatform) {
+	public WalkBehavior(Enemy enemy, float walkSpeed, boolean stayOnPlatform) {
+		super(enemy);
 		this.walkSpeed = walkSpeed;
 		this.stayOnPlatform = stayOnPlatform;
 	}
 
-	@Override
 	public void init(Enemy enemy) {
 		this.body = enemy.getBody();
 		if(stayOnPlatform) {
@@ -69,12 +69,6 @@ public class WalkBehavior implements AiBehavior {
 		shape.dispose();
 	}
 
-	@Override
-	public void update(float delta, Enemy enemy) {
-		updateSensors();
-		Body b = enemy.getBody();
-		b.setLinearVelocity(walkSpeed, b.getLinearVelocity().y);
-	}
 	
 	private void updateSensors() {
 		if(!changeDirection) return;
@@ -100,5 +94,13 @@ public class WalkBehavior implements AiBehavior {
 	public void setWalkSpeed(float walkSpeed) {
 		this.walkSpeed = walkSpeed;
 	}
+
+	@Override
+	public void updateBehavior(float delta) {
+		updateSensors();
+		Body b = enemy.getBody();
+		b.setLinearVelocity(walkSpeed, b.getLinearVelocity().y);
+	}
+
 
 }
