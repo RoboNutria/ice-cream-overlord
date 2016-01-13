@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.Hud;
 import com.dcoppetti.lordcream.Level;
+import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.entities.GameEntity;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
@@ -135,7 +136,16 @@ public class PlayScreen implements Screen {
 		for (Body b : bodies) {
 			Object userData = b.getUserData();
 			if (userData instanceof GameEntity) {
-				((GameEntity) userData).update(delta);
+				if (userData instanceof ChibiIceCream
+						&& ((ChibiIceCream) userData).shouldDestroy()
+						&& ((ChibiIceCream) userData)
+								.destroyAnimationFinished()) {
+					world.destroyBody(b);
+					b.setUserData(null);
+					b = null;
+				} else {
+					((GameEntity) userData).update(delta);
+				}
 			}
 		}
 		camHandler.update();
