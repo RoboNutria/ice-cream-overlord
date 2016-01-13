@@ -38,6 +38,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	private PlayerInputHandler input;
 
+	// experimental mechanic changes
+	boolean poopMode = false;
+
 	// box2d stuff
 	private Body body;
 	private FixtureDef sensorFdef;
@@ -355,10 +358,18 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void stickToWall() {
-		if (leftSide != null && Gdx.input.isKeyPressed(Keys.A)) {
-			newX = -stickForce;
-		} else if (rightSide != null && Gdx.input.isKeyPressed(Keys.D)) {
-			newX = stickForce;
+		if (poopMode) {
+			if (leftSide != null) {
+				newX = -stickForce;
+			} else if (rightSide != null) {
+				newX = stickForce;
+			}
+		} else {
+			if (leftSide != null && Gdx.input.isKeyPressed(Keys.A)) {
+				newX = -stickForce;
+			} else if (rightSide != null && Gdx.input.isKeyPressed(Keys.D)) {
+				newX = stickForce;
+			}
 		}
 		newY = stickFallForce;
 	}
