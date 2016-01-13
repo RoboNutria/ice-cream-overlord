@@ -1,6 +1,7 @@
 package com.dcoppetti.lordcream.entities;
-
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+
+import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 
@@ -125,6 +126,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
         FixtureDef fdef = new FixtureDef();
         fdef.friction = 0.2f;
         fdef.shape = shape;
+		fdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER;
+		fdef.filter.maskBits = CollisionHandler.MASK_PLAYER;
         body = world.createBody(bdef);
         body.createFixture(fdef);
         shape.dispose();
@@ -132,11 +135,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		setUseOrigin(true);
 		setAdjustSize(false);
 		setOrigin(getWidth()/2, (getHeight()/2)+0.03f);
-		//setOriginCenter();
 		setX(-getWidth()/2 + Box2DUtils.width(body) / 2);
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX()/1.5f/PPM, getScaleY()/1.5f/PPM);
-		//setScale(getScaleX()/PPM, getScaleY()/PPM);
 
         body.setUserData(this);
         
@@ -146,6 +147,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
     private void createFootSensor() {
 		sensorFdef = new FixtureDef();
+		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(colliderWidth/2.5f, colliderHeight/8f,
 				new Vector2(0, -colliderHeight/2), 0);
@@ -161,6 +164,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 				new Vector2(-colliderWidth/2f, 0), 0);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
+		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
 		leftSide = body.createFixture(sensorFdef);
 		leftSide.setUserData(PLAYER_SIDE);
 		shape.dispose();
@@ -172,6 +177,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 				new Vector2(colliderWidth/2f, 0), 0);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
+		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
 		rightSide = body.createFixture(sensorFdef);
 		rightSide.setUserData(PLAYER_SIDE);
 		shape.dispose();

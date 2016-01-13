@@ -81,7 +81,8 @@ public class PlayScreen implements Screen {
 		tiledHandler = new TiledHandler();
 		tiledHandler.setPpm(PPM);
 		// this already parses the box2d data
-		tiledHandler.loadTmxMap(level.getTmxFile(), batch, world);
+		tiledHandler.loadTmxMap(level.getTmxFile(), batch);
+		tiledHandler.parseBox2dMapObjects(world, "collisions");
 
 		// load/parse entities from the map (including the player)
 		level.parseGameEntities(world, tiledHandler, "entities", PPM);

@@ -1,6 +1,8 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+
+import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -51,6 +53,8 @@ public class SlugEnemy extends Enemy {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(colliderWidth/2, colliderHeight/2);
         FixtureDef fdef = new FixtureDef();
+		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY;
+		fdef.filter.maskBits = CollisionHandler.MASK_ENEMY;
         fdef.shape = shape;
         body = world.createBody(bdef);
         body.createFixture(fdef);

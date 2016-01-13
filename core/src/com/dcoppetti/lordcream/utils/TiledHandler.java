@@ -8,8 +8,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 
+import com.badlogic.gdx.utils.ObjectMap;
+import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 /**
@@ -56,7 +60,6 @@ public class TiledHandler {
 		mapWidth = (width * tilePixelWidth) / ppm;
 		mapHeight = (height * tilePixelHeight) / ppm;
 		tileSize = tilePixelWidth / ppm;
-		System.out.println(width);
 	}
 
 	// load the map and parse box2d data
@@ -76,6 +79,13 @@ public class TiledHandler {
 			parser = new Box2DMapObjectParser(1/ppm);
 		}
 		parser.load(world, map);
+		ObjectMap<String, Fixture> omFixtures = parser.getFixtures();
+		Filter f = new Filter();
+		f.categoryBits = CollisionHandler.CATEGORY_SCENARY;
+		f.maskBits = CollisionHandler.MASK_SCENARY;
+		for (Fixture fx: omFixtures.values()) {
+			fx.setFilterData(f);
+		}
 	}
 
 	public void parseBox2dMapObjects(World world, String layerName) {
@@ -84,6 +94,13 @@ public class TiledHandler {
 		}
 		MapLayer layer = map.getLayers().get(layerName);
 		parser.load(world, layer);
+		ObjectMap<String, Fixture> omFixtures = parser.getFixtures();
+		Filter f = new Filter();
+		f.categoryBits = CollisionHandler.CATEGORY_SCENARY;
+		f.maskBits = CollisionHandler.MASK_SCENARY;
+		for (Fixture fx: omFixtures.values()) {
+			fx.setFilterData(f);
+		}
 	}
 
 	public void renderMap(OrthographicCamera camera, int[] layers) {
@@ -103,6 +120,10 @@ public class TiledHandler {
 	public void dispose() {
 		mapRenderer.dispose();
 		map.dispose();
+	}
+
+	public Box2DMapObjectParser getBox2DMapParser() {
+		return this.parser;
 	}
 
 	public TiledMap getMap() {
