@@ -3,12 +3,14 @@ package com.dcoppetti.lordcream.entities;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
 
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
+
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -55,19 +57,20 @@ public class SlugEnemy extends Enemy {
         FixtureDef fdef = new FixtureDef();
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY;
 		fdef.filter.maskBits = CollisionHandler.MASK_ENEMY;
+		fdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
         fdef.shape = shape;
         body = world.createBody(bdef);
-        body.createFixture(fdef);
+        Fixture f = body.createFixture(fdef);
         shape.dispose();
 
 		setUseOrigin(true);
 		setAdjustSize(false);
-		setOrigin((getWidth()/2)+0.04f, (getHeight()/2)+0.05f);
+		setOrigin((getWidth()/2)+0.03f, (getHeight()/2)+0.05f);
 		setX(-getWidth()/2 + Box2DUtils.width(body) / 2);
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX()/1.2f/PPM, getScaleY()/1.2f/PPM);
-
-        body.setUserData(this);
+		
+		f.setUserData(this);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,6 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
+import com.dcoppetti.lordcream.ai.AiBehavior;
+import com.dcoppetti.lordcream.ai.WalkBehavior;
 import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
 import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
@@ -52,8 +55,7 @@ public class Level {
 		Assets.loadTexture("textures/dummy-8.png");
 	}
 
-	public void parseGameEntities(World world, TiledHandler tileHandler,
-			String layerName, float ppm) {
+	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
 		MapObjects objects = tileHandler.getMap().getLayers().get(layerName)
 				.getObjects();
 		Array<RectangleMapObject> rectangleObjects = objects
@@ -99,18 +101,19 @@ public class Level {
 				fdef.filter.categoryBits = CollisionHandler.CATEGORY_SCENARY;
 				fdef.filter.maskBits = CollisionHandler.MASK_SCENARY;
 				Body b = world.createBody(bdef);
-				b.setUserData(Misc.death_zone.name());
-				b.createFixture(fdef);
+				Fixture f = b.createFixture(fdef);
+				f.setUserData(Misc.death_zone.name());
 				shape.dispose();
 			}
 			if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
-				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(
-						SPRITES_PACK_FILE, "slug-idle", "-", 1);
-				Array<TextureRegion> slideRegions = Assets.getAtlasRegions(
-						SPRITES_PACK_FILE, "slug-slide", "-", 1);
-				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(),
-						new Vector2(x, y));
+				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
+				Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
+				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
 				slug.setAnimationRegions(idleRegions, slideRegions);
+				
+				WalkBehavior aiWalk = new WalkBehavior(-0.5f, true);
+				aiWalk.init(slug);
+				slug.addAiBehavior(aiWalk);
 			}
 			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
 			}
@@ -144,23 +147,23 @@ public class Level {
 		}
 	}
 
-	public String getTmxFile() {
-		return tmxFile;
-	}
+    public String getTmxFile() {
+        return tmxFile;
+    }
 
-	public String getBackgroundFile() {
-		return backgroundFile;
-	}
+    public String getBackgroundFile() {
+        return backgroundFile;
+    }
 
-	public String getLevelName() {
-		return levelName;
-	}
+    public String getLevelName() {
+        return levelName;
+    }
 
-	public float getPlayerStartX() {
-		return this.playerStartX;
-	}
+    public float getPlayerStartX() {
+        return this.playerStartX;
+    }
 
-	public float getPlayerStartY() {
-		return this.playerStartY;
-	}
+    public float getPlayerStartY() {
+        return this.playerStartY;
+    }
 }

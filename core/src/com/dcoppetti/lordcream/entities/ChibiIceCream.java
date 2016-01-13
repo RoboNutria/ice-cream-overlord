@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -57,7 +58,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_COLLECTIBLE;
 		fdef.filter.maskBits = CollisionHandler.MASK_COLLECTIBLE;
 		body = world.createBody(bdef);
-		body.createFixture(fdef);
+		Fixture f = body.createFixture(fdef);
 		shape.dispose();
 
 		setUseOrigin(true);
@@ -67,8 +68,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		setY(-getHeight() / 2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX() / 1.5f / PPM, getScaleY() / 1.5f / PPM);
 
-		body.setUserData(this);
-
+		f.setUserData(this);
 	}
 
 	@Override
@@ -126,8 +126,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		}
 	}
 
-	public void setAnimationRegions(Array<TextureRegion> idleRegions,
-			Array<TextureRegion> rescueRegions) {
+	public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> rescueRegions) {
 		idleAnim = new Animation(1f / idleFPS, idleRegions);
 		idleAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 		setRegion(idleAnim.getKeyFrame(0));

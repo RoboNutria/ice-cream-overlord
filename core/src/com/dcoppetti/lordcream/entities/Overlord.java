@@ -133,7 +133,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER;
 		fdef.filter.maskBits = CollisionHandler.MASK_PLAYER;
 		body = world.createBody(bdef);
-		body.createFixture(fdef);
+		Fixture f = body.createFixture(fdef);
 		shape.dispose();
 
 		setUseOrigin(true);
@@ -143,7 +143,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		setY(-getHeight() / 2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX() / 1.5f / PPM, getScaleY() / 1.5f / PPM);
 
-		body.setUserData(this);
+		f.setUserData(this);
 
 		createFootSensor();
 		createRightSensor();
@@ -152,7 +152,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private void createFootSensor() {
 		sensorFdef = new FixtureDef();
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
-		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(colliderWidth / 2.5f, colliderHeight / 8f, new Vector2(
 				0, -colliderHeight / 2), 0);
@@ -169,7 +170,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
-		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
 		leftSide = body.createFixture(sensorFdef);
 		leftSide.setUserData(PLAYER_SIDE);
 		shape.dispose();
@@ -182,7 +184,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
-		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSORS;
+		sensorFdef.filter.maskBits = CollisionHandler.MASK_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
 		rightSide = body.createFixture(sensorFdef);
 		rightSide.setUserData(PLAYER_SIDE);
 		shape.dispose();
@@ -409,7 +412,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void collided(GameEntity b) {
-		System.out.println("Collided with " + b.toString());
+		System.out.println(b);
 	}
 
 	public PlayerState getState() {

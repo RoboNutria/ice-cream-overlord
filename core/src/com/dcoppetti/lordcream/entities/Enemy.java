@@ -37,6 +37,14 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 	public void update(float delta) {
 		updateBehavior(delta);
 		updateEnemy(delta);
+		float x = body.getLinearVelocity().x;
+		if (x < -0.1f) {
+			lookingLeft = true;
+			setFlip(false, false);
+		} else if (x > 0.1f) {
+			lookingLeft = false;
+			setFlip(true, false);
+		}
 	}
 
 	protected abstract void updateEnemy(float delta);

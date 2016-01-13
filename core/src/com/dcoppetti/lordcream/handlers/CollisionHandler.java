@@ -1,12 +1,12 @@
 package com.dcoppetti.lordcream.handlers;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
+import com.dcoppetti.lordcream.ai.WalkBehavior;
 import com.dcoppetti.lordcream.entities.Enemy;
 import com.dcoppetti.lordcream.entities.GameEntity;
 import com.dcoppetti.lordcream.entities.Overlord;
@@ -15,7 +15,6 @@ import com.dcoppetti.lordcream.entities.Overlord;
  * @author Diego Coppetti
  *
  */
-// TODO: Fucking collision filtering with masks and category bits!
 public class CollisionHandler implements ContactListener {
 
 	public static final short CATEGORY_PLAYER = 0x2;
@@ -25,13 +24,13 @@ public class CollisionHandler implements ContactListener {
 	public static final short CATEGORY_SCENARY = 0x32;
 	public static final short CATEGORY_ENEMY_SENSORS = 0x64;
 
-	public static final short MASK_PLAYER = CATEGORY_ENEMY
-			| CATEGORY_COLLECTIBLE | CATEGORY_SCENARY;
+	public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_COLLECTIBLE | CATEGORY_SCENARY;
 	public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENARY;
-	public static final short MASK_PLAYER_SENSORS = CATEGORY_SCENARY;
-	public static final short MASK_COLLECTIBLE = CATEGORY_PLAYER
-			| CATEGORY_SCENARY;
+	public static final short MASK_SENSOR = CATEGORY_SCENARY & ~CATEGORY_ENEMY & ~CATEGORY_PLAYER_SENSORS & ~CATEGORY_PLAYER & ~CATEGORY_COLLECTIBLE;
+	public static final short MASK_COLLECTIBLE = CATEGORY_PLAYER | CATEGORY_SCENARY;
 	public static final short MASK_SCENARY = -1;
+	
+	public static final short GROUP_SENSOR = -1;
 
 	private Overlord player;
 
@@ -59,7 +58,7 @@ public class CollisionHandler implements ContactListener {
 		// check if player can stick to a wall
 		if (faData != null && faData.equals(Overlord.PLAYER_SIDE)) {
 			// if it's an enemy don't do shit
-			if (fb.getBody().getUserData() instanceof Enemy) {
+			if (fb.getUserData() instanceof Enemy) {
 				return;
 			}
 			player.playerSideContact = true;
@@ -67,7 +66,7 @@ public class CollisionHandler implements ContactListener {
 		}
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
 			// if it's an enemy don't do shit
-			if (fa.getBody().getUserData() instanceof Enemy) {
+			if (fa.getUserData() instanceof Enemy) {
 				return;
 			}
 			player.playerSideContact = true;
@@ -75,24 +74,23 @@ public class CollisionHandler implements ContactListener {
 		}
 
 		// call their corresponding collision logic
-		if (fa.getBody().getUserData() != null
-				&& fb.getBody().getUserData() != null) {
+		if (faData != null && fbData != null) {
 			// first check if it's the player colliding with a death zone
-			if (fa.getBody().getUserData().equals(Misc.death_zone.name())
-					&& fb.getBody().getUserData() instanceof Overlord) {
-				Overlord overlord = (Overlord) fb.getBody().getUserData();
+			if (faData.equals(Misc.death_zone.name()) && fbData instanceof Overlord) {
+				Overlord overlord = (Overlord) fbData;
 				overlord.setIsDead(true);
 				return;
 			}
-			if (fb.getBody().getUserData().equals(Misc.death_zone.name())
-					&& fa.getBody().getUserData() instanceof Overlord) {
-				Overlord overlord = (Overlord) fa.getBody().getUserData();
+			if (fbData.equals(Misc.death_zone.name()) && faData instanceof Overlord) {
+				Overlord overlord = (Overlord) faData;
 				overlord.setIsDead(true);
 				return;
 			}
 			// else it's a collision within entities
-			checkCollision((GameEntity) fa.getBody().getUserData(),
-					(GameEntity) fb.getBody().getUserData());
+			if(!(faData instanceof GameEntity) || !(fbData instanceof GameEntity)) {
+				return;
+			}
+			checkCollision((GameEntity) faData, (GameEntity) fbData);
 
 		}
 
@@ -125,17 +123,29 @@ public class CollisionHandler implements ContactListener {
 			return;
 		}
 
+		// AI behaviour trigger checks
+		if (faData != null && faData instanceof WalkBehavior) {
+			WalkBehavior wb = (WalkBehavior) faData;
+			wb.changeDirection();
+			return;
+		}
+		if (fbData != null && fbData instanceof WalkBehavior) {
+			WalkBehavior wb = (WalkBehavior) fbData;
+			wb.changeDirection();
+			return;
+		}
+
 	}
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
 		Fixture fa = contact.getFixtureA();
 		Fixture fb = contact.getFixtureB();
-		Body faBody = fa.getBody();
-		Body fbBody = fb.getBody();
-		if (faBody.getUserData() != null && fbBody.getUserData() != null) {
-			GameEntity a = (GameEntity) faBody.getUserData();
-			GameEntity b = (GameEntity) fbBody.getUserData();
+		Object faData = fa.getUserData();
+		Object fbData = fb.getUserData();
+		if (faData != null && fbData != null) {
+			GameEntity a = (GameEntity) faData;
+			GameEntity b = (GameEntity) fbData;
 
 			// Disable physics simulation between player and enemy contact
 			if (a instanceof Overlord && b instanceof Enemy) {

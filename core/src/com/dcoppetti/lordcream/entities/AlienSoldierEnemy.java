@@ -6,6 +6,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -35,7 +36,7 @@ public class AlienSoldierEnemy extends Enemy {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         body = world.createBody(bdef);
-        body.createFixture(fdef);
+        Fixture f = body.createFixture(fdef);
         shape.dispose();
 
 		setUseOrigin(true);
@@ -45,7 +46,7 @@ public class AlienSoldierEnemy extends Enemy {
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
 		setScale(getScaleX()/PPM, getScaleY()/PPM);
 
-        body.setUserData(this);
+        f.setUserData(this);
 	}
 
 	@Override
