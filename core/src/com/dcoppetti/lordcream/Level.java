@@ -20,6 +20,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
 import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
+import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.TiledHandler;
 
@@ -68,9 +69,6 @@ public class Level {
                 playerStartY = y;
             }
             if(object.getName().equals(Misc.chibi_ice_cream.name())) {
-            	// TODO: Tafok do we get the region from?
-            	// TIP: Just add Assets class from BaseGame to the utils and load the texture from there in PlayScreen
-            	// Then do something like Assets.getTexture here and create a new region
 
             	//TextureRegion region = null;
             	//new ChibiIceCream(region, world, new Vector2(x, y));
@@ -84,6 +82,8 @@ public class Level {
             	FixtureDef fdef = new FixtureDef();
             	fdef.isSensor = true;
             	fdef.shape = shape;
+                fdef.filter.categoryBits = CollisionHandler.CATEGORY_SCENARY;
+                fdef.filter.maskBits = CollisionHandler.MASK_SCENARY;
             	Body b = world.createBody(bdef);
             	b.setUserData(Misc.death_zone.name());
             	b.createFixture(fdef);

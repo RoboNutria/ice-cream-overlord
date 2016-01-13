@@ -15,11 +15,23 @@ import com.dcoppetti.lordcream.entities.Overlord;
  * @author Diego Coppetti
  *
  */
-// TODO: Fucking collision filtering with groups man!
+// TODO: Fucking collision filtering with masks and category bits!
 public class CollisionHandler implements ContactListener {
-	
+
+	public static final short CATEGORY_PLAYER = 0x0002;
+	public static final short CATEGORY_ENEMY = 0x0004;
+	public static final short CATEGORY_COLLECTIBLE = 0x0008;
+	public static final short CATEGORY_PLAYER_SENSORS = 0x0016;
+	public static final short CATEGORY_SCENARY = 0x0032;
+	public static final short CATEGORY_ENEMY_SENSORS = 0x0064;
+
+	public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_COLLECTIBLE | CATEGORY_SCENARY;
+	public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENARY;
+	public static final short MASK_PLAYER_SENSORS = CATEGORY_SCENARY;
+	public static final short MASK_SCENARY = -1;
+
 	private Overlord player;
-	
+
 	public CollisionHandler(Overlord player) {
 		this.player = player;
 	}
