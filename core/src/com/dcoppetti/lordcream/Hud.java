@@ -19,6 +19,7 @@ public class Hud {
 
 	private Stage stage;
 	private Viewport viewport;
+	private BitmapFont font;
 
 	// debug stuff
 	private Label playerStateLabel;
@@ -31,16 +32,17 @@ public class Hud {
 
 		viewport = new FitViewport(IceCreamOverlordGame.V_WIDTH * scale, IceCreamOverlordGame.V_HEIGHT * scale, new OrthographicCamera());
 		stage = new Stage(viewport, batch);
-		
+		font = new BitmapFont();
+
 		Table table = new Table();
 		table.top();
 		table.setFillParent(true);
 
 		if(IceCreamOverlordGame.DEBUG_MODE) {
 			Color debugColor = Color.GOLD;
-			playerStateLabel = new Label("P_State: ", new Label.LabelStyle(new BitmapFont(), debugColor));
-			playerXLabel = new Label("P_X: ", new Label.LabelStyle(new BitmapFont(), debugColor));
-			playerYLabel = new Label("P_Y: ", new Label.LabelStyle(new BitmapFont(), debugColor));
+			playerStateLabel = new Label("P_State: ", new Label.LabelStyle(font, debugColor));
+			playerXLabel = new Label("P_X: ", new Label.LabelStyle(font, debugColor));
+			playerYLabel = new Label("P_Y: ", new Label.LabelStyle(font, debugColor));
 			table.add(playerStateLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
 			table.row();
 			table.add(playerXLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
@@ -66,6 +68,7 @@ public class Hud {
 	
 	public void dispose() {
 		stage.dispose();
+		font.dispose();
 	}
 
 }

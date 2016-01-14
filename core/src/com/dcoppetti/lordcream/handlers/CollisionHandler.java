@@ -9,10 +9,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.ai.WalkBehavior;
 import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
-import com.dcoppetti.lordcream.entities.Enemy;
-import com.dcoppetti.lordcream.entities.GameEntity;
-import com.dcoppetti.lordcream.entities.Overlord;
-import com.dcoppetti.lordcream.entities.SlugEnemy;
+import com.dcoppetti.lordcream.entities.*;
 
 /**
  * @author Diego Coppetti
@@ -166,12 +163,21 @@ public class CollisionHandler implements ContactListener {
 			GameEntity a = (GameEntity) faData;
 			GameEntity b = (GameEntity) fbData;
 
-			// Disable physics simulation between player and enemy contact
+			// Disable between player and enemy contact
 			if (a instanceof Overlord && b instanceof Enemy) {
 				contact.setEnabled(false);
 				return;
 			}
 			if (b instanceof Overlord && a instanceof Enemy) {
+				contact.setEnabled(false);
+				return;
+			}
+			// Disable between player and chibi
+			if (a instanceof Overlord && b instanceof ChibiIceCream) {
+				contact.setEnabled(false);
+				return;
+			}
+			if (b instanceof Overlord && a instanceof ChibiIceCream) {
 				contact.setEnabled(false);
 				return;
 			}

@@ -3,6 +3,7 @@ package com.dcoppetti.lordcream;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.dcoppetti.lordcream.screens.PlayScreen;
+import com.dcoppetti.lordcream.utils.Assets;
 
 import java.util.HashMap;
 
@@ -77,5 +78,10 @@ public class IceCreamOverlordGame extends Game {
 	public void setPlayScreen(Level level) {
 		setScreen(new PlayScreen(this, level));
 	}
-	
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		Assets.dispose();
+	}
 }

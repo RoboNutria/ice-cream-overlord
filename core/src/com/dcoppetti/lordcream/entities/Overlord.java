@@ -407,11 +407,18 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void dispose() {
-
+		leftSide = null;
+		rightSide = null;
+		body.getWorld().destroyBody(body);
 	}
 
 	@Override
 	public void collided(GameEntity b) {
+	}
+
+	@Override
+	public boolean isKill() {
+		return false;
 	}
 
 	public PlayerState getState() {

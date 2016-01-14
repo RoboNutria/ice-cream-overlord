@@ -58,12 +58,9 @@ public class Level {
 	}
 
 	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
-		MapObjects objects = tileHandler.getMap().getLayers().get(layerName)
-				.getObjects();
-		Array<RectangleMapObject> rectangleObjects = objects
-				.getByType(RectangleMapObject.class);
-		for (Iterator<RectangleMapObject> iterator = rectangleObjects
-				.iterator(); iterator.hasNext();) {
+		MapObjects objects = tileHandler.getMap().getLayers().get(layerName).getObjects();
+		Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
+		for (Iterator<RectangleMapObject> iterator = rectangleObjects.iterator(); iterator.hasNext();) {
 			RectangleMapObject object = iterator.next();
 			Rectangle rect = object.getRectangle();
 			rect.x = rect.x / ppm;
@@ -79,21 +76,15 @@ public class Level {
 				playerStartX = x;
 				playerStartY = y;
 			}
-			if (object.getName().equals(Misc.chibi_ice_cream.name())) {
-				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(
-						SPRITES_PACK_FILE, "chibi-idle", "-", 1);
-				Array<TextureRegion> rescueRegions = Assets.getAtlasRegions(
-						SPRITES_PACK_FILE, "chibi-rescue", "-", 1);
-				ChibiIceCream chibiIcecream = new ChibiIceCream(world,
-						idleRegions.first(), new Vector2(x, y));
+			else if (object.getName().equals(Misc.chibi_ice_cream.name())) {
+				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chibi-idle", "-", 1);
+				Array<TextureRegion> rescueRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chibi-rescue", "-", 1);
+				ChibiIceCream chibiIcecream = new ChibiIceCream(world, idleRegions.first(), new Vector2(x, y));
 				chibiIcecream.setAnimationRegions(idleRegions, rescueRegions);
-				// TextureRegion region = null;
-				// new ChibiIceCream(region, world, new Vector2(x, y));
 			}
-			if (object.getName().equals(Misc.death_zone.name())) {
+			else if (object.getName().equals(Misc.death_zone.name())) {
 				BodyDef bdef = new BodyDef();
-				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y
-						+ rect.height / 2f));
+				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f));
 				bdef.fixedRotation = true;
 				PolygonShape shape = new PolygonShape();
 				shape.setAsBox(rect.width / 2, rect.height / 2);
@@ -107,51 +98,45 @@ public class Level {
 				f.setUserData(Misc.death_zone.name());
 				shape.dispose();
 			}
-			if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
 				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
 				Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
 				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
 				slug.setAnimationRegions(idleRegions, slideRegions);
 				
-				//WalkBehavior aiWalk = new WalkBehavior(-0.5f, true);
-				//aiWalk.init(slug);
-				//slug.addAiBehavior(aiWalk);
 				WalkBumpBehavior aiWalkBump = new WalkBumpBehavior(slug, -0.5f);
 				slug.addAiBehavior(aiWalkBump);
 			}
-			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_chobi.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_chobi.name())) {
 			}
-			if (object.getName().equals(
+			else if (object.getName().equals(
 					EnemyTypes.enemy_flying_firing_fish.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
 			}
-			if (object.getName().equals(
-					EnemyTypes.enemy_mutant_walking_rat.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_mutant_walking_rat.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
-				TextureRegion region = new TextureRegion(
-						Assets.getTexture("textures/dummy-8.png"));
+			else if (object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
+				TextureRegion region = new TextureRegion(Assets.getTexture("textures/dummy-8.png"));
 				new AlienSoldierEnemy(world, region, new Vector2(x, y));
 			}
-			if (object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_turret_floor.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_turret_floor.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
 			}
-			if (object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
 			}
-			if (object.getName().equals(EnemyTriggers.bumper.name())) {
+			else if (object.getName().equals(EnemyTriggers.bumper.name())) {
 				BodyDef bdef = new BodyDef();
-				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y
-						+ rect.height / 2f));
+				bdef.position.set(new Vector2(rect.x + rect.width / 2f, rect.y + rect.height / 2f));
 				bdef.fixedRotation = true;
 				PolygonShape shape = new PolygonShape();
 				shape.setAsBox(rect.width / 2, rect.height / 2);

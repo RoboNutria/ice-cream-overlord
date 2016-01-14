@@ -1,15 +1,5 @@
 package com.dcoppetti.lordcream.screens;
 
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
-
-import java.util.Iterator;
-
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -28,13 +18,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.Hud;
 import com.dcoppetti.lordcream.Level;
-import com.dcoppetti.lordcream.entities.ChibiIceCream;
-import com.dcoppetti.lordcream.entities.GameEntity;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
+import com.dcoppetti.lordcream.handlers.EntityHandler;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.TiledHandler;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.*;
 
 /**
  * @author Diego Coppetti
@@ -50,6 +42,7 @@ public class PlayScreen implements Screen {
 	private Viewport viewport;
 	private OrthographicCamera cam;
 	private CameraHandler camHandler;
+	private EntityHandler entityHandler;
 	
 	private World world;
 	private Array<Body> bodies;
@@ -69,6 +62,7 @@ public class PlayScreen implements Screen {
 	public PlayScreen(Game game, Level level) {
 		this.game = game;
 		this.level = level;
+		entityHandler = new EntityHandler(true);
 	}
 
 	@Override
@@ -127,38 +121,9 @@ public class PlayScreen implements Screen {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		// TODO: update the whole world
 		camHandler.update();
 
-		// update all world entities
-		world.getBodies(bodies);
-		Iterator<Body> it = bodies.iterator();
-		while(it.hasNext()) {
-			Body b = it.next();
-			if(b.getUserData() instanceof GameEntity) {
-				GameEntity entity = (GameEntity) b.getUserData();
-				entity.update(delta);
-				continue;
-			}
-			if(b.getFixtureList().get(0).getUserData() instanceof GameEntity) {
-				GameEntity entity = (GameEntity) b.getFixtureList().get(0).getUserData();
-				entity.update(delta);
-				continue;
-			}
-		}
-//		for (Body b : bodies) {
-//			Object userData = b.getUserData();
-//			if (userData instanceof GameEntity) {
-//				if (userData instanceof ChibiIceCream
-//						&& ((ChibiIceCream) userData).rescued()) {
-//					world.destroyBody(b);
-//					b.setUserData(null);
-//					b = null;
-//				} else {
-//					((GameEntity) userData).update(delta);
-//				}
-//			}
-//		}
+		entityHandler.updateFromWorld(world, delta);
 
 		hud.update(overlord);
 		world.step(1f/60f, velIter, posIter);
@@ -209,7 +174,7 @@ public class PlayScreen implements Screen {
 		world.dispose();
 		hud.dispose();
 		background.dispose();
-		Assets.dispose();
+		entityHandler.disposeInactive();
 	}
 
 }

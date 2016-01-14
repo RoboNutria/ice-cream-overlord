@@ -72,6 +72,7 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 	@Override
 	public void dispose() {
 		behavior.clear();
+		body.getWorld().destroyBody(body);
 	}
 
 	public Body getBody() {
@@ -80,10 +81,6 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 
 	public boolean isLookingLeft() {
 		return lookingLeft;
-	}
-
-	public void setLookingLeft(boolean b) {
-		this.lookingLeft = b;
 	}
 
 }

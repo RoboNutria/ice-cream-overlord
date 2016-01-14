@@ -35,7 +35,12 @@ public class SlugEnemy extends Enemy {
 
 	}
 
-    public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> slideRegions) {
+	@Override
+	public boolean isKill() {
+		return false;
+	}
+
+	public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> slideRegions) {
     	idleAnim = new Animation(1f/idleFPS, idleRegions);
     	idleAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     	setRegion(idleAnim.getKeyFrame(0));

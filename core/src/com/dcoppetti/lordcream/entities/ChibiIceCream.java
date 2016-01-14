@@ -21,13 +21,13 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	private Animation rescueAnim;
 	private float rescueFPS = 2;
 	private float rescueAnimTimer = 0;
-	private boolean rescueAnimationFinished = false;
 	private Animation idleAnim;
 	private float idleAnimTimer = 0;
 	private Body body;
 	private float idleFPS = 2;
 	private float colliderWidth;
 	private float colliderHeight;
+	private boolean inactive = false;
 
 	public enum ChibiStates {
 		Idle, Rescued
@@ -86,7 +86,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 				region = rescueAnim.getKeyFrame(rescueAnimTimer);
 				setRegion(region);
 				if (rescueAnim.isAnimationFinished(rescueAnimTimer)) {
-					rescueAnimationFinished = true;
+					inactive = true;
 				}
 				break;
 			default:
@@ -97,16 +97,11 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void dispose() {
-		// TODO: I'm not sure if we're gonna dispose anything here (probably
-		// not)
+		body.getWorld().destroyBody(body);
 	}
 
 	public Body getBody() {
 		return body;
-	}
-
-	public boolean rescued() {
-		return rescueAnimationFinished;
 	}
 
 	@Override
@@ -124,6 +119,11 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		if (b instanceof Overlord) {
 			state = ChibiStates.Rescued;
 		}
+	}
+
+	@Override
+	public boolean isKill() {
+		return inactive;
 	}
 
 	public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> rescueRegions) {

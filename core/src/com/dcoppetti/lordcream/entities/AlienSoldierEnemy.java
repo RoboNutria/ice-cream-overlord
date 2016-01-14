@@ -24,6 +24,11 @@ public class AlienSoldierEnemy extends Enemy {
 	}
 
 	@Override
+	public boolean isKill() {
+		return false;
+	}
+
+	@Override
 	protected void createBody(World world, Vector2 position) {
 		float colliderWidth = 6f/PPM;
 		float colliderHeight = 6f/PPM;
@@ -38,6 +43,7 @@ public class AlienSoldierEnemy extends Enemy {
         body = world.createBody(bdef);
         Fixture f = body.createFixture(fdef);
         shape.dispose();
+
 
 		setUseOrigin(true);
 		setAdjustSize(false);
