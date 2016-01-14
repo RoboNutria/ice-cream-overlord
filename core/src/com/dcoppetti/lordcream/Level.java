@@ -78,9 +78,11 @@ public class Level {
 			if (object.getName().equals(Misc.chibi_ice_cream.name())) {
 				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(
 						SPRITES_PACK_FILE, "chibi-idle", "-", 1);
+				Array<TextureRegion> rescueRegions = Assets.getAtlasRegions(
+						SPRITES_PACK_FILE, "chibi-rescue", "-", 1);
 				ChibiIceCream chibiIcecream = new ChibiIceCream(world,
 						idleRegions.first(), new Vector2(x, y));
-				chibiIcecream.setAnimationRegions(idleRegions);
+				chibiIcecream.setAnimationRegions(idleRegions, rescueRegions);
 				// TextureRegion region = null;
 				// new ChibiIceCream(region, world, new Vector2(x, y));
 			}

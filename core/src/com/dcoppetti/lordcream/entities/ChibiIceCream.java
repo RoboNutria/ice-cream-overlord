@@ -17,6 +17,10 @@ import com.dcoppetti.lordcream.handlers.CollisionHandler;
 
 public class ChibiIceCream extends Box2DSprite implements GameEntity {
 
+	private Animation rescueAnim;
+	private float rescueFPS = 2;
+	private float rescueAnimTimer = 0;
+	private boolean rescueAnimationFinished = false;
 	private Animation idleAnim;
 	private float idleAnimTimer = 0;
 	private Body body;
@@ -26,7 +30,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	private boolean shouldDestroy = false;
 
 	public enum ChibiStates {
-		Idle
+		Idle, Rescued
 	}
 
 	private ChibiStates state;
@@ -38,8 +42,6 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	}
 
 	private void createBody(World world, Vector2 position) {
-		// TODO: Create a body sensor PolygonShape as box
-		// Check Overlord class
 		colliderWidth = getWidth() / 3.6f / PPM;
 		colliderHeight = getHeight() / 4 / PPM;
 		colliderWidth = 4 / PPM;
@@ -72,17 +74,22 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void update(float delta) {
-		// Probably we only want to update for animation and to self destroy
-		// when collected
 		TextureRegion region = null;
-		if (idleAnim != null) {
+		if (idleAnim != null || rescueAnim != null) {
 			switch (state) {
 			case Idle:
 				idleAnimTimer += delta;
 				region = idleAnim.getKeyFrame(idleAnimTimer);
 				setRegion(region);
 				break;
-			// TODO: Handle rescue animation (not drawn yet)
+			case Rescued:
+				rescueAnimTimer += delta;
+				region = rescueAnim.getKeyFrame(rescueAnimTimer);
+				setRegion(region);
+				if (rescueAnim.isAnimationFinished(rescueAnimTimer)) {
+					rescueAnimationFinished = true;
+				}
+				break;
 			default:
 				break;
 			}
@@ -103,18 +110,12 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		return shouldDestroy;
 	}
 
-	public boolean destroyAnimationFinished() {
-		// TODO: set boolean to true when destroy animation finished
-		return true;
+	public boolean rescueAnimationFinished() {
+		return rescueAnimationFinished;
 	}
 
 	@Override
 	public void collided(GameEntity b) {
-		// TODO: This will be executed if any other GameEntity collides with it
-		// (player for example)
-		// TODO: WE WILL NEED FILTERING, We don't want this to collide with an
-		// enemy or bullet (but ignore it for now)
-
 		// So what you wanna do here is check if it collided with the
 		// Overlord.class (cast b to Overlord if instance of it) and set some
 		// boolean to true
@@ -127,13 +128,18 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		// what needs to be destroyed
 		if (b instanceof Overlord) {
 			shouldDestroy = true;
+			state = ChibiStates.Rescued;
 		}
 	}
 
-	public void setAnimationRegions(Array<TextureRegion> idleRegions) {
+	public void setAnimationRegions(Array<TextureRegion> idleRegions,
+			Array<TextureRegion> rescueRegions) {
 		idleAnim = new Animation(1f / idleFPS, idleRegions);
 		idleAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 		setRegion(idleAnim.getKeyFrame(0));
+		rescueAnim = new Animation(1f / rescueFPS, rescueRegions);
+		rescueAnim.setPlayMode(Animation.PlayMode.NORMAL);
+		setRegion(rescueAnim.getKeyFrame(0));
 	}
 
 }

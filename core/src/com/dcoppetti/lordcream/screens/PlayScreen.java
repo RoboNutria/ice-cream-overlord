@@ -138,8 +138,7 @@ public class PlayScreen implements Screen {
 			if (userData instanceof GameEntity) {
 				if (userData instanceof ChibiIceCream
 						&& ((ChibiIceCream) userData).shouldDestroy()
-						&& ((ChibiIceCream) userData)
-								.destroyAnimationFinished()) {
+						&& ((ChibiIceCream) userData).rescueAnimationFinished()) {
 					world.destroyBody(b);
 					b.setUserData(null);
 					b = null;
