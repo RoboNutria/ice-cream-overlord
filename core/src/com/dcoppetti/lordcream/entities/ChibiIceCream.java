@@ -27,7 +27,6 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	private float idleFPS = 2;
 	private float colliderWidth;
 	private float colliderHeight;
-	private boolean shouldDestroy = false;
 
 	public enum ChibiStates {
 		Idle, Rescued
@@ -106,11 +105,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		return body;
 	}
 
-	public boolean shouldDestroy() {
-		return shouldDestroy;
-	}
-
-	public boolean rescueAnimationFinished() {
+	public boolean rescued() {
 		return rescueAnimationFinished;
 	}
 
@@ -127,7 +122,6 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		// shouldDestroy boolean and iterate the world objects to check
 		// what needs to be destroyed
 		if (b instanceof Overlord) {
-			shouldDestroy = true;
 			state = ChibiStates.Rescued;
 		}
 	}
