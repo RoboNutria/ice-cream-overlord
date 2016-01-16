@@ -13,8 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class AlienSoldierEnemy extends Enemy {
 
-	public AlienSoldierEnemy(World world, TextureRegion region, Vector2 position) {
-		super(world, region, position);
+	public AlienSoldierEnemy(World world, TextureRegion region, Vector2 position, float size) {
+		super(world, region, position, size);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class AlienSoldierEnemy extends Enemy {
 	}
 
 	@Override
-	protected void createBody(World world, Vector2 position) {
+	protected void createBody(World world, Vector2 position, float size) {
 		float colliderWidth = 6f/PPM;
 		float colliderHeight = 6f/PPM;
         BodyDef bdef = new BodyDef();

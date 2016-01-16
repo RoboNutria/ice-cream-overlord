@@ -40,14 +40,14 @@ public abstract class Enemy extends Box2DSprite implements GameEntity {
 
 	private Array<AiBehavior> behavior;
 
-	public Enemy(World world, TextureRegion region, Vector2 position) {
+	public Enemy(World world, TextureRegion region, Vector2 position, float size) {
 		super(region);
 		behavior = new Array<AiBehavior>();
-		createBody(world, position);
+		createBody(world, position, size);
 		state = EnemyStates.Idle;
 	}
 
-	protected abstract void createBody(World world, Vector2 position);
+	protected abstract void createBody(World world, Vector2 position, float size);
 
 	@Override
 	public void update(float delta) {

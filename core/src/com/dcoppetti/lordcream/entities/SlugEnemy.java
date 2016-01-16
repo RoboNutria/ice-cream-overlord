@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -29,8 +30,8 @@ public class SlugEnemy extends Enemy {
 	
 	private boolean inDeathZone = false;
 
-	public SlugEnemy(World world, TextureRegion region, Vector2 position) {
-		super(world, region, position);
+	public SlugEnemy(World world, TextureRegion region, Vector2 position, float size) {
+		super(world, region, position, size);
 		this.recoverySpeed = 0.3f;
 	}
 
@@ -42,7 +43,7 @@ public class SlugEnemy extends Enemy {
 			wasHit = true;
 			Vector2 pushForce = new Vector2(coneBody.getLinearVelocity());
 			pushForce.x *= pushBackForce;
-			this.body.setLinearVelocity(0, 0);
+			//this.body.setLinearVelocity(0, 0);
 			this.body.applyForceToCenter(pushForce, true);
 			tweenHitAnim();
 		}
@@ -64,17 +65,17 @@ public class SlugEnemy extends Enemy {
     }
 
 	@Override
-	protected void createBody(World world, Vector2 position) {
-		float colliderWidth = 7/PPM;
-		float colliderHeight = 4.5f/PPM;
+	protected void createBody(World world, Vector2 position, float size) {
+		float colliderWidth = size/1.5f;
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.fixedRotation = true;
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(colliderWidth/2, colliderHeight/2);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(colliderWidth/2f);
         FixtureDef fdef = new FixtureDef();
         fdef.friction = 0.2f;
+        fdef.restitution = 0.3f; // crucial to not have them stuck
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY;
 		fdef.filter.maskBits = CollisionHandler.MASK_ENEMY;
 		fdef.filter.groupIndex = CollisionHandler.GROUP_ENEMY;
@@ -85,10 +86,11 @@ public class SlugEnemy extends Enemy {
 
 		setUseOrigin(true);
 		setAdjustSize(false);
-		setOrigin((getWidth()/2)+0.03f, (getHeight()/2)+0.05f);
+		//setOrigin((getWidth()/2)+0.03f, (getHeight()/2)+0.05f);
+		setOriginCenter();
 		setX(-getWidth()/2 + Box2DUtils.width(body) / 2);
 		setY(-getHeight()/2 + Box2DUtils.height(body) / 2);
-		setScale(getScaleX()/1.2f/PPM, getScaleY()/1.2f/PPM);
+		setScale(getScaleX()*size*2/PPM, getScaleY()*size*2/PPM);
 		
 		f.setUserData(this);
 	}
@@ -96,7 +98,16 @@ public class SlugEnemy extends Enemy {
 	@Override
 	protected void updateEnemy(float delta) {
 		checkIfDead(delta);
+		updateStates(delta);
 		updateAnimations(delta);
+	}
+
+	private void updateStates(float delta) {
+		if(body.getLinearVelocity().x > 0f || body.getLinearVelocity().x < 0f) {
+			state = EnemyStates.Sliding;
+			return;
+		}
+		state = EnemyStates.Idle;
 	}
 
 	private void checkIfDead(float delta) {

@@ -15,14 +15,20 @@ public class WalkBumpBehavior extends AiBehavior {
 
 	@Override
 	public void updateBehavior(float delta) {
-		if(changeDirection) {
-			walkSpeed = walkSpeed * -1f;
-			changeDirection = false;
-		}
+		changeDir();
 		enemy.getBody().setLinearVelocity(walkSpeed, enemy.getBody().getLinearVelocity().y);
 	}
 	
-	public void bump() {
+	private void changeDir() {
+		if(changeDirection) {
+			walkSpeed = walkSpeed * -1f;
+			enemy.getBody().setLinearVelocity(walkSpeed, enemy.getBody().getLinearVelocity().y);
+			changeDirection = false;
+		}
+	}
+	
+	@Override
+	public void colliderNotify() {
 		changeDirection = true;
 	}
 	

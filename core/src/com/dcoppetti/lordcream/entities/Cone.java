@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -47,16 +48,14 @@ public class Cone extends Bullet {
 	@Override
 	protected void createBody(World world, Vector2 position) {
 		float colliderWidth = getWidth() / 8 / PPM;
-		float colliderHeight = getHeight() / 8 / PPM;
 		colliderWidth = 4 / PPM;
-		colliderHeight = 4 / PPM;
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position);
 		bdef.gravityScale = 0;
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		bdef.fixedRotation = true;
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(colliderWidth / 2, colliderHeight / 2);
+		CircleShape shape = new CircleShape();
+		shape.setRadius(colliderWidth/2f);
 		FixtureDef fdef = new FixtureDef();
 		fdef.isSensor = true;
 		fdef.shape = shape;

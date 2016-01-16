@@ -20,10 +20,8 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTypes;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
-import com.dcoppetti.lordcream.ai.AiBehavior;
-import com.dcoppetti.lordcream.ai.WalkBehavior;
+import com.dcoppetti.lordcream.ai.WalkAccelBumpBehavior;
 import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
-import com.dcoppetti.lordcream.entities.AlienSoldierEnemy;
 import com.dcoppetti.lordcream.entities.ChibiIceCream;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
@@ -40,26 +38,23 @@ public class Level {
 	private String backgroundFile;
 	private float playerStartX;
 	private float playerStartY;
-	private int world;
 
-	public Level(int world, String levelName, String tmxFile,
-			String backgroundFile) {
-		this.world = world;
+	public Level(String levelName, String tmxFile, String backgroundFile) {
 		this.levelName = levelName;
 		this.tmxFile = tmxFile;
 		this.backgroundFile = backgroundFile;
-		loadLevelAssets();
-	}
-
-	// always load them, if they already exist they won't be reloaded so it's
-	// all good
-	private void loadLevelAssets() {
-		Assets.loadTexture("textures/dummy-8.png");
 	}
 
 	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
 		MapObjects objects = tileHandler.getMap().getLayers().get(layerName).getObjects();
 		Array<RectangleMapObject> rectangleObjects = objects.getByType(RectangleMapObject.class);
+
+		// texture regions for the entities
+		Array<TextureRegion> slugIdleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
+		Array<TextureRegion> slugSlideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
+		Array<TextureRegion> goombaIdleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chobi-idle", "-", 1);
+		Array<TextureRegion> goombaSlideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chobi-walk", "-", 1);
+
 		for (Iterator<RectangleMapObject> iterator = rectangleObjects.iterator(); iterator.hasNext();) {
 			RectangleMapObject object = iterator.next();
 			Rectangle rect = object.getRectangle();
@@ -99,38 +94,17 @@ public class Level {
 				shape.dispose();
 			}
 			else if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
-				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-idle", "-", 1);
-				Array<TextureRegion> slideRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "slug-slide", "-", 1);
-				SlugEnemy slug = new SlugEnemy(world, idleRegions.first(), new Vector2(x, y));
-				slug.setAnimationRegions(idleRegions, slideRegions);
+				SlugEnemy slug = new SlugEnemy(world, slugIdleRegions.first(), new Vector2(x, y), rect.width);
+				slug.setAnimationRegions(slugIdleRegions, slugSlideRegions);
 				
 				WalkBumpBehavior aiWalkBump = new WalkBumpBehavior(slug, -0.5f);
 				slug.addAiBehavior(aiWalkBump);
 			}
-			else if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_chobi.name())) {
-			}
-			else if (object.getName().equals(
-					EnemyTypes.enemy_flying_firing_fish.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_flying_fish.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_slug_floor.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_mutant_walking_rat.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_turret_floor.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_turret_roof.name())) {
-			}
-			else if (object.getName().equals(EnemyTypes.enemy_walking_alien.name())) {
+			else if (object.getName().equals(EnemyTypes.enemy_slug_goomba.name())) {
+				SlugEnemy slug = new SlugEnemy(world, goombaIdleRegions.first(), new Vector2(x, y), rect.width);
+				slug.setAnimationRegions(goombaIdleRegions, goombaSlideRegions);
+				WalkAccelBumpBehavior aiWalkAccelBump = new WalkAccelBumpBehavior(slug, -2f, 3);
+				slug.addAiBehavior(aiWalkAccelBump);
 			}
 			else if (object.getName().equals(EnemyTriggers.bumper.name())) {
 				BodyDef bdef = new BodyDef();

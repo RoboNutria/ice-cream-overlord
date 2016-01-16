@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
+import com.dcoppetti.lordcream.ai.AiBehavior;
 import com.dcoppetti.lordcream.ai.WalkBehavior;
 import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
 import com.dcoppetti.lordcream.entities.*;
@@ -110,16 +111,16 @@ public class CollisionHandler implements ContactListener {
 				SlugEnemy enemy = (SlugEnemy) fbData;
 				if(enemy.getAiBehavior().size == 0) return;
 				if(enemy.wasHit) return;
-				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
-				walkBump.bump();
+				AiBehavior aiBehavior = (AiBehavior) enemy.getAiBehavior().first();
+				aiBehavior.colliderNotify();
 				return;
 			}
 			if (fbData.equals(EnemyTriggers.bumper.name()) && faData instanceof SlugEnemy) {
 				SlugEnemy enemy = (SlugEnemy) faData;
 				if(enemy.getAiBehavior().size == 0) return;
 				if(enemy.wasHit) return;
-				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
-				walkBump.bump();
+				AiBehavior aiBehavior = (AiBehavior) enemy.getAiBehavior().first();
+				aiBehavior.colliderNotify();
 				return;
 			}
 			if (faData.equals(Misc.death_zone.name()) && fbData instanceof Enemy) {
@@ -170,16 +171,16 @@ public class CollisionHandler implements ContactListener {
 		}
 
 		// AI behaviour trigger checks
-		if (faData != null && faData instanceof WalkBehavior) {
-			WalkBehavior wb = (WalkBehavior) faData;
-			wb.changeDirection();
-			return;
-		}
-		if (fbData != null && fbData instanceof WalkBehavior) {
-			WalkBehavior wb = (WalkBehavior) fbData;
-			wb.changeDirection();
-			return;
-		}
+//		if (faData != null && faData instanceof WalkBehavior) {
+//			WalkBehavior wb = (WalkBehavior) faData;
+//			wb.changeDirection();
+//			return;
+//		}
+//		if (fbData != null && fbData instanceof WalkBehavior) {
+//			WalkBehavior wb = (WalkBehavior) fbData;
+//			wb.changeDirection();
+//			return;
+		//}
 
 	}
 

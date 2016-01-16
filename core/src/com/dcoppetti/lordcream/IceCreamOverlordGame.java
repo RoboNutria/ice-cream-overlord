@@ -20,7 +20,7 @@ public class IceCreamOverlordGame extends Game {
 	public static final int W_WIDTH = 800;
 	public static final int W_HEIGHT = 600;
 
-	// ATARI VIRTUAL RESOLUTION!!!! OLD SCHOOL MOTHAFUCKA!
+	// ATARI VIRTUAL RESOLUTION!!!! A LO CHOMA!
 	public static final int V_WIDTH = 160;
 	public static final int V_HEIGHT = 128;
 
@@ -43,7 +43,7 @@ public class IceCreamOverlordGame extends Game {
 		enemy_turret_roof,
 		enemy_mutant_walking_rat,
 		enemy_slug_floor,
-		enemy_slug_wall,
+		enemy_slug_goomba,
 		enemy_chobi,
 		enemy_flying_fish,
 		enemy_flying_firing_fish,
@@ -79,14 +79,14 @@ public class IceCreamOverlordGame extends Game {
 		levels = new HashMap<String, Level>();
 		Level level;
 
-		level = new Level(1, "level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
+		level = new Level("level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
 		levels.put(level.getLevelName(), level);
-		level = new Level(1, "level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
+		level = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
 		levels.put(level.getLevelName(), level);
 	}
 
 	private Screen getInitialScreen() {
-		return new PlayScreen(this, levels.get("level 1-1"));
+		return new PlayScreen(this, levels.get("level 1-2"));
 	}
 
 	public void setPlayScreen(Level level) {

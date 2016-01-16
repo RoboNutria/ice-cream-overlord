@@ -83,10 +83,6 @@ public class WalkBehavior extends AiBehavior {
 		}
 	}
 
-	public void changeDirection() {
-		this.changeDirection = true;
-	}
-	
 	public float getWalkSpeed() {
 		return walkSpeed;
 	}
@@ -100,6 +96,11 @@ public class WalkBehavior extends AiBehavior {
 		updateSensors();
 		Body b = enemy.getBody();
 		b.setLinearVelocity(walkSpeed, b.getLinearVelocity().y);
+	}
+
+	@Override
+	public void colliderNotify() {
+		changeDirection = true;
 	}
 
 

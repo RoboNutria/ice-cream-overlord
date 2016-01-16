@@ -31,4 +31,6 @@ public abstract class AiBehavior {
 
 	public abstract void updateBehavior(float delta);
 
+	public abstract void colliderNotify();
+
 }
