@@ -1,6 +1,8 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+
+import com.badlogic.gdx.graphics.Color;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 
@@ -27,6 +29,7 @@ import com.dcoppetti.lordcream.handlers.PlayerInputHandler;
  */
 public class Overlord extends Box2DSprite implements GameEntity {
 
+
 	public enum PlayerState {
 		Idle, Sliding, OnAir, OnWall
 	}
@@ -46,17 +49,27 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private FixtureDef sensorFdef;
 	private Fixture leftSide;
 	private Fixture rightSide;
-
 	private float colliderWidth;
 	private float colliderHeight;
+
+	// state stuff
 	private PlayerState state = PlayerState.Idle;
 	private boolean canMove = true;
 	private boolean facingLeft = false;
 	private boolean dead = false;
-	private float respawnTime = 0.8f;
+	private float respawnTime = 2f;
 	private float respawnTimer = 0f;
 	private float respawnX;
 	private float respawnY;
+	private boolean invincible = false;
+	private float invincibleTiemer = 2f;
+	private float invincibleTime = 0f;
+	// Animations
+
+	// for when player is hitted by an enemy
+	private boolean bounceHit = false;
+	private float bounceHitTimer = 0;
+	private float bounceHitDuration = 0.6f;
 
 	// private float slideAccel = 6f;
 	private float slideAccel = 7.5f;
@@ -64,13 +77,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private float jumpPower = 60f;
 	private float jumpLimit = 3f;
 	private float stickForce = 80f;
-	private float stickFallForce = -0.1f; // this force pulls you down when
-											// stick
-											// to walls, this could be changed
-											// in
-											// certain levels
-
-	// Animations
+	private float stickFallForce = -0.1f; // this force pulls you down when stick to walls,
+											// this could be changed in certain levels
 	private Animation idleAnim;
 	private Animation slideAnim;
 	private Animation jumpAnim;
@@ -197,20 +205,43 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		if (isDead()) {
 			checkRespawn(delta);
 		} else {
-			updateState();
+			updateState(delta);
 			updateAnimations(delta);
 			updateSideFixture();
+			checkWasHitted(delta);
 			updateMovement();
 		}
 	}
 
+	private void checkWasHitted(float delta) {
+		if(bounceHit) {
+			bounceHitTimer += delta;
+			invincible = true;
+			if(bounceHitTimer >= bounceHitDuration) {
+				bounceHit = false;
+				canMove = true;
+				bounceHitTimer = 0;
+			}
+		}
+		if(invincible) {
+			setColor(1,0,0,1);
+			invincibleTime += delta;
+			if(invincibleTime >= invincibleTiemer) {
+				setColor(Color.WHITE);
+				invincible = false;
+				invincibleTime = 0;
+			}
+		}
+	}
+
 	private void checkRespawn(float delta) {
-		if (!isDead())
-			return;
+		if (!isDead()) return;
+		setColor(1,0,0,1);
 		body.setLinearVelocity(0, 0);
 		respawnTimer += delta;
 		if (respawnTimer >= respawnTime) {
 			// now we respawn it
+			setColor(Color.WHITE);
 			body.setTransform(respawnX, respawnY, body.getAngle());
 			setIsDead(false);
 			respawnTimer = 0;
@@ -277,7 +308,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		}
 	}
 
-	private void updateState() {
+	private void updateState(float delta) {
 		if (playerSideContact && !isGrounded()) {
 			if (leftSide != null || rightSide != null) {
 				state = PlayerState.OnWall;
@@ -414,6 +445,29 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void collided(GameEntity b) {
+		if(b instanceof Enemy) {
+			bounceOffEnemy((Enemy) b);
+		}
+	}
+
+	private void bounceOffEnemy(Enemy b) {
+		if(invincible) return;
+		if(!bounceHit) {
+			bounceHit = true;
+			Body eBody = b.getBody();
+			Vector2 eVelocity = eBody.getLinearVelocity();
+			Vector2 velocity = body.getLinearVelocity();
+			float xMul = 30f;
+			float yMul = 60;
+			if(velocity.x == 0.0f) {
+				velocity.x = eVelocity.x;
+				xMul = -125f;
+			}
+			body.resetMassData();
+			body.setLinearVelocity(0, 0);
+			body.applyForceToCenter((velocity.x*xMul)*-1f, velocity.y*yMul*-1f, true);
+			canMove = false;
+		}
 	}
 
 	@Override

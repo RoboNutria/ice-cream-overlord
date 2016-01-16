@@ -39,6 +39,7 @@ public class PlayScreen implements Screen {
 	private Color backColor = Color.DARK_GRAY;
 	
 	private SpriteBatch batch;
+	private SpriteBatch spritesBacth;
 	private Viewport viewport;
 	private OrthographicCamera cam;
 	private CameraHandler camHandler;
@@ -71,6 +72,7 @@ public class PlayScreen implements Screen {
 		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 
 		batch = new SpriteBatch();
+		spritesBacth = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
 		camHandler = new CameraHandler(cam);
@@ -134,10 +136,10 @@ public class PlayScreen implements Screen {
 		batch.draw(background, cam.position.x-viewport.getWorldWidth()/2, cam.position.y-viewport.getWorldHeight()/2, viewport.getWorldWidth(), viewport.getWorldHeight());
 		batch.end();
 		tiledHandler.renderMap(cam);
-		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
-		Box2DSprite.draw(batch, world, true);
-		batch.end();
+		spritesBacth.setProjectionMatrix(cam.combined);
+		spritesBacth.begin();
+		Box2DSprite.draw(spritesBacth, world, true);
+		spritesBacth.end();
 		
 		hud.render();
 		

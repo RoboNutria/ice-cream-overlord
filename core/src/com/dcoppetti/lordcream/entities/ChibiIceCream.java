@@ -16,6 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 
+/**
+ * @author Marccio Silva, Diego Coppetti
+ *
+ */
 public class ChibiIceCream extends Box2DSprite implements GameEntity {
 
 	private Animation rescueAnim;
@@ -106,16 +110,6 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void collided(GameEntity b) {
-		// So what you wanna do here is check if it collided with the
-		// Overlord.class (cast b to Overlord if instance of it) and set some
-		// boolean to true
-		// to this instance (to mark it as shouldDestroy, then destroy on
-		// update)
-		// NEVER destroy an entity in this method, only at the beginning of the
-		// update
-		// We're not destroyng shit yet, so we probably will need to abstract a
-		// shouldDestroy boolean and iterate the world objects to check
-		// what needs to be destroyed
 		if (b instanceof Overlord) {
 			state = ChibiStates.Rescued;
 		}
