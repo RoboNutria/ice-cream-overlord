@@ -1,9 +1,9 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
-import javafx.animation.Timeline;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -24,6 +24,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.dcoppetti.lordcream.handlers.BulletFactory;
+import com.dcoppetti.lordcream.handlers.BulletFactory.BulletType;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.handlers.PlayerInputHandler;
 import com.dcoppetti.lordcream.utils.SpriteAccessor;
@@ -56,6 +58,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private Fixture rightSide;
 	private float colliderWidth;
 	private float colliderHeight;
+	
+	// bullet stuff
+	private float bulletTimer;
+	private float bulletTime = 0.4f;
+	private boolean canFire = true;
 
 	// state stuff
 	private PlayerState state = PlayerState.Idle;
@@ -86,6 +93,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private float stickForce = 80f;
 	private float stickFallForce = -0.1f; // this force pulls you down when stick to walls,
 											// this could be changed in certain levels
+	// Animations
 	private Animation idleAnim;
 	private Animation slideAnim;
 	private Animation jumpAnim;
@@ -148,6 +156,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		fdef.shape = shape;
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER;
 		fdef.filter.maskBits = CollisionHandler.MASK_PLAYER;
+		fdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		body = world.createBody(bdef);
 		Fixture f = body.createFixture(fdef);
 		shape.dispose();
@@ -169,7 +178,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		sensorFdef = new FixtureDef();
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
 		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSOR;
-		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(colliderWidth / 2.5f, colliderHeight / 8f, new Vector2(
 				0, -colliderHeight / 2), 0);
@@ -187,7 +196,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
 		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSOR;
-		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		leftSide = body.createFixture(sensorFdef);
 		leftSide.setUserData(PLAYER_SIDE);
 		shape.dispose();
@@ -201,7 +210,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
 		sensorFdef.filter.maskBits = CollisionHandler.MASK_PLAYER_SENSOR;
-		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		sensorFdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		rightSide = body.createFixture(sensorFdef);
 		rightSide.setUserData(PLAYER_SIDE);
 		shape.dispose();
@@ -218,8 +227,33 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			updateAnimations(delta);
 			updateSideFixture();
 			checkWasHit(delta);
+			checkFire(delta);
 			updateMovement();
 		}
+	}
+
+	private void checkFire(float delta) {
+		if(bounceHit) return;
+		if(state == PlayerState.Idle || state == PlayerState.Sliding || state == PlayerState.OnAir) {
+			bulletTimer += delta;
+			if(bulletTimer >= bulletTime) {
+				canFire = true;
+				bulletTimer = 0;
+			}
+			if(input.fire) {
+				fireBullet();
+			}
+		}
+	}
+	
+	private void fireBullet() {
+		if(!canFire) return;
+		int side = facingLeft == true ? -1 : 1;
+		float bulletVel = 5f;
+		Vector2 position = new Vector2(body.getPosition().x, body.getPosition().y + colliderWidth/2);
+		BulletFactory.createPlayerBullet(BulletType.Cone, body.getWorld(), position, new Vector2(bulletVel*side, 0));
+		canFire = false;
+		input.fire = false;
 	}
 
 	private void checkWasHit(float delta) {
@@ -472,7 +506,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			Vector2 eVelocity = eBody.getLinearVelocity();
 			Vector2 velocity = body.getLinearVelocity();
 			float xMul = 30;
-			float yVel = 150f;
+			float yVel = 170f;
 			float side = facingLeft == true ? -1f : 1f;
 			if(velocity.x <= 2f && velocity.x >= -2f) {
 				velocity.x = eVelocity.x;

@@ -43,7 +43,7 @@ public class WalkBehavior extends AiBehavior {
 		FixtureDef fdef = new FixtureDef();
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY_SENSORS;
 		fdef.filter.maskBits = CollisionHandler.MASK_SENSOR;
-		fdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		fdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		CircleShape shape = new CircleShape();
 		shape.setRadius(1.5f/PPM);
 		shape.setPosition(new Vector2(-6f/PPM, yOffset/PPM));
@@ -58,7 +58,7 @@ public class WalkBehavior extends AiBehavior {
 		FixtureDef fdef = new FixtureDef();
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY_SENSORS;
 		fdef.filter.maskBits = CollisionHandler.MASK_SENSOR;
-		fdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		fdef.filter.groupIndex = CollisionHandler.GROUP_PLAYER;
 		CircleShape shape = new CircleShape();
 		shape.setRadius(1.5f/PPM);
 		shape.setPosition(new Vector2(6f/PPM, yOffset/PPM));

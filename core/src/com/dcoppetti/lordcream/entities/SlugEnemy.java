@@ -63,7 +63,7 @@ public class SlugEnemy extends Enemy {
         fdef.friction = 0.2f;
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY;
 		fdef.filter.maskBits = CollisionHandler.MASK_ENEMY;
-		fdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
+		fdef.filter.groupIndex = CollisionHandler.GROUP_ENEMY;
         fdef.shape = shape;
         body = world.createBody(bdef);
         Fixture f = body.createFixture(fdef);

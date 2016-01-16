@@ -6,6 +6,7 @@ import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
@@ -69,6 +70,11 @@ public class CameraHandler {
 	public void setBoundX(float mapWidth) {
 		useBounds = true;
 		xBound = mapWidth;
+	}
+	
+	public boolean isOffCamera(Vector2 pos) {
+		return (pos.x >= (camera.position.x + camera.viewportWidth/2)
+				|| pos.x <= (camera.position.x - camera.viewportWidth/2));
 	}
 
 }

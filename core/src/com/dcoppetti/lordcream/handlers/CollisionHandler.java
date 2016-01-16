@@ -10,6 +10,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.ai.WalkBehavior;
 import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
 import com.dcoppetti.lordcream.entities.*;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 /**
  * @author Diego Coppetti
@@ -24,8 +25,10 @@ public class CollisionHandler implements ContactListener {
 	public static final short CATEGORY_SCENARY = 0x32;
 	public static final short CATEGORY_ENEMY_SENSORS = 0x64;
 	public static final short CATEGORY_TILED_SENSOR = 0x128;
+	public static final short CATEGORY_CONE = 0x256;
 
 	public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_COLLECTIBLE | CATEGORY_SCENARY;
+	public static final short MASK_CONE = ~CATEGORY_TILED_SENSOR | CATEGORY_ENEMY | CATEGORY_SCENARY;
 	public static final short MASK_ENEMY = CATEGORY_TILED_SENSOR | CATEGORY_PLAYER | CATEGORY_SCENARY;
 	public static final short MASK_SENSOR = CATEGORY_SCENARY & ~CATEGORY_ENEMY & ~CATEGORY_PLAYER_SENSORS & ~CATEGORY_PLAYER & ~CATEGORY_COLLECTIBLE;
 	public static final short MASK_PLAYER_SENSOR = CATEGORY_SCENARY & ~CATEGORY_TILED_SENSOR;
@@ -33,7 +36,8 @@ public class CollisionHandler implements ContactListener {
 	public static final short MASK_TILED_SENSOR = CATEGORY_ENEMY;
 	public static final short MASK_SCENARY = -1;
 	
-	public static final short GROUP_SENSOR = -1;
+	public static final short GROUP_ENEMY = -1;
+	public static final short GROUP_PLAYER = -2;
 
 	private Overlord player;
 
@@ -73,6 +77,18 @@ public class CollisionHandler implements ContactListener {
 				return;
 			}
 			player.playerSideContact = true;
+			return;
+		}
+
+		// Bullet against a wall
+		if (fbData != null && fbData instanceof Bullet && faData == null) {
+			Bullet b = (Bullet) fbData;
+			b.collided(null);
+			return;
+		}
+		if (faData != null && faData instanceof Bullet && fbData == null) {
+			Bullet b = (Bullet) faData;
+			b.collided(null);
 			return;
 		}
 

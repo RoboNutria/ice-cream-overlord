@@ -41,6 +41,8 @@ public class PlayScreen implements Screen {
 	private Game game;
 	private Level level;
 	private Color backColor = Color.DARK_GRAY;
+
+	public static CameraHandler CAMERA_HANDLER;
 	
 	// I'm using 2 batches because when I changed tint of a sprite the other textures also got affected
 	// I'd have to check b2dsprite class to see, but no time :V
@@ -48,7 +50,6 @@ public class PlayScreen implements Screen {
 	private SpriteBatch spritesBacth;
 	private Viewport viewport;
 	private OrthographicCamera cam;
-	private CameraHandler camHandler;
 	private EntityHandler entityHandler;
 	
 	private World world;
@@ -82,7 +83,7 @@ public class PlayScreen implements Screen {
 		spritesBacth = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
-		camHandler = new CameraHandler(cam);
+		CAMERA_HANDLER = new CameraHandler(cam);
 		
 		world = new World(gravity, true);
 		if(DEBUG_MODE) debugRenderer = new Box2DDebugRenderer();
@@ -109,9 +110,9 @@ public class PlayScreen implements Screen {
 		overlord = new Overlord(world, idleRegions.first(), position);
 		overlord.setAnimationRegions(idleRegions, slideRegions, jumpRegions, wallRegions);
 		
-		camHandler.setTarget(overlord.getBody(), true);
-		camHandler.setBoundX(tiledHandler.getMapWidth());
-		camHandler.setBoundY(tiledHandler.getMapHeight());
+		CAMERA_HANDLER.setTarget(overlord.getBody(), true);
+		CAMERA_HANDLER.setBoundX(tiledHandler.getMapWidth());
+		CAMERA_HANDLER.setBoundY(tiledHandler.getMapHeight());
 		
 		// the background
 		background = new Texture(Gdx.files.internal(level.getBackgroundFile()));
@@ -131,7 +132,7 @@ public class PlayScreen implements Screen {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		camHandler.update();
+		CAMERA_HANDLER.update();
 
 		entityHandler.updateFromWorld(world, delta);
 
@@ -148,7 +149,6 @@ public class PlayScreen implements Screen {
 		spritesBacth.begin();
 		Box2DSprite.draw(spritesBacth, world, true);
 		spritesBacth.end();
-		
 		hud.render();
 		
 		if(DEBUG_MODE) debugRenderer.render(world, cam.combined);
@@ -187,6 +187,7 @@ public class PlayScreen implements Screen {
 		hud.dispose();
 		background.dispose();
 		entityHandler.disposeInactive();
+		CAMERA_HANDLER = null;
 	}
 
 }

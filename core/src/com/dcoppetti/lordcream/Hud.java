@@ -46,25 +46,22 @@ public class Hud {
 		table.top();
 		table.setFillParent(true);
 
-		if(IceCreamOverlordGame.DEBUG_MODE) {
-			Color debugColor = Color.WHITE;
-			playerStateLabel = new Label("P_State: ", new Label.LabelStyle(font, debugColor));
-			playerXLabel = new Label("P_X: ", new Label.LabelStyle(font, debugColor));
-			playerYLabel = new Label("P_Y: ", new Label.LabelStyle(font, debugColor));
-			rescueAmountLabel = new Label(Short.toString(rescueAmount) + "/" + Short.toString(chibiToRescue), new Label.LabelStyle(font, debugColor));
-			//hearts
-			table.row();
-			for (int i = 0 ; i < 3 ; i++) table.add(new Image(Assets.loadTexture("textures/heart-full.png"))).padTop(10);
-			//chibi icecreams rescued
-			table.add(new Image(Assets.loadTexture("textures/chibi-icon.png"))).padTop(10).padLeft(viewport.getWorldWidth() - 100);
-			table.add(rescueAmountLabel).padLeft(10).padTop(10);
-//			table.add(playerStateLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
-//			table.row();
-//			table.add(playerXLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
-//			table.row();
-//			table.add(playerYLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
-			
-		}
+		Color debugColor = Color.WHITE;
+		playerStateLabel = new Label("P_State: ", new Label.LabelStyle(font, debugColor));
+		playerXLabel = new Label("P_X: ", new Label.LabelStyle(font, debugColor));
+		playerYLabel = new Label("P_Y: ", new Label.LabelStyle(font, debugColor));
+		rescueAmountLabel = new Label(Short.toString(rescueAmount) + "/" + Short.toString(chibiToRescue), new Label.LabelStyle(font, debugColor));
+		//hearts
+		table.row();
+		for (int i = 0 ; i < 3 ; i++) table.add(new Image(Assets.loadTexture("textures/heart-full.png"))).padTop(10);
+		//chibi icecreams rescued
+		table.add(new Image(Assets.loadTexture("textures/chibi-icon.png"))).padTop(10).padLeft(viewport.getWorldWidth() - 100);
+		table.add(rescueAmountLabel).padLeft(10).padTop(10);
+//		table.add(playerStateLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
+//		table.row();
+//		table.add(playerXLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
+//		table.row();
+//		table.add(playerYLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
 		
 		stage.addActor(table);
 	}
