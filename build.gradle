@@ -62,6 +62,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+	compile fileTree(dir: '../libs', include: '*.jar')
     }
 }
 
@@ -96,6 +97,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.2"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.2"
+	compile fileTree(dir: '../libs', include: '*.jar')
     }
 }
 

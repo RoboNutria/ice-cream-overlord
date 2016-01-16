@@ -1,8 +1,11 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+import javafx.animation.Timeline;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +13,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.handlers.PlayerInputHandler;
+import com.dcoppetti.lordcream.utils.SpriteAccessor;
 
 /**
  * @author Diego Coppetti
@@ -39,6 +44,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public boolean playerSideContact = false;
 
 	private PlayerInputHandler input;
+	TweenManager tm = new TweenManager();
 
 	// experimental mechanic changes
 	boolean poopMode = false;
@@ -70,7 +76,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	// for when player is hit by an enemy
 	private boolean bounceHit = false;
 	private float bounceHitTimer = 0;
-	private float bounceHitDuration = 0.6f;
+	private float bounceHitDuration = 0.8f;
 
 	// private float slideAccel = 6f;
 	private float slideAccel = 7.5f;
@@ -106,6 +112,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		respawnY = position.y;
 		setZIndex(3);
 		createBody(world, position);
+		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 	}
 
 	public void setAnimationRegions(Array<TextureRegion> idleRegions,
@@ -203,6 +210,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void update(float delta) {
+		tm.update(delta);
 		if (isDead()) {
 			checkRespawn(delta);
 		} else {
@@ -225,7 +233,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			}
 		}
 		if(invincible) {
-			setColor(1,0,0,1);
+			//setColor(1,0,0,1);
 			invincibleTime += delta;
 			if(invincibleTime >= invincibleTimer) {
 				setColor(Color.WHITE);
@@ -241,12 +249,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	private void checkRespawn(float delta) {
 		if (!isDead()) return;
-		setColor(1,0,0,1);
+		//setColor(1,0,0,1);
 		body.setLinearVelocity(0, 0);
 		respawnTimer += delta;
 		if (respawnTimer >= respawnTime) {
 			// now we respawn it
-			setColor(Color.WHITE);
+			//setColor(Color.WHITE);
 			body.setTransform(respawnX, respawnY, body.getAngle());
 			setIsDead(false);
 			respawnTimer = 0;
@@ -463,17 +471,30 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			Body eBody = b.getBody();
 			Vector2 eVelocity = eBody.getLinearVelocity();
 			Vector2 velocity = body.getLinearVelocity();
-			float xMul = 30f;
-			float yMul = 60;
-			if(velocity.x == 0.0f) {
+			float xMul = 30;
+			float yVel = 150f;
+			float side = facingLeft == true ? -1f : 1f;
+			if(velocity.x <= 2f && velocity.x >= -2f) {
 				velocity.x = eVelocity.x;
-				xMul = -125f;
+				xMul = 150f;
 			}
-			body.resetMassData();
+			float x = (velocity.x * xMul) * side;
 			body.setLinearVelocity(0, 0);
-			body.applyForceToCenter((velocity.x*xMul)*-1f, velocity.y*yMul*-1f, true);
+			body.applyForceToCenter(x, yVel, true);
 			canMove = false;
+			tweenHitAnim();
 		}
+	}
+
+	private void tweenHitAnim() {
+		int flashAmount = 12;
+		float flashDuration = invincibleTimer / flashAmount * 0.5f;
+		Tween.to(this, SpriteAccessor.COLOR, 0).target(1, 0, 0).start(tm);
+		Timeline.createSequence().beginSequence()
+		.push(Tween.to(this, SpriteAccessor.ALPHA, flashDuration).target(0))
+		.push(Tween.to(this, SpriteAccessor.ALPHA, flashDuration).target(1))
+		.repeat(flashAmount, 0)
+		.end().start(tm);
 	}
 
 	@Override
@@ -499,6 +520,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	public void setIsDead(boolean dead) {
 		this.dead = dead;
+	}
+	
+	public boolean isInvincible() {
+		return invincible;
 	}
 
 	public boolean isDead() {

@@ -42,6 +42,8 @@ public class PlayScreen implements Screen {
 	private Level level;
 	private Color backColor = Color.DARK_GRAY;
 	
+	// I'm using 2 batches because when I changed tint of a sprite the other textures also got affected
+	// I'd have to check b2dsprite class to see, but no time :V
 	private SpriteBatch batch;
 	private SpriteBatch spritesBacth;
 	private Viewport viewport;
@@ -56,7 +58,7 @@ public class PlayScreen implements Screen {
 	
 	private TiledHandler tiledHandler;
 	private Texture background;
-
+	
 	// player
 	private Overlord overlord;
 	
@@ -129,8 +131,6 @@ public class PlayScreen implements Screen {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		
-
 		camHandler.update();
 
 		entityHandler.updateFromWorld(world, delta);
