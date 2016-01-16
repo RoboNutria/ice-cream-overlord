@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
+import com.dcoppetti.lordcream.screens.PlayScreen;
 
 /**
  * @author Marccio Silva, Diego Coppetti
@@ -43,6 +44,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		super(region);
 		createBody(world, position);
 		state = ChibiStates.Idle;
+		PlayScreen.chibiAmount++;
 	}
 
 	private void createBody(World world, Vector2 position) {

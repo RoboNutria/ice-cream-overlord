@@ -192,122 +192,143 @@ chibi-idle-3
   orig: 12, 12
   offset: 0, 0
   index: -1
+chibi-icon
+  rotate: false
+  xy: 239, 1
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
 wall-3
-  rotate: false
-  xy: 239, 1
-  size: 12, 12
-  orig: 12, 12
-  offset: 0, 0
-  index: -1
-wall-1
-  rotate: false
-  xy: 239, 1
-  size: 12, 12
-  orig: 12, 12
-  offset: 0, 0
-  index: -1
-slug-slide-4
   rotate: false
   xy: 253, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-idle-2
+wall-1
+  rotate: false
+  xy: 253, 1
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+slug-slide-4
   rotate: false
   xy: 267, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-cone-2
+idle-2
   rotate: false
   xy: 281, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-chibi-rescue-4
+cone-2
   rotate: false
   xy: 295, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-jump-1
+chibi-rescue-4
   rotate: false
   xy: 309, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
+jump-1
+  rotate: false
+  xy: 323, 1
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
 wall-5
-  rotate: false
-  xy: 323, 1
-  size: 12, 12
-  orig: 12, 12
-  offset: 0, 0
-  index: -1
-wall-7
-  rotate: false
-  xy: 323, 1
-  size: 12, 12
-  orig: 12, 12
-  offset: 0, 0
-  index: -1
-slug-idle-4
   rotate: false
   xy: 337, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-chobi-idle-2
+wall-7
+  rotate: false
+  xy: 337, 1
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+slug-idle-4
   rotate: false
   xy: 351, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-slug-slide-1
+chobi-idle-2
   rotate: false
   xy: 365, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-chobi-idle-3
+slug-slide-1
   rotate: false
   xy: 379, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-cone-1
+chobi-idle-3
   rotate: false
   xy: 393, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-slug-idle-2
+cone-1
   rotate: false
   xy: 407, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-slide-2
+slug-idle-2
   rotate: false
   xy: 421, 1
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-chobi-idle-4
+slide-2
   rotate: false
   xy: 435, 1
   size: 12, 12
   orig: 12, 12
+  offset: 0, 0
+  index: -1
+chobi-idle-4
+  rotate: false
+  xy: 449, 1
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+heart-full
+  rotate: false
+  xy: 463, 4
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+heart-empty
+  rotate: false
+  xy: 474, 4
+  size: 9, 9
+  orig: 9, 9
   offset: 0, 0
   index: -1

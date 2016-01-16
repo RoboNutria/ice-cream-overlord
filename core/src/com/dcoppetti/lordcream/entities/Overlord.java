@@ -1,8 +1,6 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
-
-import com.badlogic.gdx.graphics.Color;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 
@@ -10,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -62,11 +61,13 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private float respawnX;
 	private float respawnY;
 	private boolean invincible = false;
-	private float invincibleTiemer = 2f;
+	private float invincibleTimer = 1f;
 	private float invincibleTime = 0f;
+	private short lives = 3;
+	private short rescueAmount = 0;
 	// Animations
 
-	// for when player is hitted by an enemy
+	// for when player is hit by an enemy
 	private boolean bounceHit = false;
 	private float bounceHitTimer = 0;
 	private float bounceHitDuration = 0.6f;
@@ -208,12 +209,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			updateState(delta);
 			updateAnimations(delta);
 			updateSideFixture();
-			checkWasHitted(delta);
+			checkWasHit(delta);
 			updateMovement();
 		}
 	}
 
-	private void checkWasHitted(float delta) {
+	private void checkWasHit(float delta) {
 		if(bounceHit) {
 			bounceHitTimer += delta;
 			invincible = true;
@@ -226,12 +227,16 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		if(invincible) {
 			setColor(1,0,0,1);
 			invincibleTime += delta;
-			if(invincibleTime >= invincibleTiemer) {
+			if(invincibleTime >= invincibleTimer) {
 				setColor(Color.WHITE);
 				invincible = false;
 				invincibleTime = 0;
 			}
 		}
+	}
+	
+	public short getLives() {
+		return lives;
 	}
 
 	private void checkRespawn(float delta) {
@@ -447,7 +452,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public void collided(GameEntity b) {
 		if(b instanceof Enemy) {
 			bounceOffEnemy((Enemy) b);
-		}
+			if (!invincible) lives--;
+		} else if (b instanceof ChibiIceCream) rescueAmount++;
 	}
 
 	private void bounceOffEnemy(Enemy b) {
@@ -473,6 +479,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	@Override
 	public boolean isKill() {
 		return false;
+	}
+	
+	public short getRescueAmount() {
+		return rescueAmount;
 	}
 
 	public PlayerState getState() {

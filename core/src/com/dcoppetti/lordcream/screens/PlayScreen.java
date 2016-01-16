@@ -1,5 +1,12 @@
 package com.dcoppetti.lordcream.screens;
 
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,13 +17,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.Hud;
+import com.dcoppetti.lordcream.IceCreamOverlordGame;
 import com.dcoppetti.lordcream.Level;
 import com.dcoppetti.lordcream.entities.Overlord;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
@@ -24,9 +31,6 @@ import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.handlers.EntityHandler;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.TiledHandler;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
-
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.*;
 
 /**
  * @author Diego Coppetti
@@ -46,7 +50,6 @@ public class PlayScreen implements Screen {
 	private EntityHandler entityHandler;
 	
 	private World world;
-	private Array<Body> bodies;
 	private final int velIter = 6, posIter = 2;
 	private Box2DDebugRenderer debugRenderer;
 	private Vector2 gravity = new Vector2(0, -6.8f);
@@ -59,6 +62,7 @@ public class PlayScreen implements Screen {
 	
 	// hud
 	private Hud hud;
+	public static short chibiAmount = 0;
 
 	public PlayScreen(Game game, Level level) {
 		this.game = game;
@@ -68,6 +72,7 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void show() {
+		chibiAmount = 0;
 		// load player texture pack
 		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 
@@ -78,7 +83,6 @@ public class PlayScreen implements Screen {
 		camHandler = new CameraHandler(cam);
 		
 		world = new World(gravity, true);
-		bodies = new Array<Body>();
 		if(DEBUG_MODE) debugRenderer = new Box2DDebugRenderer();
 		
 		// load tiled map
@@ -116,12 +120,16 @@ public class PlayScreen implements Screen {
 		world.setContactListener(new CollisionHandler(overlord));
 		
 		Gdx.input.setInputProcessor(overlord.getInputHandler());
+		
+		
 	}
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		
 
 		camHandler.update();
 
@@ -144,6 +152,8 @@ public class PlayScreen implements Screen {
 		hud.render();
 		
 		if(DEBUG_MODE) debugRenderer.render(world, cam.combined);
+		
+		if (overlord.getLives() <= 0) ((IceCreamOverlordGame) game).setPlayScreen(level);
 	}
 
 	@Override
