@@ -2,7 +2,7 @@ package com.dcoppetti.lordcream.handlers;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.dcoppetti.lordcream.utils.ScreenShotFactory;
+import com.badlogic.gdx.Input.Keys;
 
 /**
  * This class indicates the input that is desired for the player to execute
@@ -15,6 +15,7 @@ public class PlayerInputHandler extends InputAdapter {
 	public boolean left = false;
 	public boolean right = false;
 	public boolean jump = false;
+	public boolean fire = false;
 	
 	@Override
 	public boolean keyDown(int keycode) {
@@ -27,6 +28,9 @@ public class PlayerInputHandler extends InputAdapter {
 			break;
 		case Keys.W:
 			jump = true;
+			break;
+		case Keys.SPACE:
+			fire = true;
 			break;
 		}
 		return true;
@@ -43,6 +47,9 @@ public class PlayerInputHandler extends InputAdapter {
 			break;
 		case Keys.W:
 			jump = false;
+			break;
+		case Keys.SPACE:
+			fire = false;
 			break;
 		default:
 			break;

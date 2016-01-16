@@ -59,6 +59,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private Fixture rightSide;
 	private float colliderWidth;
 	private float colliderHeight;
+	
+	// bullet stuff
+	private float bulletTimer;
+	private float bulletTime = 0.4f;
+	private boolean canFire = true;
 
 	// state stuff
 	private PlayerState state = PlayerState.Idle;
@@ -87,6 +92,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private float stickForce = 80f;
 	private float stickFallForce = -0.1f; // this force pulls you down when stick to walls,
 											// this could be changed in certain levels
+	// Animations
 	private Animation idleAnim;
 	private Animation slideAnim;
 	private Animation jumpAnim;
@@ -219,8 +225,29 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			updateAnimations(delta);
 			updateSideFixture();
 			checkWasHitted(delta);
+			checkFire(delta);
 			updateMovement();
 		}
+	}
+
+	private void checkFire(float delta) {
+		if(bounceHit) return;
+		if(state == PlayerState.Idle || state == PlayerState.Sliding || state == PlayerState.OnAir) {
+			bulletTimer += delta;
+			if(bulletTimer >= bulletTime) {
+				canFire = true;
+				bulletTimer = 0;
+			}
+			if(input.fire) {
+				fireBullet();
+			}
+		}
+	}
+	
+	private void fireBullet() {
+		if(!canFire) return;
+		System.out.println("fire bullet");
+		canFire = false;
 	}
 
 	private void checkWasHitted(float delta) {

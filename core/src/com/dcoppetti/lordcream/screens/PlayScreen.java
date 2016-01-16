@@ -1,7 +1,11 @@
 package com.dcoppetti.lordcream.screens;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -30,9 +34,6 @@ import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.ScreenShotFactory;
 import com.dcoppetti.lordcream.utils.SpriteAccessor;
 import com.dcoppetti.lordcream.utils.TiledHandler;
-
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.*;
 
 /**
  * @author Diego Coppetti
