@@ -24,6 +24,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.dcoppetti.lordcream.IceCreamOverlordGame;
 import com.dcoppetti.lordcream.handlers.BulletFactory;
 import com.dcoppetti.lordcream.handlers.BulletFactory.BulletType;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
@@ -46,7 +47,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public boolean playerSideContact = false;
 
 	private PlayerInputHandler input;
-	TweenManager tm = new TweenManager();
 
 	// experimental mechanic changes
 	boolean poopMode = false;
@@ -219,7 +219,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void update(float delta) {
-		tm.update(delta);
 		if (isDead()) {
 			checkRespawn(delta);
 		} else {
@@ -523,6 +522,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private void tweenHitAnim() {
 		int flashAmount = 12;
 		float flashDuration = invincibleTimer / flashAmount * 0.5f;
+		TweenManager tm = IceCreamOverlordGame.TWEEN_MANAGER;
 		Tween.to(this, SpriteAccessor.COLOR, 0).target(1, 0, 0).start(tm);
 		Timeline.createSequence().beginSequence()
 		.push(Tween.to(this, SpriteAccessor.ALPHA, flashDuration).target(0))

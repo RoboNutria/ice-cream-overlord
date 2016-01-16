@@ -1,7 +1,11 @@
 package com.dcoppetti.lordcream;
 
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.utils.Assets;
 
@@ -25,6 +29,9 @@ public class IceCreamOverlordGame extends Game {
 	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
+
+	public static CameraHandler CAMERA_HANDLER;
+	public static TweenManager TWEEN_MANAGER;
 
 	public static HashMap<String, Level> levels;
 	
@@ -58,7 +65,14 @@ public class IceCreamOverlordGame extends Game {
 	@Override
 	public void create() {
 		setGameLevels();
+		TWEEN_MANAGER = new TweenManager();
 		setScreen(getInitialScreen());
+	}
+	
+	@Override
+	public void render() {
+		super.render();
+		TWEEN_MANAGER.update(Gdx.graphics.getDeltaTime());
 	}
 
 	private void setGameLevels() {
@@ -81,6 +95,8 @@ public class IceCreamOverlordGame extends Game {
 
 	@Override
 	public void dispose() {
+		CAMERA_HANDLER = null;
+		TWEEN_MANAGER = null;
 		super.dispose();
 		Assets.dispose();
 	}

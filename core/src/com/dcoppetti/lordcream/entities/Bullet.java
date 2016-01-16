@@ -48,7 +48,11 @@ public abstract class Bullet extends Box2DSprite implements GameEntity {
 	}
 
 	public void checkBounds() {
-		dead = PlayScreen.CAMERA_HANDLER.isOffCamera(body.getPosition());
+		dead = IceCreamOverlordGame.CAMERA_HANDLER.isOffCamera(body.getPosition());
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 
 }

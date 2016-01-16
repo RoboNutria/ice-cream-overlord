@@ -38,7 +38,9 @@ public class Cone extends Bullet {
 		if(b == null) {
 			dead = true;
 		} else {
-			// TODO: if against enemy
+			if(b instanceof Enemy) {
+				dead = true;
+			}
 		}
 	}
 

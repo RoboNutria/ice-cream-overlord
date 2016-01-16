@@ -5,6 +5,7 @@ import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.CAMERA_HANDLER;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 import com.badlogic.gdx.Game;
@@ -42,7 +43,6 @@ public class PlayScreen implements Screen {
 	private Level level;
 	private Color backColor = Color.DARK_GRAY;
 
-	public static CameraHandler CAMERA_HANDLER;
 	
 	// I'm using 2 batches because when I changed tint of a sprite the other textures also got affected
 	// I'd have to check b2dsprite class to see, but no time :V

@@ -108,14 +108,28 @@ public class CollisionHandler implements ContactListener {
 			// Check enemy triggers on tiled
 			if (faData.equals(EnemyTriggers.bumper.name()) && fbData instanceof SlugEnemy) {
 				SlugEnemy enemy = (SlugEnemy) fbData;
+				if(enemy.getAiBehavior().size == 0) return;
+				if(enemy.wasHit) return;
 				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
 				walkBump.bump();
 				return;
 			}
 			if (fbData.equals(EnemyTriggers.bumper.name()) && faData instanceof SlugEnemy) {
 				SlugEnemy enemy = (SlugEnemy) faData;
+				if(enemy.getAiBehavior().size == 0) return;
+				if(enemy.wasHit) return;
 				WalkBumpBehavior walkBump = (WalkBumpBehavior) enemy.getAiBehavior().first();
 				walkBump.bump();
+				return;
+			}
+			if (faData.equals(Misc.death_zone.name()) && fbData instanceof Enemy) {
+				Enemy e = (Enemy) fbData;
+				e.contactDeathZone();
+				return;
+			}
+			if (fbData.equals(Misc.death_zone.name()) && faData instanceof Enemy) {
+				Enemy e = (Enemy) faData;
+				e.contactDeathZone();
 				return;
 			}
 			// else it's a collision within entities

@@ -9,6 +9,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -24,20 +25,33 @@ public class SlugEnemy extends Enemy {
 	private float slideFPS = 8;
 	private float idleAnimTimer = 0;
 	private float slideAnimTimer = 0;
+	private float pushBackForce = 15f;
+	
+	private boolean inDeathZone = false;
 
 	public SlugEnemy(World world, TextureRegion region, Vector2 position) {
 		super(world, region, position);
+		this.recoverySpeed = 0.3f;
 	}
 
 	@Override
 	public void collided(GameEntity b) {
-		// TODO Auto-generated method stub
-
+		if(wasHit) return;
+		if(b instanceof Cone) {
+			Body coneBody = ((Cone) b).getBody();
+			wasHit = true;
+			Vector2 pushForce = new Vector2(coneBody.getLinearVelocity());
+			pushForce.x *= pushBackForce;
+			this.body.setLinearVelocity(0, 0);
+			this.body.applyForceToCenter(pushForce, true);
+			tweenHitAnim();
+		}
 	}
 
-	@Override
-	public boolean isKill() {
-		return false;
+	public void contactDeathZone() {
+		inDeathZone = true;
+		this.getAiBehavior().clear();
+		tweenDeathAnim();
 	}
 
 	public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> slideRegions) {
@@ -81,7 +95,18 @@ public class SlugEnemy extends Enemy {
 
 	@Override
 	protected void updateEnemy(float delta) {
+		checkIfDead(delta);
 		updateAnimations(delta);
+	}
+
+	private void checkIfDead(float delta) {
+		if(!inDeathZone) return;
+		if(deathTimer >= deathSpeed) {
+			dead = true;
+			return;
+		}
+		deathTimer += delta;
+		this.body.setLinearVelocity(0, 0);
 	}
 
 	private void updateAnimations(float delta) {
