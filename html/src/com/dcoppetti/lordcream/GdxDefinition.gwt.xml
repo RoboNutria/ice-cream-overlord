@@ -6,6 +6,7 @@
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='libgdx-utils' />
 	<inherits name='libgdx-utils-box2d' />
+	<inherits name='aurelienribon.tweenengine'/>
 
 	<inherits name='IceCreamOverlordGame' />
 	<entry-point class='com.dcoppetti.lordcream.client.HtmlLauncher' />

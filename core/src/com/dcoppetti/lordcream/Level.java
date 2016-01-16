@@ -123,8 +123,6 @@ public class Level {
 			else if (object.getName().equals(EnemyTypes.enemy_slug_wall.name())) {
 			}
 			else if (object.getName().equals(EnemyTypes.enemy_standing_alien.name())) {
-				TextureRegion region = new TextureRegion(Assets.getTexture("textures/dummy-8.png"));
-				new AlienSoldierEnemy(world, region, new Vector2(x, y));
 			}
 			else if (object.getName().equals(EnemyTypes.enemy_tank_alien.name())) {
 			}

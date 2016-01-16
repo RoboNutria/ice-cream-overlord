@@ -1,8 +1,12 @@
 package com.dcoppetti.lordcream.screens;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,9 +27,11 @@ import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.handlers.EntityHandler;
 import com.dcoppetti.lordcream.utils.Assets;
+import com.dcoppetti.lordcream.utils.ScreenShotFactory;
+import com.dcoppetti.lordcream.utils.SpriteAccessor;
 import com.dcoppetti.lordcream.utils.TiledHandler;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.*;
 
 /**
@@ -38,6 +44,8 @@ public class PlayScreen implements Screen {
 	private Level level;
 	private Color backColor = Color.DARK_GRAY;
 	
+	// I'm using 2 batches because when I changed tint of a sprite the other textures also got affected
+	// I'd have to check b2dsprite class to see, but no time :V
 	private SpriteBatch batch;
 	private SpriteBatch spritesBacth;
 	private Viewport viewport;
@@ -53,7 +61,7 @@ public class PlayScreen implements Screen {
 	
 	private TiledHandler tiledHandler;
 	private Texture background;
-
+	
 	// player
 	private Overlord overlord;
 	
@@ -122,6 +130,7 @@ public class PlayScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 
 		camHandler.update();
 

@@ -1,7 +1,8 @@
 package com.dcoppetti.lordcream.handlers;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.dcoppetti.lordcream.utils.ScreenShotFactory;
 
 /**
  * This class indicates the input that is desired for the player to execute
@@ -26,8 +27,6 @@ public class PlayerInputHandler extends InputAdapter {
 			break;
 		case Keys.W:
 			jump = true;
-			break;
-		default:
 			break;
 		}
 		return true;

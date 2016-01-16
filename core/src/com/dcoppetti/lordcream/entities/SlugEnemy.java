@@ -60,6 +60,7 @@ public class SlugEnemy extends Enemy {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(colliderWidth/2, colliderHeight/2);
         FixtureDef fdef = new FixtureDef();
+        fdef.friction = 0.2f;
 		fdef.filter.categoryBits = CollisionHandler.CATEGORY_ENEMY;
 		fdef.filter.maskBits = CollisionHandler.MASK_ENEMY;
 		fdef.filter.groupIndex = CollisionHandler.GROUP_SENSOR;
