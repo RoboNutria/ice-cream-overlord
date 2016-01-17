@@ -105,6 +105,7 @@ public class IceCreamOverlordGame extends Game {
 		} else {
 			// Set here how you want it to be, the level unlocking and default par times
 			level1.getLevelData().setParTime("00:10:50");
+			level4.getLevelData().setParTime("00:03:02");
 
 			level2.getLevelData().setUnlocked(false);
 			level3.getLevelData().setUnlocked(false);

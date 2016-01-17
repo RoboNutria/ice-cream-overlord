@@ -50,7 +50,7 @@ public class Hud {
 	private float scale = 2;
 	private boolean deleteMessages = false;
 	
-	public Hud(SpriteBatch batch) {
+	public Hud(SpriteBatch batch, Level level) {
 		
 		this.chibiToRescue = PlayScreen.chibiAmount;
 		viewport = new FitViewport(IceCreamOverlordGame.V_WIDTH * scale, IceCreamOverlordGame.V_HEIGHT * scale, new OrthographicCamera());
@@ -82,7 +82,7 @@ public class Hud {
 		timerLabel.setPosition(stage.getWidth()/12, 5);
 		stage.addActor(timerLabel);
 
-		bestTimeLabel = new Label("top 00:00:00", new Label.LabelStyle(font, fontColor));
+		bestTimeLabel = new Label("top " + level.getLevelData().getParTime(), new Label.LabelStyle(font, fontColor));
 		bestTimeLabel.setPosition(stage.getWidth()/1.5f, 5);
 		stage.addActor(bestTimeLabel);
 	}

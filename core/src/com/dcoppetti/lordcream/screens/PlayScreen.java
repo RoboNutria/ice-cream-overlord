@@ -139,7 +139,7 @@ public class PlayScreen implements Screen {
 		world.setContactListener(new CollisionHandler(overlord));
 
 		// create the hud
-		hud = new Hud(batch);
+		hud = new Hud(batch, level);
 		hud.getStage().getRoot().getColor().a = 0;
 		hud.getStage().getRoot().addAction(Actions.fadeIn(0.25f));
 		
