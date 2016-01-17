@@ -157,4 +157,8 @@ public class Level {
     public float getPlayerStartY() {
         return this.playerStartY;
     }
+
+	public void setLevelData(LevelData ld) {
+		this.levelData = ld;
+	}
 }

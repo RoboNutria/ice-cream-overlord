@@ -9,6 +9,8 @@ public class LevelData {
 	private String parTime;
 	private boolean completeWithBestTime = false;
 	
+	public LevelData() {}
+	
 	public LevelData(String levelName) {
 		this.levelName = levelName;
 	}

@@ -219,7 +219,7 @@ public class PlayScreen implements Screen {
 		if(next != null) {
 			next.getLevelData().setUnlocked(true);
 		}
-		// TODO: Save all levels data!
+		game.save();
 	}
 
 

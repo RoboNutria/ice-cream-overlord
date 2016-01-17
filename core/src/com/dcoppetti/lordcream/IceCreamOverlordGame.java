@@ -6,6 +6,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.screens.TitleScreen;
@@ -28,6 +31,7 @@ public class IceCreamOverlordGame extends Game {
 	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
+	private static final String SAVE_DATA_FILE = "data.dat";
 
 	public static CameraHandler CAMERA_HANDLER;
 	public static TweenManager TWEEN_MANAGER;
@@ -79,15 +83,12 @@ public class IceCreamOverlordGame extends Game {
 	private void setGameLevels() {
 		levels = new Array<Level>();
 
-		Level level1 = new Level("level 1-1", "maps/stage-1-2.tmx", "textures/planet.png");
+		Level level1 = new Level("level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
 		Level level2 = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
-		Level level3 = new Level("Dark Slug Cave 1", "maps/stage-1-2.tmx", "textures/spacefield_a-000.png");
-		Level level4 = new Level("level 1-4", "maps/stage-1-2.tmx", "textures/planet-4.png");
-		Level level5 = new Level("level 1-5", "maps/stage-1-2.tmx", "textures/planet-2.png");
+		Level level3 = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
+		Level level4 = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
+		Level level5 = new Level("level 1-5", "maps/stage-1-5.tmx", "textures/planet-2.png");
 		
-		level2.getLevelData().setUnlocked(false);
-		level3.getLevelData().setUnlocked(false);
-		level5.getLevelData().setUnlocked(false);
 
 		level1.setNext(level2);
 		level2.setNext(level5);
@@ -98,11 +99,20 @@ public class IceCreamOverlordGame extends Game {
 		levels.add(level3);
 		levels.add(level4);
 		levels.add(level5);
+
+		if(Gdx.files.local(SAVE_DATA_FILE).exists()) {
+			load();
+		} else {
+			// Set here how you want it to be, the level unlocking and default par times
+			level1.getLevelData().setParTime("00:10:50");
+
+			level2.getLevelData().setUnlocked(false);
+			level3.getLevelData().setUnlocked(false);
+			level5.getLevelData().setUnlocked(false);
+		}
 	}
 
 	private Screen getInitialScreen() {
-//		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
-		//return new PlayScreen(this, levels.get("level 1-4"));
 		return new TitleScreen(this);
 	}
 
@@ -117,5 +127,27 @@ public class IceCreamOverlordGame extends Game {
 		super.dispose();
 		Assets.dispose();
 		Gdx.input.setInputProcessor(null);
+	}
+
+	public void save() {
+		Json json = new Json();
+		Array<LevelData> levelData = new Array<LevelData>();
+		for(Level l : levels) {
+			LevelData ld = l.getLevelData();
+			levelData.add(ld);
+		}
+		Gdx.files.local(SAVE_DATA_FILE).writeString(json.toJson(levelData, Array.class), false);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void load() {
+		Json json = new Json();
+		Array<LevelData> array = new Array<LevelData>();
+		array = json.fromJson(Array.class, Gdx.files.local(SAVE_DATA_FILE));
+		for(int i = 0 ; i < levels.size ; i++) {
+			Level l = levels.get(i);
+			LevelData ld = array.get(i);
+			l.setLevelData(ld);
+		}
 	}
 }
