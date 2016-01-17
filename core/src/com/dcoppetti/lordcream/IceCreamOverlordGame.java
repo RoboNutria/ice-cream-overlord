@@ -1,5 +1,7 @@
 package com.dcoppetti.lordcream;
 
+import java.util.HashMap;
+
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Game;
@@ -8,8 +10,6 @@ import com.badlogic.gdx.Screen;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.utils.Assets;
-
-import java.util.HashMap;
 
 /**
  * @author Diego Coppetti
@@ -85,10 +85,13 @@ public class IceCreamOverlordGame extends Game {
 		levels.put(level.getLevelName(), level);
 		level = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
 		levels.put(level.getLevelName(), level);
+		level = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
+		levels.put(level.getLevelName(), level);
 	}
 
 	private Screen getInitialScreen() {
-		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
+//		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
+		return new PlayScreen(this, levels.get("level 1-4"));
 	}
 
 	public void setPlayScreen(Level level) {

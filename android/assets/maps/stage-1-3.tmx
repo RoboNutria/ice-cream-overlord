@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="8" tileheight="8" nextobjectid="120">
- <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400" columns="20">
+<map version="1.0" orientation="orthogonal" width="60" height="60" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
  <layer name="layer 1" width="60" height="60">
@@ -67,407 +67,407 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <objectgroup name="collisions">
-  <object id="1" name="env" type="object" x="64" y="48" width="48" height="160"/>
-  <object id="2" name="ground" type="fixture" x="112" y="152" width="120" height="56">
+ <objectgroup name="collisions" width="0" height="0">
+  <object name="env" type="object" x="64" y="48" width="48" height="160"/>
+  <object name="ground" type="fixture" x="112" y="152" width="120" height="56">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="3" name="ground" type="fixture" x="152" y="144" width="16" height="8">
+  <object name="ground" type="fixture" x="152" y="144" width="16" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="4" name="ground" type="fixture" x="232" y="144" width="8" height="64">
+  <object name="ground" type="fixture" x="232" y="144" width="8" height="64">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="5" name="ground" type="fixture" x="256" y="152" width="16" height="120">
+  <object name="ground" type="fixture" x="256" y="152" width="16" height="120">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="6" name="ground" type="fixture" x="272" y="192" width="8" height="80">
+  <object name="ground" type="fixture" x="272" y="192" width="8" height="80">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="7" name="ground" type="fixture" x="280" y="208" width="8" height="64">
+  <object name="ground" type="fixture" x="280" y="208" width="8" height="64">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="8" name="ground" type="fixture" x="288" y="224" width="8" height="56">
+  <object name="ground" type="fixture" x="288" y="224" width="8" height="56">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="9" name="ground" type="fixture" x="296" y="264" width="8" height="48">
+  <object name="ground" type="fixture" x="296" y="264" width="8" height="48">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="10" name="ground" type="fixture" x="304" y="304" width="8" height="8">
+  <object name="ground" type="fixture" x="304" y="304" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="11" name="ground" type="fixture" x="352" y="304" width="56" height="8">
+  <object name="ground" type="fixture" x="352" y="304" width="56" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="12" name="ground" type="fixture" x="424" y="304" width="40" height="8">
+  <object name="ground" type="fixture" x="424" y="304" width="40" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="13" name="ground" type="fixture" x="464" y="272" width="8" height="40">
+  <object name="ground" type="fixture" x="464" y="272" width="8" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="14" name="ground" type="fixture" x="432" y="248" width="8" height="32">
+  <object name="ground" type="fixture" x="432" y="248" width="8" height="32">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="15" name="ground" type="fixture" x="440" y="272" width="24" height="8">
+  <object name="ground" type="fixture" x="440" y="272" width="24" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="16" name="ground" type="fixture" x="384" y="272" width="24" height="8">
+  <object name="ground" type="fixture" x="384" y="272" width="24" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="17" name="ground" type="fixture" x="328" y="240" width="24" height="24">
+  <object name="ground" type="fixture" x="328" y="240" width="24" height="24">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="18" name="ground" type="fixture" x="192" y="256" width="48" height="160">
+  <object name="ground" type="fixture" x="192" y="256" width="48" height="160">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="19" name="ground" type="fixture" x="240" y="272" width="32" height="8">
+  <object name="ground" type="fixture" x="240" y="272" width="32" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="20" name="ground" type="fixture" x="184" y="312" width="8" height="8">
+  <object name="ground" type="fixture" x="184" y="312" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="21" name="ground" type="fixture" x="152" y="312" width="8" height="120">
+  <object name="ground" type="fixture" x="152" y="312" width="8" height="120">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="22" name="ground" type="fixture" x="136" y="424" width="16" height="8">
+  <object name="ground" type="fixture" x="136" y="424" width="16" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="23" name="ground" type="fixture" x="136" y="432" width="8" height="8">
+  <object name="ground" type="fixture" x="136" y="432" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="24" name="ground" type="fixture" x="216" y="416" width="8" height="48">
+  <object name="ground" type="fixture" x="216" y="416" width="8" height="48">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="25" name="ground" type="fixture" x="144" y="440" width="40" height="16">
+  <object name="ground" type="fixture" x="144" y="440" width="40" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="26" name="ground" type="fixture" x="0" y="352" width="152" height="8">
+  <object name="ground" type="fixture" x="0" y="352" width="152" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="27" name="ground" type="fixture" x="80" y="264" width="24" height="56">
+  <object name="ground" type="fixture" x="80" y="264" width="24" height="56">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="28" name="ground" type="fixture" x="0" y="312" width="80" height="8">
+  <object name="ground" type="fixture" x="0" y="312" width="80" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="29" name="ground" type="fixture" x="128" y="288" width="24" height="32">
+  <object name="ground" type="fixture" x="128" y="288" width="24" height="32">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="30" name="ground" type="fixture" x="128" y="208" width="24" height="40">
+  <object name="ground" type="fixture" x="128" y="208" width="24" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="31" name="ground" type="fixture" x="312" y="312" width="40" height="8">
+  <object name="ground" type="fixture" x="312" y="312" width="40" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="32" name="ground" type="fixture" x="408" y="312" width="16" height="8">
+  <object name="ground" type="fixture" x="408" y="312" width="16" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="33" name="ground" type="fixture" x="440" y="240" width="24" height="16">
+  <object name="ground" type="fixture" x="440" y="240" width="24" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="34" name="ground" type="fixture" x="464" y="56" width="16" height="192">
+  <object name="ground" type="fixture" x="464" y="56" width="16" height="192">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="35" name="ground" type="fixture" x="376" y="136" width="88" height="16">
+  <object name="ground" type="fixture" x="376" y="136" width="88" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="36" name="ground" type="fixture" x="408" y="152" width="56" height="8">
+  <object name="ground" type="fixture" x="408" y="152" width="56" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="37" name="ground" type="fixture" x="368" y="184" width="80" height="8">
+  <object name="ground" type="fixture" x="368" y="184" width="80" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="38" name="ground" type="fixture" x="360" y="168" width="8" height="24">
+  <object name="ground" type="fixture" x="360" y="168" width="8" height="24">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="39" name="ground" type="fixture" x="312" y="152" width="48" height="40">
+  <object name="ground" type="fixture" x="312" y="152" width="48" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="40" name="ground" type="fixture" x="304" y="112" width="8" height="80">
+  <object name="ground" type="fixture" x="304" y="112" width="8" height="80">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="41" name="ground" type="fixture" x="144" y="112" width="160" height="8">
+  <object name="ground" type="fixture" x="144" y="112" width="160" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="42" name="ground" type="fixture" x="136" y="56" width="8" height="64">
+  <object name="ground" type="fixture" x="136" y="56" width="8" height="64">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="43" name="ground" type="fixture" x="136" y="48" width="24" height="8">
+  <object name="ground" type="fixture" x="136" y="48" width="24" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="44" name="ground" type="fixture" x="184" y="48" width="56" height="40">
+  <object name="ground" type="fixture" x="184" y="48" width="56" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="45" name="ground" type="fixture" x="240" y="80" width="24" height="16">
+  <object name="ground" type="fixture" x="240" y="80" width="24" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="46" name="ground" type="fixture" x="264" y="88" width="80" height="8">
+  <object name="ground" type="fixture" x="264" y="88" width="80" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="47" name="ground" type="fixture" x="312" y="104" width="80" height="8">
+  <object name="ground" type="fixture" x="312" y="104" width="80" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="48" name="ground" type="fixture" x="392" y="96" width="48" height="16">
+  <object name="ground" type="fixture" x="392" y="96" width="48" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="49" name="ground" type="fixture" x="336" y="96" width="48" height="8">
+  <object name="ground" type="fixture" x="336" y="96" width="48" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="50" name="ground" type="fixture" x="408" y="80" width="8" height="16">
+  <object name="ground" type="fixture" x="408" y="80" width="8" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="51" name="ground" type="fixture" x="416" y="88" width="8" height="8">
+  <object name="ground" type="fixture" x="416" y="88" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="52" name="ground" type="fixture" x="376" y="80" width="8" height="16">
+  <object name="ground" type="fixture" x="376" y="80" width="8" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="53" name="ground" type="fixture" x="336" y="80" width="8" height="8">
+  <object name="ground" type="fixture" x="336" y="80" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="54" name="ground" type="fixture" x="296" y="80" width="8" height="8">
+  <object name="ground" type="fixture" x="296" y="80" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="55" name="ground" type="fixture" x="376" y="192" width="16" height="40">
+  <object name="ground" type="fixture" x="376" y="192" width="16" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="56" name="ground" type="fixture" x="392" y="192" width="8" height="24">
+  <object name="ground" type="fixture" x="392" y="192" width="8" height="24">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="57" name="ground" type="fixture" x="160" y="0" width="24" height="56">
+  <object name="ground" type="fixture" x="160" y="0" width="24" height="56">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="58" name="ground" type="fixture" x="296" y="24" width="40" height="32">
+  <object name="ground" type="fixture" x="296" y="24" width="40" height="32">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="59" name="ground" type="fixture" x="264" y="48" width="32" height="8">
+  <object name="ground" type="fixture" x="264" y="48" width="32" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="60" name="ground" type="fixture" x="336" y="40" width="88" height="16">
+  <object name="ground" type="fixture" x="336" y="40" width="88" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="61" name="ground" type="fixture" x="424" y="16" width="16" height="40">
+  <object name="ground" type="fixture" x="424" y="16" width="16" height="40">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="62" name="ground" type="fixture" x="440" y="48" width="40" height="8">
+  <object name="ground" type="fixture" x="440" y="48" width="40" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="63" name="ground" type="fixture" x="24" y="256" width="24" height="48">
+  <object name="ground" type="fixture" x="24" y="256" width="24" height="48">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="64" name="ground" type="fixture" x="40" y="200" width="24" height="56">
+  <object name="ground" type="fixture" x="40" y="200" width="24" height="56">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="65" name="ground" type="fixture" x="48" y="256" width="16" height="8">
+  <object name="ground" type="fixture" x="48" y="256" width="16" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="66" name="ground" type="fixture" x="32" y="240" width="8" height="16">
+  <object name="ground" type="fixture" x="32" y="240" width="8" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="67" name="ground" type="fixture" x="56" y="152" width="8" height="16">
+  <object name="ground" type="fixture" x="56" y="152" width="8" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="68" name="ground" type="fixture" x="32" y="104" width="8" height="8">
+  <object name="ground" type="fixture" x="32" y="104" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="69" name="ground" type="fixture" x="56" y="80" width="8" height="24">
+  <object name="ground" type="fixture" x="56" y="80" width="8" height="24">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="72" name="ground" type="fixture" x="8" y="176" width="32" height="16">
+  <object name="ground" type="fixture" x="8" y="176" width="32" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="73" name="ground" type="fixture" x="32" y="168" width="8" height="8">
+  <object name="ground" type="fixture" x="32" y="168" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="74" name="ground" type="fixture" x="0" y="128" width="8" height="184">
+  <object name="ground" type="fixture" x="0" y="128" width="8" height="184">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="75" name="ground" type="fixture" x="48" y="104" width="16" height="32">
+  <object name="ground" type="fixture" x="48" y="104" width="16" height="32">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="79" name="ground" type="fixture" x="176" y="456" width="40" height="8">
+  <object name="ground" type="fixture" x="176" y="456" width="40" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="100" name="ground" type="fixture" x="288" y="136" width="16" height="8">
+  <object name="ground" type="fixture" x="288" y="136" width="16" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="110" name="ground" type="fixture" x="16" y="104" width="8" height="16">
+  <object name="ground" type="fixture" x="16" y="104" width="8" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="111" name="ground" type="fixture" x="240" y="184" width="8" height="8">
+  <object name="ground" type="fixture" x="240" y="184" width="8" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="118" name="boundary" type="object" x="0" y="136">
+  <object name="boundary" type="object" x="0" y="136">
    <polyline points="0,0 0,-136 480,-136 480,-72"/>
   </object>
  </objectgroup>
- <objectgroup name="entities">
-  <object id="71" name="player_ship" x="88" y="40" width="8" height="8"/>
-  <object id="95" name="chibi_ice_cream" x="296" y="128" width="8" height="8"/>
-  <object id="96" name="chibi_ice_cream" x="464" y="40" width="8" height="8"/>
-  <object id="97" name="chibi_ice_cream" x="192" y="40" width="8" height="8"/>
-  <object id="98" name="chibi_ice_cream" x="32" y="160" width="8" height="8"/>
-  <object id="99" name="chibi_ice_cream" x="152" y="432" width="8" height="8"/>
-  <object id="101" name="death_zone" x="304" y="277.25" width="80" height="26.75"/>
-  <object id="102" name="death_zone" x="384" y="283.636" width="80" height="20.3636"/>
-  <object id="103" name="death_zone" x="384" y="85.4545" width="24" height="10.5455"/>
-  <object id="104" name="death_zone" x="344" y="85.4545" width="32" height="10.5455"/>
-  <object id="105" name="death_zone" x="304" y="84" width="32" height="4"/>
-  <object id="106" name="death_zone" x="264" y="84.1818" width="32" height="3.81818"/>
-  <object id="107" name="death_zone" x="0" y="323.455" width="152" height="28.5455"/>
-  <object id="108" name="death_zone" x="184" y="445.5" width="32" height="10.5"/>
-  <object id="109" name="death_zone" x="240" y="261.5" width="16" height="10.5"/>
+ <objectgroup name="entities" width="0" height="0">
+  <object name="player_ship" x="88" y="40" width="8" height="8"/>
+  <object name="chibi_ice_cream" x="296" y="128" width="8" height="8"/>
+  <object name="chibi_ice_cream" x="464" y="40" width="8" height="8"/>
+  <object name="chibi_ice_cream" x="192" y="40" width="8" height="8"/>
+  <object name="chibi_ice_cream" x="32" y="160" width="8" height="8"/>
+  <object name="chibi_ice_cream" x="152" y="432" width="8" height="8"/>
+  <object name="death_zone" x="304" y="0" width="80"/>
+  <object name="death_zone" x="384" y="0" width="80"/>
+  <object name="death_zone" x="384" y="0" width="24"/>
+  <object name="death_zone" x="344" y="0" width="32"/>
+  <object name="death_zone" x="304" y="84" width="32" height="4"/>
+  <object name="death_zone" x="264" y="0" width="32"/>
+  <object name="death_zone" x="0" y="0" width="152"/>
+  <object name="death_zone" x="184" y="0" width="32"/>
+  <object name="death_zone" x="240" y="0" width="16"/>
  </objectgroup>
 </map>
