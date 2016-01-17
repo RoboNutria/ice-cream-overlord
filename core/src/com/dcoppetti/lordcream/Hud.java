@@ -96,4 +96,8 @@ public class Hud {
 		font.dispose();
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+
 }

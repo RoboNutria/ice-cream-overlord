@@ -20,12 +20,13 @@ public class IceCreamOverlordGame extends Game {
 	public static final int W_WIDTH = 800;
 	public static final int W_HEIGHT = 600;
 
+	// ATARI VIRTUAL RESOLUTION!!!! A LO CHOMA!
 	public static final int V_WIDTH = 160;
 	public static final int V_HEIGHT = 128;
 
 	public static final float PPM = 25;
 	public static final int FPS = 60;
-	public static boolean DEBUG_MODE = true;
+	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
 
@@ -82,12 +83,12 @@ public class IceCreamOverlordGame extends Game {
 		levels.put(level.getLevelName(), level);
 		level = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
 		levels.put(level.getLevelName(), level);
-		level = new Level("Dark Space Cavern 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
+		level = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
 		levels.put(level.getLevelName(), level);
 	}
 
 	private Screen getInitialScreen() {
-		return new PlayScreen(this, levels.get("Dark Space Cavern 1"));
+		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
 	}
 
 	public void setPlayScreen(Level level) {

@@ -40,6 +40,8 @@ public class CollisionHandler implements ContactListener {
 	public static final short GROUP_ENEMY = -1;
 	public static final short GROUP_PLAYER = -2;
 
+	public static final String LEVEL_BOUNDARY = "levelBoundary";
+
 	private Overlord player;
 
 	public CollisionHandler(Overlord player) {
@@ -62,9 +64,14 @@ public class CollisionHandler implements ContactListener {
 			player.playerFootContanct++;
 			return;
 		}
-
+		
 		// check if player can stick to a wall
 		if (faData != null && faData.equals(Overlord.PLAYER_SIDE)) {
+			// level boundary, don't stick to wall
+			if(fb.getUserData() != null && fb.getUserData().equals(CollisionHandler.LEVEL_BOUNDARY)) {
+				System.out.println("aca");
+				return;
+			}
 			// if it's an enemy don't do shit
 			if (fb.getUserData() instanceof Enemy) {
 				return;
@@ -73,6 +80,11 @@ public class CollisionHandler implements ContactListener {
 			return;
 		}
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
+			// level boundary, don't stick to wall
+			if(fa.getUserData() != null && fa.getUserData().equals(CollisionHandler.LEVEL_BOUNDARY)) {
+				System.out.println("aca");
+				return;
+			}
 			// if it's an enemy don't do shit
 			if (fa.getUserData() instanceof Enemy) {
 				return;
@@ -98,12 +110,12 @@ public class CollisionHandler implements ContactListener {
 			// first check if it's the player colliding with a death zone
 			if (faData.equals(Misc.death_zone.name()) && fbData instanceof Overlord) {
 				Overlord overlord = (Overlord) fbData;
-				overlord.setIsDead(true);
+				overlord.contactDeathZone();
 				return;
 			}
 			if (fbData.equals(Misc.death_zone.name()) && faData instanceof Overlord) {
 				Overlord overlord = (Overlord) faData;
-				overlord.setIsDead(true);
+				overlord.contactDeathZone();
 				return;
 			}
 			// Check enemy triggers on tiled
@@ -191,6 +203,9 @@ public class CollisionHandler implements ContactListener {
 		Object faData = fa.getUserData();
 		Object fbData = fb.getUserData();
 		if (faData != null && fbData != null) {
+
+			if(faData instanceof String || fbData instanceof String) return;
+
 			GameEntity a = (GameEntity) faData;
 			GameEntity b = (GameEntity) fbData;
 

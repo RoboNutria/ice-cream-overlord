@@ -8,12 +8,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.badlogic.gdx.utils.ObjectMap;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
+
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 /**
@@ -29,8 +30,8 @@ import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 public class TiledHandler {
 
 	private TiledMap map;
-	private float mapWidth;
-	private float mapHeight;
+	public static float MAP_WIDTH;
+	public static float MAP_HEIGHT;
 	private float tileSize;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private Box2DMapObjectParser parser;
@@ -57,8 +58,8 @@ public class TiledHandler {
 		int height = prop.get("height", Integer.class);
 		int tilePixelWidth = prop.get("tilewidth", Integer.class);
 		int tilePixelHeight = prop.get("tileheight", Integer.class);
-		mapWidth = (width * tilePixelWidth) / ppm;
-		mapHeight = (height * tilePixelHeight) / ppm;
+		MAP_WIDTH = (width * tilePixelWidth) / ppm;
+		MAP_HEIGHT = (height * tilePixelHeight) / ppm;
 		tileSize = tilePixelWidth / ppm;
 	}
 
@@ -79,6 +80,8 @@ public class TiledHandler {
 			parser = new Box2DMapObjectParser(1/ppm);
 		}
 		parser.load(world, map);
+		Body body = parser.getBodies().get("boundary");
+		body.getFixtureList().first().setUserData(CollisionHandler.LEVEL_BOUNDARY);
 		ObjectMap<String, Fixture> omFixtures = parser.getFixtures();
 		Filter f = new Filter();
 		f.categoryBits = CollisionHandler.CATEGORY_SCENARY;
@@ -94,6 +97,8 @@ public class TiledHandler {
 		}
 		MapLayer layer = map.getLayers().get(layerName);
 		parser.load(world, layer);
+		Body body = parser.getBodies().get("boundary");
+		body.getFixtureList().first().setUserData(CollisionHandler.LEVEL_BOUNDARY);
 		ObjectMap<String, Fixture> omFixtures = parser.getFixtures();
 		Filter f = new Filter();
 		f.categoryBits = CollisionHandler.CATEGORY_SCENARY;
@@ -131,11 +136,11 @@ public class TiledHandler {
 	}
 
 	public float getMapHeight() {
-		return mapHeight;
+		return MAP_HEIGHT;
 	}
 
 	public float getMapWidth() {
-		return mapWidth;
+		return MAP_WIDTH;
 	}
 	
 	public float getTileSize() {

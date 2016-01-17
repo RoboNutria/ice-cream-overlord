@@ -69,10 +69,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private boolean canMove = true;
 	private boolean facingLeft = false;
 	private boolean dead = false;
-	private float respawnTime = 2f;
-	private float respawnTimer = 0f;
-	private float respawnX;
-	private float respawnY;
+	private float deathDuration = 2f;
+	private float deathTimer = 0f;
+	public boolean willDie = false;
 	private boolean invincible = false;
 	private float invincibleTimer = 1f;
 	private float invincibleTime = 0f;
@@ -113,11 +112,11 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	float newX;
 	float newY;
 
+	public boolean gameOver;
+
 	public Overlord(World world, TextureRegion region, Vector2 position) {
 		super(region);
 		input = new PlayerInputHandler();
-		respawnX = position.x;
-		respawnY = position.y;
 		setZIndex(3);
 		createBody(world, position);
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
@@ -219,8 +218,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void update(float delta) {
-		if (isDead()) {
-			checkRespawn(delta);
+		if(isKill()) return;
+		if (willDie) {
+			updateGameOver(delta);
+			return;
 		} else {
 			updateState(delta);
 			updateAnimations(delta);
@@ -228,6 +229,15 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			checkWasHit(delta);
 			checkFire(delta);
 			updateMovement();
+		}
+	}
+
+	public void updateGameOver(float delta) {
+		deathTimer += delta;
+		body.setLinearVelocity(0, 0);
+		if(deathTimer >= deathDuration) {
+			gameOver = true;
+			dispose();
 		}
 	}
 
@@ -278,20 +288,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	
 	public short getLives() {
 		return lives;
-	}
-
-	private void checkRespawn(float delta) {
-		if (!isDead()) return;
-		//setColor(1,0,0,1);
-		body.setLinearVelocity(0, 0);
-		respawnTimer += delta;
-		if (respawnTimer >= respawnTime) {
-			// now we respawn it
-			//setColor(Color.WHITE);
-			body.setTransform(respawnX, respawnY, body.getAngle());
-			setIsDead(false);
-			respawnTimer = 0;
-		}
 	}
 
 	private void updateAnimations(float delta) {
@@ -491,9 +487,15 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public void collided(GameEntity b) {
+		if(willDie) return;
 		if(b instanceof Enemy) {
-			bounceOffEnemy((Enemy) b);
 			if (!invincible) lives--;
+			if(getLives() <= 0) {
+				willDie = true;
+				tweenDeathAnim();
+				return;
+			}
+			bounceOffEnemy((Enemy) b);
 		} else if (b instanceof ChibiIceCream) rescueAmount++;
 	}
 
@@ -516,6 +518,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			body.applyForceToCenter(x, yVel, true);
 			canMove = false;
 			tweenHitAnim();
+			System.out.println("aca");
 		}
 	}
 
@@ -533,7 +536,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	@Override
 	public boolean isKill() {
-		return false;
+		return gameOver;
 	}
 	
 	public short getRescueAmount() {
@@ -552,15 +555,24 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		return input;
 	}
 
-	public void setIsDead(boolean dead) {
-		this.dead = dead;
-	}
-	
 	public boolean isInvincible() {
 		return invincible;
 	}
 
 	public boolean isDead() {
 		return this.dead;
+	}
+
+	public void contactDeathZone() {
+		willDie = true;
+		tweenDeathAnim();
+	}
+
+	private void tweenDeathAnim() {
+		Timeline.createSequence().beginSequence()
+		.push(Tween.to(this, SpriteAccessor.COLOR, deathDuration/2f).target(1, 0, 0))
+		.push(Tween.to(this, SpriteAccessor.ALPHA, deathDuration/2f).target(0))
+		.end().start(IceCreamOverlordGame.TWEEN_MANAGER);
+		
 	}
 }

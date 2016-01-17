@@ -1,11 +1,11 @@
 package com.dcoppetti.lordcream.screens;
 
+import static com.dcoppetti.lordcream.IceCreamOverlordGame.CAMERA_HANDLER;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.DEBUG_MODE;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.SPRITES_PACK_FILE;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
-import static com.dcoppetti.lordcream.IceCreamOverlordGame.CAMERA_HANDLER;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 import com.badlogic.gdx.Game;
@@ -20,6 +20,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -41,13 +44,12 @@ public class PlayScreen implements Screen {
 
 	private Game game;
 	private Level level;
-	private Color backColor = Color.DARK_GRAY;
+	private Color backColor = Color.BLACK;
 
 	
 	// I'm using 2 batches because when I changed tint of a sprite the other textures also got affected
 	// I'd have to check b2dsprite class to see, but no time :V
 	private SpriteBatch batch;
-	private SpriteBatch spritesBacth;
 	private Viewport viewport;
 	private OrthographicCamera cam;
 	private EntityHandler entityHandler;
@@ -59,6 +61,10 @@ public class PlayScreen implements Screen {
 	
 	private TiledHandler tiledHandler;
 	private Texture background;
+
+	// screen transition
+	private boolean transitionDone = false;
+	private String transitionAction;
 	
 	// player
 	private Overlord overlord;
@@ -75,12 +81,13 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void show() {
+		batch = new SpriteBatch();
+		batch.setColor(0, 0, 0, 0);
+
 		chibiAmount = 0;
 		// load player texture pack
 		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 
-		batch = new SpriteBatch();
-		spritesBacth = new SpriteBatch();
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
 		CAMERA_HANDLER = new CameraHandler(cam);
@@ -119,10 +126,13 @@ public class PlayScreen implements Screen {
 			background = Assets.loadTexture(level.getBackgroundFile());
 		}
 		
-		// create the hud
-		hud = new Hud(batch);
 
 		world.setContactListener(new CollisionHandler(overlord));
+
+		// create the hud
+		hud = new Hud(batch);
+		hud.getStage().getRoot().getColor().a = 0;
+		hud.getStage().getRoot().addAction(Actions.fadeIn(0.25f));
 		
 		Gdx.input.setInputProcessor(overlord.getInputHandler());
 	}
@@ -131,6 +141,14 @@ public class PlayScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		if(transitionDone) {
+			if(transitionAction.equals("restart")) {
+				((IceCreamOverlordGame) game).setPlayScreen(level);;
+			}
+       		return;
+		}
+		
 		
 		CAMERA_HANDLER.update();
 
@@ -147,15 +165,34 @@ public class PlayScreen implements Screen {
 			batch.end();
 		}
 		tiledHandler.renderMap(cam);
-		spritesBacth.setProjectionMatrix(cam.combined);
-		spritesBacth.begin();
-		Box2DSprite.draw(spritesBacth, world, true);
-		spritesBacth.end();
+		batch.setProjectionMatrix(cam.combined);
+		batch.begin();
+		Box2DSprite.draw(batch, world, true);
+		batch.end();
 		hud.render();
 		
 		if(DEBUG_MODE) debugRenderer.render(world, cam.combined);
 		
-		if (overlord.getLives() <= 0) ((IceCreamOverlordGame) game).setPlayScreen(level);
+		if(overlord.gameOver) {
+			changeScreen("restart");
+			return;
+		}
+	}
+
+	private void changeScreen(final String transitionAction) {
+		this.transitionAction = transitionAction;
+		hud.getStage().getRoot().addAction(Actions.fadeOut(0.5f));
+		Stage stage = hud.getStage();
+		stage.getRoot().getColor().a = 1;
+	    SequenceAction sequenceAction = new SequenceAction();
+	    sequenceAction.addAction(Actions.fadeOut(0.25f));
+	    sequenceAction.addAction(Actions.run(new Runnable() {
+	        @Override
+	        public void run() {
+	        	transitionDone = true;
+	        }
+	    }));
+	    stage.getRoot().addAction(sequenceAction);
 	}
 
 	@Override
