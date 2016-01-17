@@ -87,11 +87,14 @@ public class IceCreamOverlordGame extends Game {
 		levels.put(level.getLevelName(), level);
 		level = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
 		levels.put(level.getLevelName(), level);
+		level = new Level("level 1-5", "maps/stage-1-5.tmx", "textures/planet-2.png");
+		levels.put(level.getLevelName(), level);
 	}
 
 	private Screen getInitialScreen() {
 //		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
-		return new PlayScreen(this, levels.get("level 1-4"));
+//		return new PlayScreen(this, levels.get("level 1-4"));
+		return new PlayScreen(this, levels.get("level 1-5"));
 	}
 
 	public void setPlayScreen(Level level) {
