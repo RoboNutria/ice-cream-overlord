@@ -232,6 +232,10 @@ public class Assets {
 	public static Texture getTexture(String filename) {
 		return texturesMap.get(filename);
 	}
+
+	public static BitmapFont getBitmapFont(String filename) {
+		return fontsMap.get(filename);
+	}
 	
 	public static Music getMusic(String filename) {
 		return musicMap.get(filename);

@@ -55,7 +55,7 @@ public class Cone extends Bullet {
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		bdef.fixedRotation = true;
 		CircleShape shape = new CircleShape();
-		shape.setRadius(colliderWidth/2f);
+		shape.setRadius(colliderWidth/2.2f);
 		FixtureDef fdef = new FixtureDef();
 		fdef.isSensor = true;
 		fdef.shape = shape;

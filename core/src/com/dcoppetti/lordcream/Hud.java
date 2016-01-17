@@ -41,7 +41,8 @@ public class Hud {
 		this.chibiToRescue = PlayScreen.chibiAmount;
 		viewport = new FitViewport(IceCreamOverlordGame.V_WIDTH * scale, IceCreamOverlordGame.V_HEIGHT * scale, new OrthographicCamera());
 		stage = new Stage(viewport, batch);
-		font = new BitmapFont();
+		font = Assets.getBitmapFont("fonts/minimal-4.fnt");
+		font.getData().setScale(0.5f);
 		table = new Table();
 		table.top();
 		table.setFillParent(true);
@@ -57,11 +58,6 @@ public class Hud {
 		//chibi icecreams rescued
 		table.add(new Image(Assets.loadTexture("textures/chibi-icon.png"))).padTop(10).padLeft(viewport.getWorldWidth() - 100);
 		table.add(rescueAmountLabel).padLeft(10).padTop(10);
-//		table.add(playerStateLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
-//		table.row();
-//		table.add(playerXLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
-//		table.row();
-//		table.add(playerYLabel).fillX().expandX().padRight(viewport.getWorldWidth()-150).padTop(10);
 		
 		stage.addActor(table);
 	}
@@ -93,7 +89,6 @@ public class Hud {
 	
 	public void dispose() {
 		stage.dispose();
-		font.dispose();
 	}
 
 	public Stage getStage() {

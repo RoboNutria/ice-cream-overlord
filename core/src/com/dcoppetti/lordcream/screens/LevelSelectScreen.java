@@ -67,6 +67,7 @@ public class LevelSelectScreen implements Screen {
 		font = Assets.loadBitmapFont("fonts/minimal-4.fnt");
 		font2 = Assets.loadBitmapFont("fonts/megaman-style.fnt");
 		font2.getData().setScale(0.5f);
+		font2.setColor(Color.WHITE);
 		viewport = new FitViewport(V_WIDTH * scale, V_HEIGHT * scale);
 		batch = new SpriteBatch();
 		stage = new Stage(viewport, batch);

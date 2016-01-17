@@ -68,6 +68,8 @@ public class TitleScreen implements Screen {
 		font.getData().setScale(1f);
 		font2 = Assets.loadBitmapFont("fonts/megaman-style.fnt");
 		font2.getData().setScale(0.25f);
+		font.setColor(Color.WHITE);
+		font2.setColor(Color.WHITE);
 		viewport = new FitViewport(V_WIDTH * scale, V_HEIGHT * scale);
 		batch = new SpriteBatch();
 		stage = new Stage(viewport, batch);
