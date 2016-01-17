@@ -23,6 +23,7 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame.PlayerObjects;
 import com.dcoppetti.lordcream.ai.WalkAccelBumpBehavior;
 import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
 import com.dcoppetti.lordcream.entities.ChibiIceCream;
+import com.dcoppetti.lordcream.entities.PlayerShip;
 import com.dcoppetti.lordcream.entities.SlugEnemy;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
 import com.dcoppetti.lordcream.utils.Assets;
@@ -71,6 +72,9 @@ public class Level {
 			if (object.getName().equals(PlayerObjects.player_ship.name())) {
 				playerStartX = x;
 				playerStartY = y;
+				// create ship collider (for ending the level)
+				PlayerShip ship = new PlayerShip(world, new Vector2(rect.width, rect.height), new Vector2(rect.x, rect.y));
+
 			}
 			else if (object.getName().equals(Misc.chibi_ice_cream.name())) {
 				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chibi-idle", "-", 1);

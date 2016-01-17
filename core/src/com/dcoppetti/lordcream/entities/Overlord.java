@@ -517,7 +517,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			body.applyForceToCenter(x, yVel, true);
 			canMove = false;
 			tweenHitAnim();
-			System.out.println("aca");
 		}
 	}
 
@@ -563,11 +562,20 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		tweenDeathAnim();
 	}
 
-	private void tweenDeathAnim() {
+	public void tweenDeathAnim() {
 		Timeline.createSequence().beginSequence()
 		.push(Tween.to(this, SpriteAccessor.COLOR, deathDuration/2f).target(1, 0, 0))
 		.push(Tween.to(this, SpriteAccessor.ALPHA, deathDuration/2f).target(0))
 		.end().start(IceCreamOverlordGame.TWEEN_MANAGER);
 		
+	}
+
+	public void tweenFadeOut() {
+		Tween.to(this, SpriteAccessor.ALPHA, deathDuration).target(0).start(IceCreamOverlordGame.TWEEN_MANAGER);
+		
+	}
+
+	public void setWillDie(boolean b) {
+		this.willDie = b;
 	}
 }

@@ -1,7 +1,5 @@
 package com.dcoppetti.lordcream;
 
-import java.util.HashMap;
-
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Game;
@@ -9,8 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
-import com.dcoppetti.lordcream.screens.TitleScreen;
 import com.dcoppetti.lordcream.screens.PlayScreen;
+import com.dcoppetti.lordcream.screens.TitleScreen;
 import com.dcoppetti.lordcream.utils.Assets;
 
 /**
@@ -27,7 +25,7 @@ public class IceCreamOverlordGame extends Game {
 
 	public static final float PPM = 25;
 	public static final int FPS = 60;
-	public static boolean DEBUG_MODE = true;
+	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
 

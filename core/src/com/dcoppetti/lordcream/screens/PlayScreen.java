@@ -67,6 +67,7 @@ public class PlayScreen implements Screen {
 	// screen transition
 	private boolean transitionDone = false;
 	private String transitionAction = null;
+	private boolean endLevel = false;
 	
 	// player
 	private Overlord overlord;
@@ -75,15 +76,21 @@ public class PlayScreen implements Screen {
 	private Hud hud;
 	public static short chibiAmount;
 	public static short rescueAmount;
+	// level progress flags
+	public static boolean getBackToTheShip = false;
+	public static boolean levelSuccess = false; // NOTE: The entity PlayerShip sets this to true
 
 	public PlayScreen(IceCreamOverlordGame game, Level level) {
 		this.game = game;
 		this.level = level;
 		entityHandler = new EntityHandler(true);
 	}
+	
 
 	@Override
 	public void show() {
+		getBackToTheShip = false;
+		levelSuccess = false;
 		batch = new SpriteBatch();
 		batch.setColor(0, 0, 0, 0);
 
@@ -140,7 +147,7 @@ public class PlayScreen implements Screen {
 			@Override
 			public boolean keyDown(int keycode) {
 				if(keycode == Keys.ESCAPE && transitionAction == null) {
-					changeScreen("menu");
+					changeScreen("menu", 0);
 				}
 				return false;
 			}
@@ -163,6 +170,8 @@ public class PlayScreen implements Screen {
 		
 		
 		CAMERA_HANDLER.update();
+		
+		checkLevelProgress();
 
 		entityHandler.updateFromWorld(world, delta);
 
@@ -183,20 +192,52 @@ public class PlayScreen implements Screen {
 		batch.end();
 		hud.render();
 		
+		if(getBackToTheShip) {
+			batch.begin();
+			batch.end();
+		}
+		
 		if(DEBUG_MODE) debugRenderer.render(world, cam.combined);
 		
 		if(overlord.gameOver && transitionAction == null) {
-			changeScreen("restart");
+			changeScreen("restart", 0);
 			return;
+		}
+		
+		if(endLevel) {
+			endLevel = false;
+			displaySuccessMessages();
+			changeScreen("menu", 3);
 		}
 	}
 
-	private void changeScreen(final String transitionAction) {
+	private void displaySuccessMessages() {
+		Vector2 pos = new Vector2(V_WIDTH-30, V_HEIGHT+30);
+		hud.displayMessage("SUCCESS!", pos);
+	}
+
+
+	private void checkLevelProgress() {
+		if(!getBackToTheShip && PlayScreen.rescueAmount == PlayScreen.chibiAmount) {
+			hud.displayMessage("Get back to the ship!");
+			getBackToTheShip = true;
+		}
+		else if(levelSuccess) {
+			levelSuccess = false;
+			transitionAction = "levelSuccess";
+			overlord.setWillDie(true);
+			overlord.tweenFadeOut();
+			hud.clearMessages();
+			endLevel = true;
+		}
+	}
+
+	private void changeScreen(final String transitionAction, float delay) {
 		this.transitionAction = transitionAction;
-		hud.getStage().getRoot().addAction(Actions.fadeOut(0.5f));
 		Stage stage = hud.getStage();
 		stage.getRoot().getColor().a = 1;
 	    SequenceAction sequenceAction = new SequenceAction();
+	    sequenceAction.addAction(Actions.delay(delay));
 	    sequenceAction.addAction(Actions.fadeOut(0.25f));
 	    sequenceAction.addAction(Actions.run(new Runnable() {
 	        @Override
