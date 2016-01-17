@@ -71,7 +71,8 @@ public class PlayScreen implements Screen {
 	
 	// hud
 	private Hud hud;
-	public static short chibiAmount = 0;
+	public static short chibiAmount;
+	public static short rescueAmount;
 
 	public PlayScreen(Game game, Level level) {
 		this.game = game;
@@ -85,6 +86,7 @@ public class PlayScreen implements Screen {
 		batch.setColor(0, 0, 0, 0);
 
 		chibiAmount = 0;
+		rescueAmount = 0;
 		// load player texture pack
 		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 

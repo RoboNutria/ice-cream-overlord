@@ -76,7 +76,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	private float invincibleTimer = 1f;
 	private float invincibleTime = 0f;
 	private short lives = 3;
-	private short rescueAmount = 0;
 	// Animations
 
 	// for when player is hit by an enemy
@@ -496,7 +495,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 				return;
 			}
 			bounceOffEnemy((Enemy) b);
-		} else if (b instanceof ChibiIceCream) rescueAmount++;
+		}
 	}
 
 	private void bounceOffEnemy(Enemy b) {
@@ -539,10 +538,6 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		return gameOver;
 	}
 	
-	public short getRescueAmount() {
-		return rescueAmount;
-	}
-
 	public PlayerState getState() {
 		return state;
 	}

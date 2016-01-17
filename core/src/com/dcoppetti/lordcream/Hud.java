@@ -74,7 +74,7 @@ public class Hud {
 			playerYLabel.setText("P_Y: " + overlord.getBody().getPosition().y);
 		}
 		short tmpLives = overlord.getLives();
-		short tmpRescueAmount = overlord.getRescueAmount();
+		short tmpRescueAmount = PlayScreen.rescueAmount;
 		if (tmpLives != livesHud || tmpRescueAmount != rescueAmount) {
 			table.clear();
 			livesHud = tmpLives;

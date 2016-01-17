@@ -8,10 +8,12 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.EnemyTriggers;
 import com.dcoppetti.lordcream.IceCreamOverlordGame.Misc;
 import com.dcoppetti.lordcream.ai.AiBehavior;
-import com.dcoppetti.lordcream.ai.WalkBehavior;
-import com.dcoppetti.lordcream.ai.WalkBumpBehavior;
-import com.dcoppetti.lordcream.entities.*;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+import com.dcoppetti.lordcream.entities.Bullet;
+import com.dcoppetti.lordcream.entities.ChibiIceCream;
+import com.dcoppetti.lordcream.entities.Enemy;
+import com.dcoppetti.lordcream.entities.GameEntity;
+import com.dcoppetti.lordcream.entities.Overlord;
+import com.dcoppetti.lordcream.entities.SlugEnemy;
 
 /**
  * @author Diego Coppetti
@@ -156,8 +158,14 @@ public class CollisionHandler implements ContactListener {
 	}
 
 	private void checkCollision(GameEntity a, GameEntity b) {
-		a.collided(b);
-		b.collided(a);
+		// manage chibi icecream before than overlord because fuck you
+		if (a instanceof ChibiIceCream) {
+			a.collided(b);
+			b.collided(a);
+		} else {
+			b.collided(a);
+			a.collided(b);
+		}
 	}
 
 	@Override

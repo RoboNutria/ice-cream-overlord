@@ -33,6 +33,7 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	private float colliderWidth;
 	private float colliderHeight;
 	private boolean inactive = false;
+//	private short collisionsOverlord = 0;
 
 	public enum ChibiStates {
 		Idle, Rescued
@@ -113,7 +114,10 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 	@Override
 	public void collided(GameEntity b) {
 		if (b instanceof Overlord) {
-			state = ChibiStates.Rescued;
+			if (state == ChibiStates.Idle) {
+				PlayScreen.rescueAmount++;
+				state = ChibiStates.Rescued;
+			}
 		}
 	}
 
@@ -122,6 +126,14 @@ public class ChibiIceCream extends Box2DSprite implements GameEntity {
 		return inactive;
 	}
 
+	public boolean isRescued() {
+		return state == ChibiStates.Rescued;
+	}
+	
+//	public short getCollisionsOverlord() {
+//		return collisionsOverlord;
+//	}
+	
 	public void setAnimationRegions(Array<TextureRegion> idleRegions, Array<TextureRegion> rescueRegions) {
 		idleAnim = new Animation(1f / idleFPS, idleRegions);
 		idleAnim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
