@@ -115,7 +115,9 @@ public class PlayScreen implements Screen {
 		CAMERA_HANDLER.setBoundY(tiledHandler.getMapHeight());
 		
 		// the background
-		background = new Texture(Gdx.files.internal(level.getBackgroundFile()));
+		if(level.getBackgroundFile() != null) {
+			background = Assets.loadTexture(level.getBackgroundFile());
+		}
 		
 		// create the hud
 		hud = new Hud(batch);
@@ -123,8 +125,6 @@ public class PlayScreen implements Screen {
 		world.setContactListener(new CollisionHandler(overlord));
 		
 		Gdx.input.setInputProcessor(overlord.getInputHandler());
-		
-		
 	}
 
 	@Override
@@ -141,9 +141,11 @@ public class PlayScreen implements Screen {
 
 		// render all
 		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
-		batch.draw(background, cam.position.x-viewport.getWorldWidth()/2, cam.position.y-viewport.getWorldHeight()/2, viewport.getWorldWidth(), viewport.getWorldHeight());
-		batch.end();
+		if(background != null) {
+			batch.begin();
+			batch.draw(background, cam.position.x-viewport.getWorldWidth()/2, cam.position.y-viewport.getWorldHeight()/2, viewport.getWorldWidth(), viewport.getWorldHeight());
+			batch.end();
+		}
 		tiledHandler.renderMap(cam);
 		spritesBacth.setProjectionMatrix(cam.combined);
 		spritesBacth.begin();
@@ -185,7 +187,6 @@ public class PlayScreen implements Screen {
 		if(DEBUG_MODE) debugRenderer.dispose();
 		world.dispose();
 		hud.dispose();
-		background.dispose();
 		entityHandler.disposeInactive();
 		CAMERA_HANDLER = null;
 	}

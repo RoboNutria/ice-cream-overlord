@@ -1,12 +1,18 @@
-### Credits for Opengameart stuff ###
+### Attributions for Opengameart assets ###
+
+# Backgrounds #
 
 http://opengameart.org/content/space-desert-background for:
-backgrounds/planet.png
+textures/planet.png
+textures/planet-2.png
 
-http://opengameart.org/content/free-sci-fi-platformer-game-tileset for:
-tiles/custom-scifi.png
+http://opengameart.org/content/starfield-background for:
+textures/bg_1_1.png
 
-I had to pack them together and resize.
+http://opengameart.org/content/space-backdrop for:
+textures/spacefield_a-000.png
 
-http://opengameart.org/content/wasteland-tileset:
-tiles/tileset_extended_128px.png
+# Tiles #
+
+http://opengameart.org/content/starfield-background for:
+maps/tiles.png

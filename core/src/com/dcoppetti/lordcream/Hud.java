@@ -15,7 +15,7 @@ import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.utils.Assets;
 
 /**
- * @author Diego Coppetti
+ * @author Marccio Silva, Diego Coppetti
  *
  */
 public class Hud {
