@@ -133,8 +133,7 @@ public class Hud {
 	}
 	
 	private void updateTimerLabel() {
-		int millis = (int) (timer*100);
-		timerLabel.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + ":" + String.format("%02d", millis));
+		timerLabel.setText(getTime());
 	}
 
 	public void render() {
@@ -173,6 +172,12 @@ public class Hud {
 	
 	public void stopTimer() {
 		disableTimer = true;
+	}
+	
+	public String getTime() {
+		int millis = (int) (timer*100);
+		String time = "" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + ":" + String.format("%02d", millis);
+		return time;
 	}
 
 }

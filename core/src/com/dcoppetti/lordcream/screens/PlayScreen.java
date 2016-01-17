@@ -208,12 +208,13 @@ public class PlayScreen implements Screen {
 			endLevel = false;
 			displaySuccessMessages();
 			updateLevels();
+			hud.stopTimer();
 			changeScreen("menu", 3);
 		}
 	}
 
 	private void updateLevels() {
-		level.getLevelData().setPlayerTime(0);
+		level.getLevelData().setBestTime(hud.getTime());
 		Level next = level.getNext();
 		if(next != null) {
 			next.getLevelData().setUnlocked(true);
@@ -235,7 +236,6 @@ public class PlayScreen implements Screen {
 		}
 		else if(levelSuccess) {
 			levelSuccess = false;
-			hud.stopTimer();
 			transitionAction = "levelSuccess";
 			overlord.setWillDie(true);
 			overlord.tweenFadeOut();

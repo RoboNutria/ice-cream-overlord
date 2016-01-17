@@ -47,9 +47,9 @@ public class LevelSelectScreen implements Screen {
 	private GuiCursor cursor;
 	
 	private Label timeLabel;
-	private String timeLabelText = "time";
+	private String timeLabelText = "best";
 	private Label bestLabel;
-	private String bestLabelText = "best";
+	private String bestLabelText = "par";
 	private float labelPad = 30;
 	private float timeLabelXPos = V_WIDTH*1.8f;
 	private float bestLabelXPos = V_WIDTH*2.6f;
@@ -120,6 +120,8 @@ public class LevelSelectScreen implements Screen {
 		
 		stage.addActor(timeLabel);
 		stage.addActor(bestLabel);
+		
+		Color labelColor = fontColor;
 
 		for(Level level : game.levels) {
 			if(!level.getLevelData().isUnlocked()) {
@@ -129,14 +131,19 @@ public class LevelSelectScreen implements Screen {
 				startY -= labelPad;
 				continue;
 			}
+			if(level.getLevelData().isCompleteWithBestTime()) {
+				labelColor = Color.GOLD;
+			} else {
+				labelColor = fontColor;
+			}
 			labelText = level.getLevelData().getLevelName();
-			label = new Label(labelText, new Label.LabelStyle(font, fontColor));
+			label = new Label(labelText, new Label.LabelStyle(font, labelColor));
 			label.setPosition(startX, startY);
 			stage.addActor(label);
-			label2 = new Label("00:00:00", new Label.LabelStyle(font, fontColor));
+			label2 = new Label(level.getLevelData().getBestTime(), new Label.LabelStyle(font, labelColor));
 			label2.setPosition(timeLabelXPos, label.getY());
 			stage.addActor(label2);
-			label3 = new Label("00:00:00", new Label.LabelStyle(font, fontColor));
+			label3 = new Label(level.getLevelData().getParTime(), new Label.LabelStyle(font, labelColor));
 			label3.setPosition(bestLabelXPos, label2.getY());
 			stage.addActor(label3);
 			startY -= labelPad;
