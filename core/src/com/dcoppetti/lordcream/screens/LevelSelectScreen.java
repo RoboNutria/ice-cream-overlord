@@ -93,7 +93,9 @@ public class LevelSelectScreen implements Screen {
 				} else if(keycode == Keys.S) {
 					cursor.moveDown();
 				} else if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
-					game.setPlayScreen(game.levels.get(cursor.getCurrentRow()-1));
+					if(game.levels.get(cursor.getCurrentRow()-1).getLevelData().isUnlocked()) {
+						game.setPlayScreen(game.levels.get(cursor.getCurrentRow()-1));
+					}
 				} else if(keycode == Keys.ESCAPE) {
 					game.setScreen(new TitleScreen(game));
 				}
@@ -120,6 +122,13 @@ public class LevelSelectScreen implements Screen {
 		stage.addActor(bestLabel);
 
 		for(Level level : game.levels) {
+			if(!level.getLevelData().isUnlocked()) {
+				label = new Label("??????", new Label.LabelStyle(font, fontColor));
+				label.setPosition(startX, startY);
+				stage.addActor(label);
+				startY -= labelPad;
+				continue;
+			}
 			labelText = level.getLevelData().getLevelName();
 			label = new Label(labelText, new Label.LabelStyle(font, fontColor));
 			label.setPosition(startX, startY);

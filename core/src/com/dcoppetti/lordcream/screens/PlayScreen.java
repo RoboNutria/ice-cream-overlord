@@ -175,7 +175,7 @@ public class PlayScreen implements Screen {
 
 		entityHandler.updateFromWorld(world, delta);
 
-		hud.update(overlord);
+		hud.update(overlord, delta);
 		world.step(1f/60f, velIter, posIter);
 
 		// render all
@@ -207,9 +207,20 @@ public class PlayScreen implements Screen {
 		if(endLevel) {
 			endLevel = false;
 			displaySuccessMessages();
+			updateLevels();
 			changeScreen("menu", 3);
 		}
 	}
+
+	private void updateLevels() {
+		level.getLevelData().setPlayerTime(0);
+		Level next = level.getNext();
+		if(next != null) {
+			next.getLevelData().setUnlocked(true);
+		}
+		// TODO: Save all levels data!
+	}
+
 
 	private void displaySuccessMessages() {
 		Vector2 pos = new Vector2(V_WIDTH-30, V_HEIGHT+30);
@@ -224,6 +235,7 @@ public class PlayScreen implements Screen {
 		}
 		else if(levelSuccess) {
 			levelSuccess = false;
+			hud.stopTimer();
 			transitionAction = "levelSuccess";
 			overlord.setWillDie(true);
 			overlord.tweenFadeOut();

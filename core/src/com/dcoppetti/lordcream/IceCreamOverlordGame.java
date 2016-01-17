@@ -78,18 +78,26 @@ public class IceCreamOverlordGame extends Game {
 
 	private void setGameLevels() {
 		levels = new Array<Level>();
-		Level level;
 
-		level = new Level("level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
-		levels.add(level);
-		level = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
-		levels.add(level);
-		level = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
-		levels.add(level);
-		level = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
-		levels.add(level);
-		level = new Level("level 1-5", "maps/stage-1-5.tmx", "textures/planet-2.png");
-		levels.add(level);
+		Level level1 = new Level("level 1-1", "maps/stage-1-2.tmx", "textures/planet.png");
+		Level level2 = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
+		Level level3 = new Level("Dark Slug Cave 1", "maps/stage-1-2.tmx", "textures/spacefield_a-000.png");
+		Level level4 = new Level("level 1-4", "maps/stage-1-2.tmx", "textures/planet-4.png");
+		Level level5 = new Level("level 1-5", "maps/stage-1-2.tmx", "textures/planet-2.png");
+		
+		level2.getLevelData().setUnlocked(false);
+		level3.getLevelData().setUnlocked(false);
+		level5.getLevelData().setUnlocked(false);
+
+		level1.setNext(level2);
+		level2.setNext(level5);
+		level5.setNext(level3);
+
+		levels.add(level1);
+		levels.add(level2);
+		levels.add(level3);
+		levels.add(level4);
+		levels.add(level5);
 	}
 
 	private Screen getInitialScreen() {

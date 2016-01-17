@@ -31,6 +31,14 @@ public class Hud {
 	private short chibiToRescue;
 	private Color fontColor;
 	
+	// timer stuff
+	private boolean disableTimer = false;
+	private float timer = 0;
+	private int secs = 0;
+	private int mins = 0;
+	private Label timerLabel;
+	private Label bestTimeLabel;
+	
 	private Array<Label> messages;
 
 	// debug stuff
@@ -67,11 +75,36 @@ public class Hud {
 		//chibi icecreams rescued
 		table.add(new Image(Assets.loadTexture("textures/chibi-icon.png"))).padTop(10).padLeft(viewport.getWorldWidth() - 100);
 		table.add(rescueAmountLabel).padLeft(10).padTop(10);
-		
+
 		stage.addActor(table);
+
+		timerLabel = new Label("00:00:00", new Label.LabelStyle(font, fontColor));
+		timerLabel.setPosition(stage.getWidth()/12, 5);
+		stage.addActor(timerLabel);
+
+		bestTimeLabel = new Label("top 00:00:00", new Label.LabelStyle(font, fontColor));
+		bestTimeLabel.setPosition(stage.getWidth()/1.5f, 5);
+		stage.addActor(bestTimeLabel);
 	}
 	
-	public void update(Overlord overlord) {
+	public void update(Overlord overlord, float delta) {
+		timer += delta;
+		if(!disableTimer) {
+			if(mins >= 99 && secs >= 99 && timer >= 99) {
+				disableTimer  = true;
+			} else {
+				if(timer >= 1) {
+					secs++;
+					timer = 0;
+				}
+				if(secs >= 60) {
+					mins++;
+					secs = 0;
+				}
+			}
+			updateTimerLabel();
+		}
+		
 		stage.act();
 		if(IceCreamOverlordGame.DEBUG_MODE) {
 			playerStateLabel.setText("P_State: " + overlord.getState().toString());
@@ -99,6 +132,11 @@ public class Hud {
 		}
 	}
 	
+	private void updateTimerLabel() {
+		int millis = (int) (timer*100);
+		timerLabel.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + ":" + String.format("%02d", millis));
+	}
+
 	public void render() {
 		stage.draw();
 	}
@@ -131,6 +169,10 @@ public class Hud {
 	
 	public void clearMessages() {
 		this.deleteMessages = true;
+	}
+	
+	public void stopTimer() {
+		disableTimer = true;
 	}
 
 }

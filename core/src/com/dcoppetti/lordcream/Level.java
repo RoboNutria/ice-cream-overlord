@@ -38,6 +38,7 @@ public class Level {
 	private String backgroundFile;
 	private float playerStartX;
 	private float playerStartY;
+	private Level next;
 	
 	private LevelData levelData;
 
@@ -45,6 +46,14 @@ public class Level {
 		this.tmxFile = tmxFile;
 		this.backgroundFile = backgroundFile;
 		this.levelData = new LevelData(levelName);
+	}
+	
+	public void setNext(Level next) {
+		this.next = next;
+	}
+	
+	public Level getNext() {
+		return this.next;
 	}
 
 	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
@@ -73,8 +82,7 @@ public class Level {
 				playerStartX = x;
 				playerStartY = y;
 				// create ship collider (for ending the level)
-				PlayerShip ship = new PlayerShip(world, new Vector2(rect.width, rect.height), new Vector2(rect.x, rect.y));
-
+				new PlayerShip(world, new Vector2(rect.width, rect.height), new Vector2(rect.x, rect.y));
 			}
 			else if (object.getName().equals(Misc.chibi_ice_cream.name())) {
 				Array<TextureRegion> idleRegions = Assets.getAtlasRegions(SPRITES_PACK_FILE, "chibi-idle", "-", 1);

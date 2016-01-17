@@ -2,10 +2,10 @@ package com.dcoppetti.lordcream;
 
 public class LevelData {
 
+	private boolean unlocked = true;
 	private String levelName;
 	private float playerTime;
 	private float bestTime;
-	private boolean complete = false;
 	private boolean completeWithBestTime = false;
 	
 	public LevelData(String levelName) {
@@ -19,17 +19,8 @@ public class LevelData {
 	public boolean isCompleteWithBestTime() {
 		return this.completeWithBestTime;
 	}
-
-	public boolean isComplete() {
-		return this.complete;
-	}
 	
-	public void finishLevel(float time) {
-		setPlayerTime(time);
-		complete = true;
-	}
-	
-	private void setPlayerTime(float time) {
+	public void setPlayerTime(float time) {
 		this.playerTime = time;
 		if(time < bestTime) {
 			bestTime = time;
@@ -43,6 +34,14 @@ public class LevelData {
 
 	public float getBestTime() {
 		return bestTime;
+	}
+
+	public boolean isUnlocked() {
+		return unlocked;
+	}
+	
+	public void setUnlocked(boolean b) {
+		this.unlocked = b;
 	}
 
 }
