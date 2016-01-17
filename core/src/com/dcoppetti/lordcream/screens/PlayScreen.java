@@ -8,9 +8,11 @@ import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_WIDTH;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -42,7 +44,7 @@ import com.dcoppetti.lordcream.utils.TiledHandler;
  */
 public class PlayScreen implements Screen {
 
-	private Game game;
+	private IceCreamOverlordGame game;
 	private Level level;
 	private Color backColor = Color.BLACK;
 
@@ -64,7 +66,7 @@ public class PlayScreen implements Screen {
 
 	// screen transition
 	private boolean transitionDone = false;
-	private String transitionAction;
+	private String transitionAction = null;
 	
 	// player
 	private Overlord overlord;
@@ -74,7 +76,7 @@ public class PlayScreen implements Screen {
 	public static short chibiAmount;
 	public static short rescueAmount;
 
-	public PlayScreen(Game game, Level level) {
+	public PlayScreen(IceCreamOverlordGame game, Level level) {
 		this.game = game;
 		this.level = level;
 		entityHandler = new EntityHandler(true);
@@ -87,8 +89,6 @@ public class PlayScreen implements Screen {
 
 		chibiAmount = 0;
 		rescueAmount = 0;
-		// load player texture pack
-		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(V_WIDTH/PPM, V_HEIGHT/PPM, cam);
@@ -136,7 +136,15 @@ public class PlayScreen implements Screen {
 		hud.getStage().getRoot().getColor().a = 0;
 		hud.getStage().getRoot().addAction(Actions.fadeIn(0.25f));
 		
-		Gdx.input.setInputProcessor(overlord.getInputHandler());
+		Gdx.input.setInputProcessor(new InputMultiplexer(overlord.getInputHandler(), new InputAdapter() {
+			@Override
+			public boolean keyDown(int keycode) {
+				if(keycode == Keys.ESCAPE && transitionAction == null) {
+					changeScreen("menu");
+				}
+				return false;
+			}
+		}));
 	}
 
 	@Override
@@ -146,7 +154,9 @@ public class PlayScreen implements Screen {
 		
 		if(transitionDone) {
 			if(transitionAction.equals("restart")) {
-				((IceCreamOverlordGame) game).setPlayScreen(level);;
+				game.setPlayScreen(level);
+			} else if(transitionAction.equals("menu")) {
+				game.setScreen(new LevelSelectScreen(game));
 			}
        		return;
 		}
@@ -175,7 +185,7 @@ public class PlayScreen implements Screen {
 		
 		if(DEBUG_MODE) debugRenderer.render(world, cam.combined);
 		
-		if(overlord.gameOver) {
+		if(overlord.gameOver && transitionAction == null) {
 			changeScreen("restart");
 			return;
 		}
@@ -228,6 +238,7 @@ public class PlayScreen implements Screen {
 		hud.dispose();
 		entityHandler.disposeInactive();
 		CAMERA_HANDLER = null;
+		Gdx.input.setInputProcessor(null);
 	}
 
 }

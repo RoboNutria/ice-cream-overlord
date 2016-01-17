@@ -7,7 +7,9 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
+import com.dcoppetti.lordcream.screens.TitleScreen;
 import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.utils.Assets;
 
@@ -20,7 +22,6 @@ public class IceCreamOverlordGame extends Game {
 	public static final int W_WIDTH = 800;
 	public static final int W_HEIGHT = 600;
 
-	// ATARI VIRTUAL RESOLUTION!!!! A LO CHOMA!
 	public static final int V_WIDTH = 160;
 	public static final int V_HEIGHT = 128;
 
@@ -33,7 +34,7 @@ public class IceCreamOverlordGame extends Game {
 	public static CameraHandler CAMERA_HANDLER;
 	public static TweenManager TWEEN_MANAGER;
 
-	public static HashMap<String, Level> levels;
+	public Array<Level> levels;
 	
 	public static enum EnemyTypes {
 		enemy_standing_alien,
@@ -66,6 +67,8 @@ public class IceCreamOverlordGame extends Game {
 	public void create() {
 		setGameLevels();
 		TWEEN_MANAGER = new TweenManager();
+		// load player texture pack
+		Assets.loadAtlas(SPRITES_PACK_FILE, true);
 		setScreen(getInitialScreen());
 	}
 	
@@ -76,25 +79,25 @@ public class IceCreamOverlordGame extends Game {
 	}
 
 	private void setGameLevels() {
-		levels = new HashMap<String, Level>();
+		levels = new Array<Level>();
 		Level level;
 
 		level = new Level("level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
-		levels.put(level.getLevelName(), level);
+		levels.add(level);
 		level = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
-		levels.put(level.getLevelName(), level);
+		levels.add(level);
 		level = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
-		levels.put(level.getLevelName(), level);
+		levels.add(level);
 		level = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
-		levels.put(level.getLevelName(), level);
+		levels.add(level);
 		level = new Level("level 1-5", "maps/stage-1-5.tmx", "textures/planet-2.png");
-		levels.put(level.getLevelName(), level);
+		levels.add(level);
 	}
 
 	private Screen getInitialScreen() {
 //		return new PlayScreen(this, levels.get("Dark Slug Cave 1"));
-//		return new PlayScreen(this, levels.get("level 1-4"));
-		return new PlayScreen(this, levels.get("level 1-5"));
+		//return new PlayScreen(this, levels.get("level 1-4"));
+		return new TitleScreen(this);
 	}
 
 	public void setPlayScreen(Level level) {
@@ -107,5 +110,6 @@ public class IceCreamOverlordGame extends Game {
 		TWEEN_MANAGER = null;
 		super.dispose();
 		Assets.dispose();
+		Gdx.input.setInputProcessor(null);
 	}
 }

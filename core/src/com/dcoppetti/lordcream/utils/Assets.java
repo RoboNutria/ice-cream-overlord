@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +23,7 @@ public class Assets {
 	private static HashMap<String, Texture> texturesMap = new HashMap<String, Texture>();
 	private static HashMap<String, Sound> soundMap = new HashMap<String, Sound>();
 	private static HashMap<String, Music> musicMap = new HashMap<String, Music>();
+	private static HashMap<String, BitmapFont> fontsMap = new HashMap<String, BitmapFont>();
 
 	private static float musicVolume = 1f;
 	private static float soundVolume = 0.8f;
@@ -70,6 +72,15 @@ public class Assets {
 			aRegion = atlas.findRegion(name);
 		}
 		return regions;
+	}
+
+	public static BitmapFont loadBitmapFont(String filename) {
+		if(fontsMap.containsKey(filename)) {
+			return fontsMap.get(filename);
+		}
+		BitmapFont font = new BitmapFont(Gdx.files.internal(filename));
+		fontsMap.put(filename, font);
+		return font;
 	}
 
 	public static Texture loadTexture(String filename) {
@@ -231,6 +242,7 @@ public class Assets {
 		disposeTexturesMap();
 		disposeSoundMap();
 		disposeMusicMap();
+		disposeFontsMap();
 	}
 
 	private static void disposeAtlasMap() {
@@ -241,6 +253,16 @@ public class Assets {
 		}
 		atlasMap.clear();
 		atlasMap = null;
+	}
+
+	public static void disposeFontsMap() {
+		if(fontsMap.size() > 0) {
+			for(BitmapFont f : fontsMap.values()) {
+				f.dispose();
+			}
+		}
+		fontsMap.clear();
+		fontsMap = null;
 	}
 
 	public static void disposeTexturesMap() {

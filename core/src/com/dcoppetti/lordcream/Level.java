@@ -33,16 +33,17 @@ import com.dcoppetti.lordcream.utils.TiledHandler;
  */
 public class Level {
 
-	private String levelName;
 	private String tmxFile;
 	private String backgroundFile;
 	private float playerStartX;
 	private float playerStartY;
+	
+	private LevelData levelData;
 
 	public Level(String levelName, String tmxFile, String backgroundFile) {
-		this.levelName = levelName;
 		this.tmxFile = tmxFile;
 		this.backgroundFile = backgroundFile;
+		this.levelData = new LevelData(levelName);
 	}
 
 	public void parseGameEntities(World world, TiledHandler tileHandler, String layerName, float ppm) {
@@ -132,9 +133,9 @@ public class Level {
     public String getBackgroundFile() {
         return backgroundFile;
     }
-
-    public String getLevelName() {
-        return levelName;
+    
+    public LevelData getLevelData() {
+    	return this.levelData;
     }
 
     public float getPlayerStartX() {

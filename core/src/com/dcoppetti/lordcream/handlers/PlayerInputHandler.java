@@ -33,7 +33,7 @@ public class PlayerInputHandler extends InputAdapter {
 			fire = true;
 			break;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class PlayerInputHandler extends InputAdapter {
 		default:
 			break;
 		}
-		return true;
+		return false;
 	}
 
 }
