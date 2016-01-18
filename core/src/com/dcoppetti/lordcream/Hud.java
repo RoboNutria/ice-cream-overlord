@@ -176,7 +176,10 @@ public class Hud {
 	
 	public String getTime() {
 		int millis = (int) (timer*100);
-		String time = "" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + ":" + String.format("%02d", millis);
+		String sMillis = millis < 10 ? "0" + millis : "" + millis;
+		String sMins = mins < 10 ? "0" + mins : "" + mins;
+		String sSec = secs < 10 ? "0" + secs : "" + secs;
+		String time = sMins + ":" + sSec + ":" + sMillis;
 		return time;
 	}
 
