@@ -82,7 +82,7 @@ public class Hud {
 		timerLabel.setPosition(stage.getWidth()/12, 5);
 		stage.addActor(timerLabel);
 
-		bestTimeLabel = new Label("top " + level.getLevelData().getParTime(), new Label.LabelStyle(font, fontColor));
+		bestTimeLabel = new Label("par " + level.getLevelData().getParTime(), new Label.LabelStyle(font, fontColor));
 		bestTimeLabel.setPosition(stage.getWidth()/1.5f, 5);
 		stage.addActor(bestTimeLabel);
 	}

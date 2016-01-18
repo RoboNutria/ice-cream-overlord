@@ -80,6 +80,7 @@ public class PlayScreen implements Screen {
 	public static boolean getBackToTheShip = false;
 	public static boolean levelSuccess = false; // NOTE: The entity PlayerShip sets this to true
 
+
 	public PlayScreen(IceCreamOverlordGame game, Level level) {
 		this.game = game;
 		this.level = level;

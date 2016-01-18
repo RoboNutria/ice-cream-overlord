@@ -61,9 +61,14 @@ public class TitleScreen implements Screen {
 	public TitleScreen(IceCreamOverlordGame game) {
 		this.game = game;
 	}
+	
 
 	@Override
 	public void show() {
+		if(!Assets.getMusic(IceCreamOverlordGame.menuMusic).isPlaying()) {
+			Assets.stopAllMusic();
+			Assets.playMusic(IceCreamOverlordGame.menuMusic);
+		}
 		font = Assets.loadBitmapFont("fonts/minimal-4.fnt");
 		font.getData().setScale(1f);
 		font2 = Assets.loadBitmapFont("fonts/megaman-style.fnt");

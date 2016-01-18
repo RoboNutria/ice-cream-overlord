@@ -36,6 +36,10 @@ public class IceCreamOverlordGame extends Game {
 	public static CameraHandler CAMERA_HANDLER;
 	public static TweenManager TWEEN_MANAGER;
 
+	public static final String menuMusic = "music/what-a-nice-surprise.mp3";
+	public static final String levelMusic = "music/the-sleeping-funk.mp3";
+	public static final String levelMusic2 = "music/adventure.mp3";
+
 	public Array<Level> levels;
 	
 	public static enum EnemyTypes {
@@ -71,6 +75,9 @@ public class IceCreamOverlordGame extends Game {
 		TWEEN_MANAGER = new TweenManager();
 		// load player texture pack
 		Assets.loadAtlas(SPRITES_PACK_FILE, true);
+		Assets.loadMusic(menuMusic);
+		Assets.loadMusic(levelMusic);
+		Assets.loadMusic(levelMusic2);
 		setScreen(getInitialScreen());
 	}
 	
@@ -83,11 +90,11 @@ public class IceCreamOverlordGame extends Game {
 	private void setGameLevels() {
 		levels = new Array<Level>();
 
-		Level level1 = new Level("level 1-1", "maps/stage-1-1.tmx", "textures/planet.png");
-		Level level2 = new Level("level 1-2", "maps/stage-1-2.tmx", "textures/planet.png");
-		Level level3 = new Level("Dark Slug Cave 1", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
-		Level level4 = new Level("level 1-4", "maps/stage-1-4.tmx", "textures/planet-4.png");
-		Level level5 = new Level("level 1-5", "maps/stage-1-5.tmx", "textures/planet-2.png");
+		Level level1 = new Level("Alien ruins 1", "maps/stage-1-1.tmx", "textures/planet.png");
+		Level level2 = new Level("Alien ruins 2", "maps/stage-1-2.tmx", "textures/planet-2.png");
+		Level level3 = new Level("Slug Cave", "maps/stage-1-3.tmx", "textures/spacefield_a-000.png");
+		Level level4 = new Level("Red Sluggers", "maps/stage-1-4.tmx", "textures/planet-4.png");
+		Level level5 = new Level("Acid Falss", "maps/stage-1-5.tmx", "textures/planet-2.png");
 		
 
 		level1.setNext(level2);
@@ -104,12 +111,18 @@ public class IceCreamOverlordGame extends Game {
 			load();
 		} else {
 			// Set here how you want it to be, the level unlocking and default par times
-			level1.getLevelData().setParTime("00:10:50");
-			level4.getLevelData().setParTime("00:03:02");
-
+			level1.getLevelData().setParTime("01:10:00"); // verified
+			level2.getLevelData().setParTime("01:30:00"); // verified
+			level3.getLevelData().setParTime("01:25:00"); // verified
+			level4.getLevelData().setParTime("01:15:00"); // not verified
+			level5.getLevelData().setParTime("01:10:05"); // not verified
+			
 			level2.getLevelData().setUnlocked(false);
-			level3.getLevelData().setUnlocked(false);
-			level5.getLevelData().setUnlocked(false);
+			level4.getLevelData().setUnlocked(false);
+			
+			level1.setNext(level2);
+			level3.setNext(level4);
+			
 		}
 	}
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -94,6 +95,14 @@ public class LevelSelectScreen implements Screen {
 					cursor.moveDown();
 				} else if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
 					if(game.levels.get(cursor.getCurrentRow()-1).getLevelData().isUnlocked()) {
+						int random = MathUtils.random(1);
+						if(random == 0) {
+							Assets.stopAllMusic();
+							Assets.playMusic(IceCreamOverlordGame.levelMusic);
+						} else {
+							Assets.stopAllMusic();
+							Assets.playMusic(IceCreamOverlordGame.levelMusic2);
+						}
 						game.setPlayScreen(game.levels.get(cursor.getCurrentRow()-1));
 					}
 				} else if(keycode == Keys.ESCAPE) {

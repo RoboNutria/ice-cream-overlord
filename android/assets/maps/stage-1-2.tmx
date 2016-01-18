@@ -1,34 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="8" tileheight="8" nextobjectid="53">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="8" tileheight="8" nextobjectid="197">
  <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400" columns="20">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
+ <tileset firstgid="401" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024" columns="32">
+  <image source="tiles-retro.png" width="256" height="256"/>
+ </tileset>
  <layer name="tiles 1" width="40" height="40">
   <data encoding="csv">
+566,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,630,566,
+600,324,324,1,565,567,332,1,1,0,332,332,332,1,332,1,1,332,1,324,332,0,565,567,0,0,0,0,0,0,0,0,0,324,324,565,567,323,322,600,
+600,1,323,1,565,567,1,0,1,322,1,321,332,322,1,332,332,332,321,332,1,0,565,567,0,0,0,0,0,0,0,0,0,322,324,597,599,322,322,600,
+600,323,322,629,566,567,332,332,1,1,332,332,0,1,1,322,324,324,1,332,332,0,597,599,0,0,0,0,0,0,0,0,0,324,324,352,323,324,1,600,
+600,322,324,322,565,567,332,332,1,332,332,1,1,332,1,1,324,332,332,533,535,0,0,0,0,533,535,0,0,0,629,630,631,323,566,630,630,630,630,566,
+600,1,322,322,565,567,1,321,332,1,322,324,332,1,324,332,1,324,324,565,567,0,0,0,0,565,567,0,0,0,0,0,0,1,632,0,0,0,0,600,
+566,631,322,1,565,567,1,1,332,1,332,324,332,332,332,1,332,352,332,565,566,566,387,387,566,566,567,0,0,0,0,0,0,0,0,0,0,0,0,600,
+600,1,322,324,565,567,332,1,1,332,1,1,332,324,1,533,534,630,630,598,598,598,598,598,598,598,598,631,0,0,0,0,536,0,0,0,0,0,0,600,
+600,323,324,323,565,566,534,387,533,534,387,387,533,630,630,598,599,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,600,
+600,1,629,630,598,598,598,598,598,566,388,533,599,0,0,0,0,0,0,0,0,568,0,0,0,0,0,0,0,0,533,534,535,0,533,535,0,0,0,600,
+600,323,1,0,0,0,0,0,0,565,566,599,0,0,0,533,534,534,534,534,534,567,0,533,630,630,630,630,630,630,598,566,567,0,597,598,535,0,0,600,
+600,1,323,0,0,0,0,0,0,597,599,0,0,0,0,565,566,566,566,566,566,567,0,632,0,0,0,0,0,0,0,597,599,0,0,0,600,0,0,600,
+600,322,324,0,0,0,0,0,0,0,0,0,0,0,0,565,566,566,566,566,566,567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,600,0,0,600,
+600,1,0,0,0,0,0,0,0,0,0,0,568,0,0,597,598,598,598,566,566,567,0,0,0,0,0,0,0,0,0,0,0,0,533,630,598,631,0,600,
+600,323,352,0,0,0,0,0,0,0,0,0,600,0,0,0,0,0,0,597,598,599,0,629,630,630,630,630,630,630,630,630,630,630,599,0,334,0,0,600,
+565,534,534,535,0,0,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,334,0,0,0,0,0,333,0,0,600,
+597,598,566,567,0,0,0,0,0,0,533,534,567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,0,0,0,0,0,333,0,0,600,
+0,0,565,567,0,0,536,0,629,630,598,598,599,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,0,0,0,0,0,333,0,0,600,
+0,0,565,567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,0,0,0,0,0,333,0,0,600,
+0,0,565,567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,0,0,0,0,0,354,0,0,632,
+0,0,597,599,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,0,0,0,0,130,129,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,354,0,0,0,306,287,288,0,0,0,
+0,0,0,0,0,0,533,535,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,130,128,304,306,0,0,0,0,0,0,
+0,0,0,0,0,0,597,599,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,288,287,0,0,0,0,0,0,0,126,
+0,0,0,0,0,0,334,334,0,0,0,0,0,0,0,0,126,125,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,125,127,0,0,125,121,
+0,0,536,0,0,0,333,333,0,0,0,0,0,0,0,0,131,124,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,288,304,306,121,122,
+0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,0,121,123,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,288,0,0,0,121,121,
+0,0,0,0,0,536,333,333,0,0,0,0,0,0,0,131,121,122,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,131,
+0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,121,123,124,0,304,305,306,125,125,127,125,0,0,0,0,0,0,0,0,0,0,0,0,121,130,
+0,0,0,536,0,0,333,333,0,0,0,0,0,0,0,131,121,122,0,0,0,0,0,121,123,124,0,0,0,0,0,0,0,0,0,0,0,127,123,128,
+0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,121,122,121,0,0,0,0,0,121,122,121,0,0,0,0,0,0,0,0,0,0,0,121,129,128,
+0,536,0,0,0,0,333,333,0,0,0,0,0,0,0,123,123,121,0,0,0,0,0,0,122,124,0,0,0,0,0,0,0,0,0,0,125,121,130,124,
+0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,121,124,121,0,0,0,0,0,0,121,123,0,0,0,0,0,0,0,0,0,0,121,124,128,122,
+0,0,0,0,0,0,354,333,0,0,0,0,0,0,0,121,124,121,0,0,0,0,0,0,0,121,0,0,0,0,0,0,0,0,125,127,121,121,129,124,
+125,126,125,383,383,125,128,129,0,0,0,0,0,0,0,121,122,121,0,0,0,0,0,0,0,121,0,0,0,0,0,126,125,126,121,123,130,131,129,131,
+124,123,121,121,121,121,121,131,126,383,383,383,383,126,125,123,124,131,0,0,0,0,0,0,0,0,0,0,0,0,125,121,121,129,128,123,131,129,130,121,
+122,121,122,121,122,121,130,121,121,129,131,130,128,123,122,131,131,131,383,383,383,383,383,383,383,383,383,126,383,383,121,128,128,121,124,131,129,122,122,128,
+123,131,131,122,121,130,128,128,122,124,130,131,123,123,121,131,384,384,384,384,384,384,384,384,384,384,384,121,121,131,129,131,123,124,128,129,123,121,124,124,
+121,122,123,121,121,124,122,130,121,122,122,124,124,121,131,131,384,384,384,384,384,384,384,384,384,384,122,131,131,131,124,123,122,130,129,128,130,123,121,121,
+121,121,121,123,130,123,123,122,122,122,124,121,122,131,131,384,384,384,384,384,384,384,384,384,384,384,124,130,121,131,128,124,130,121,131,131,130,128,121,124
+</data>
+ </layer>
+ <layer name="tiles 2" width="40" height="40">
+  <data encoding="csv">
+536,0,0,0,0,536,0,0,0,0,0,536,0,0,0,0,536,0,0,0,0,536,0,0,0,0,536,0,0,0,536,0,0,0,536,0,0,536,0,536,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,536,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,0,536,0,0,0,0,536,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,0,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,536,0,0,0,0,536,536,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,0,536,0,0,536,0,0,536,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,536,0,0,0,0,0,0,536,0,536,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,536,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,536,0,536,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,536,0,0,0,0,0,0,0,0,0,0,536,0,0,536,0,0,536,0,0,536,0,0,0,0,0,0,0,
+536,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,536,0,0,0,0,0,536,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,536,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,29,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,328,0,0,0,0,0,0,0,0,0,0,0,0,29,29,0,0,0,0,0,0,29,0,0,0,
-0,0,0,0,0,0,0,0,0,0,29,0,0,0,0,348,0,0,0,0,0,0,0,0,0,0,0,0,29,29,0,0,0,0,0,0,29,0,0,0,
-34,35,34,35,0,0,34,35,34,35,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,0,0,0,
-54,55,54,55,0,0,54,55,54,55,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,328,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,348,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -48,43 +95,407 @@
 </data>
  </layer>
  <objectgroup name="entities">
-  <object id="9" name="player_ship" x="120" y="80" width="8" height="8"/>
-  <object id="29" name="bumper" x="80" y="48" width="8" height="40"/>
-  <object id="30" name="bumper" x="288" y="80" width="8" height="8"/>
-  <object id="38" name="bumper" x="224" y="72" width="8" height="16"/>
-  <object id="39" name="bumper" x="232" y="72" width="8" height="16"/>
-  <object id="44" name="chibi_ice_cream" x="96" y="80" width="8" height="8"/>
-  <object id="52" name="enemy_slug_floor" x="144" y="80" width="8" height="8"/>
+  <object id="134" name="player_ship" x="136" y="184" width="8" height="8"/>
+  <object id="135" name="death_zone" x="144" y="291.818" width="72" height="12.1818"/>
+  <object id="136" name="death_zone" x="224" y="291.273" width="16" height="4.72727"/>
+  <object id="137" name="death_zone" x="72" y="282.062" width="32" height="5.9375"/>
+  <object id="138" name="death_zone" x="176" y="50.8125" width="16" height="5.1875"/>
+  <object id="139" name="death_zone" x="80" y="66.9091" width="16" height="5.09091"/>
+  <object id="140" name="death_zone" x="56" y="67.2727" width="8" height="4.72727"/>
+  <object id="141" name="death_zone" x="24" y="274.75" width="16" height="5.25"/>
+  <object id="143" name="enemy_slug_goomba" x="208" y="96" width="16" height="16"/>
+  <object id="144" name="enemy_slug_floor" x="256" y="264" width="8" height="8"/>
+  <object id="145" name="enemy_slug_floor" x="272" y="184" width="8" height="8"/>
+  <object id="146" name="enemy_slug_floor" x="240" y="168" width="8" height="8"/>
+  <object id="147" name="enemy_slug_floor" x="288" y="24" width="8" height="8"/>
+  <object id="148" name="enemy_slug_floor" x="200" y="24" width="8" height="8"/>
+  <object id="149" name="enemy_slug_floor" x="120" y="48" width="8" height="8"/>
+  <object id="150" name="enemy_slug_floor" x="136" y="48" width="8" height="8"/>
+  <object id="151" name="enemy_slug_floor" x="72" y="56" width="8" height="8"/>
+  <object id="152" name="enemy_slug_floor" x="24" y="64" width="8" height="8"/>
+  <object id="153" name="enemy_slug_floor" x="48" y="264" width="8" height="8"/>
+  <object id="154" name="enemy_slug_goomba" x="208" y="72" width="8" height="8"/>
+  <object id="155" name="enemy_slug_goomba" x="120" y="208" width="8" height="8"/>
+  <object id="156" name="enemy_slug_floor" x="56" y="168" width="8" height="8"/>
+  <object id="157" name="bumper" x="32" y="264" width="8" height="8"/>
+  <object id="158" name="bumper" x="56" y="264" width="8" height="16"/>
+  <object id="159" name="bumper" x="120" y="264" width="8" height="16"/>
+  <object id="160" name="bumper" x="128" y="208" width="8" height="8"/>
+  <object id="161" name="bumper" x="240" y="264" width="8" height="8"/>
+  <object id="162" name="bumper" x="272" y="264" width="8" height="8"/>
+  <object id="163" name="bumper" x="264" y="184" width="8" height="8"/>
+  <object id="164" name="bumper" x="288" y="184" width="8" height="8"/>
+  <object id="165" name="bumper" x="232" y="168" width="8" height="8"/>
+  <object id="166" name="bumper" x="256" y="168" width="8" height="8"/>
+  <object id="167" name="bumper" x="184" y="96" width="8" height="16"/>
+  <object id="168" name="bumper" x="272" y="96" width="8" height="16"/>
+  <object id="169" name="bumper" x="264" y="24" width="8" height="8"/>
+  <object id="170" name="bumper" x="312" y="24" width="8" height="8"/>
+  <object id="171" name="bumper" x="216" y="24" width="8" height="8"/>
+  <object id="172" name="bumper" x="192" y="24" width="8" height="8"/>
+  <object id="173" name="bumper" x="200" y="40" width="8" height="8"/>
+  <object id="174" name="bumper" x="184" y="40" width="8" height="8"/>
+  <object id="175" name="bumper" x="152" y="48" width="8" height="8"/>
+  <object id="176" name="bumper" x="112" y="48" width="8" height="16"/>
+  <object id="177" name="bumper" x="80" y="56" width="16" height="8"/>
+  <object id="178" name="bumper" x="56" y="56" width="8" height="8"/>
+  <object id="179" name="bumper" x="32" y="64" width="8" height="8"/>
+  <object id="180" name="bumper" x="8" y="64" width="8" height="8"/>
+  <object id="181" name="bumper" x="40" y="168" width="8" height="8"/>
+  <object id="182" name="bumper" x="64" y="168" width="8" height="8"/>
+  <object id="183" name="chibi_ice_cream" x="24" y="16" width="8" height="8"/>
+  <object id="185" name="chibi_ice_cream" x="280" y="96" width="8" height="8"/>
+  <object id="186" name="chibi_ice_cream" x="200" y="104" width="8" height="8"/>
+  <object id="187" name="chibi_ice_cream" x="216" y="280" width="8" height="8"/>
+  <object id="188" name="chibi_ice_cream" x="304" y="24" width="8" height="8"/>
+  <object id="189" name="chibi_ice_cream" x="48" y="56" width="8" height="8"/>
+  <object id="190" name="bumper" x="184" y="72" width="8" height="8"/>
+  <object id="191" name="bumper" x="240" y="72" width="8" height="8"/>
+  <object id="192" name="bumper" x="-8" y="264" width="8" height="8"/>
+  <object id="193" name="bumper" x="72" y="272" width="8" height="8"/>
+  <object id="194" name="bumper" x="320" y="160" width="8" height="24"/>
+  <object id="195" name="bumper" x="288" y="64" width="8" height="8"/>
+  <object id="196" name="bumper" x="264" y="64" width="8" height="8"/>
  </objectgroup>
  <objectgroup name="collisions">
-  <object id="1" name="env" type="object" x="80" y="88" width="216" height="64"/>
-  <object id="2" name="ground" type="fixture" x="48" y="88" width="32" height="16">
+  <object id="1" name="env" type="object" x="128" y="192" width="24" height="32"/>
+  <object id="3" name="ground" type="fixture" x="136" y="224" width="8" height="72">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="3" name="ground" type="fixture" x="0" y="88" width="32" height="16">
+  <object id="53" name="boundary" type="object" x="0" y="120">
+   <polyline points="0,0 0,200 320,200 320,16"/>
+  </object>
+  <object id="55" name="ground" type="fixture" x="120" y="216" width="8" height="64">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="33" name="ground" type="fixture" x="80" y="48" width="8" height="40">
+  <object id="56" name="ground" type="fixture" x="40" y="272" width="16" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="34" name="ground" type="fixture" x="288" y="48" width="8" height="40">
+  <object id="57" name="ground" type="fixture" x="56" y="280" width="16" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="35" name="ground" type="fixture" x="224" y="72" width="16" height="16">
+  <object id="58" name="ground" type="fixture" x="0" y="272" width="24" height="16">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="51" name="boundary" type="object" x="320" y="152">
-   <polyline points="0,0 0,-152 -320,-152 -320,0"/>
+  <object id="59" name="ground" type="fixture" x="24" y="280" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="60" name="ground" type="fixture" x="104" y="280" width="24" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="61" name="ground" type="fixture" x="72" y="288" width="32" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="62" name="ground" type="fixture" x="8" y="248" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="63" name="ground" type="fixture" x="24" y="232" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="64" name="ground" type="fixture" x="40" y="216" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="65" name="ground" type="fixture" x="16" y="200" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="66" name="ground" type="fixture" x="48" y="176" width="16" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="68" name="ground" type="fixture" x="48" y="136" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="71" name="ground" type="fixture" x="16" y="168">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 16,0 16,-48 -16,-48 -16,-32 0,-32 0,0"/>
+  </object>
+  <object id="72" name="ground" type="fixture" x="0" y="8" width="8" height="112">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="73" name="ground" type="fixture" x="120" y="80" width="48" height="32">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="74" name="ground" type="fixture" x="16" y="72" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="75" name="ground" type="fixture" x="8" y="48" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="76" name="ground" type="fixture" x="24" y="24" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="77" name="ground" type="fixture" x="32" y="8" width="16" height="64">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="78" name="ground" type="fixture" x="80" y="128" width="16" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="79" name="ground" type="fixture" x="64" y="136" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="80" name="ground" type="fixture" x="32" y="72" width="40" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="81" name="ground" type="fixture" x="72" y="72" width="8" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="84" name="ground" type="fixture" x="64" y="64" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="85" name="ground" type="fixture" x="88" y="72" width="8" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="86" name="ground" type="fixture" x="48" y="64" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="87" name="ground" type="fixture" x="80" y="80" width="8" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="88" name="ground" type="fixture" x="96" y="64" width="40" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="89" name="ground" type="fixture" x="120" y="56" width="104" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="90" name="ground" type="fixture" x="152" y="32" width="16" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="91" name="ground" type="fixture" x="200" y="32" width="16" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="92" name="ground" type="fixture" x="176" y="8" width="16" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="93" name="ground" type="fixture" x="168" y="48" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="94" name="ground" type="fixture" x="192" y="48" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="95" name="ground" type="fixture" x="96" y="72" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="96" name="ground" type="fixture" x="256" y="56" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="97" name="ground" type="fixture" x="280" y="8" width="16" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="98" name="ground" type="fixture" x="240" y="32" width="24" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="101" name="ground" type="fixture" x="96" y="104" width="8" height="40">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="102" name="ground" type="fixture" x="168" y="72" width="8" height="48">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="103" name="ground" type="fixture" x="152" y="112" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="104" name="ground" type="fixture" x="184" y="112" width="96" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="105" name="ground" type="fixture" x="272" y="104" width="32" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="106" name="ground" type="fixture" x="312" y="8" width="8" height="152">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="107" name="ground" type="fixture" x="272" y="72" width="16" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="108" name="ground" type="fixture" x="184" y="80" width="56" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="109" name="ground" type="fixture" x="184" y="88" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="111" name="ground" type="fixture" x="248" y="88">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 0,8 16,8 16,-16 -8,-16 -8,0 0,0"/>
+  </object>
+  <object id="112" name="ground" type="fixture" x="0" y="0" width="312" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="113" name="ground" type="fixture" x="288" y="80" width="8" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="114" name="ground" type="fixture" x="312" y="32">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 -40,0 -40,16 -32,16 -32,8 0,8 0,0"/>
+  </object>
+  <object id="119" name="ground" type="fixture" x="200" y="264">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 0,16 8,16 8,-40 -24,-40 -24,-32 -16,-32 -16,-16 -8,-16 -8,0 0,0"/>
+  </object>
+  <object id="121" name="ground" type="fixture" x="240" y="176" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="122" name="ground" type="fixture" x="280" y="160" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="123" name="ground" type="fixture" x="216" y="288" width="8" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="124" name="ground" type="fixture" x="224" y="296" width="16" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="125" name="ground" type="fixture" x="240" y="280" width="8" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="126" name="ground" type="fixture" x="248" y="272" width="32" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="127" name="ground" type="fixture" x="272" y="264" width="24" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="128" name="ground" type="fixture" x="288" y="248" width="8" height="16">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="129" name="ground" type="fixture" x="296" y="232" width="8" height="24">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="130" name="ground" type="fixture" x="304" y="192" width="8" height="48">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="131" name="ground" type="fixture" x="312" y="184" width="8" height="8">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+  </object>
+  <object id="132" name="ground" type="fixture" x="280" y="200">
+   <properties>
+    <property name="body" value="env"/>
+   </properties>
+   <polyline points="0,0 0,8 -8,8 -8,-8 8,-8 8,0 0,0"/>
   </object>
  </objectgroup>
 </map>
