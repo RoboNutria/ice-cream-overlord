@@ -89,11 +89,19 @@ public class LevelSelectScreen implements Screen {
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown(int keycode) {
+				if(keycode == Keys.UP) {
+					cursor.moveUp();
+				}
+				if(keycode == Keys.DOWN) {
+					cursor.moveDown();
+				}
 				if(keycode == Keys.W) {
 					cursor.moveUp();
-				} else if(keycode == Keys.S) {
+				}
+				if(keycode == Keys.S) {
 					cursor.moveDown();
-				} else if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
+				}
+				if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
 					if(game.levels.get(cursor.getCurrentRow()-1).getLevelData().isUnlocked()) {
 						int random = MathUtils.random(1);
 						if(random == 0) {

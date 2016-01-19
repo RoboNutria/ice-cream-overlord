@@ -7,8 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
 import com.dcoppetti.lordcream.screens.PlayScreen;
 import com.dcoppetti.lordcream.screens.TitleScreen;

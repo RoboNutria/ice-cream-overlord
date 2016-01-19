@@ -440,9 +440,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 				newX = stickForce;
 			}
 		} else {
-			if (leftSide != null && Gdx.input.isKeyPressed(Keys.A)) {
+			if (leftSide != null && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
 				newX = -stickForce;
-			} else if (rightSide != null && Gdx.input.isKeyPressed(Keys.D)) {
+			} else if (rightSide != null && (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
 				newX = stickForce;
 			}
 		}
@@ -458,7 +458,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void moveLeft() {
-		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
 			if (velX - slideAccel >= -maxSlideSpeed) {
 				newX = -slideAccel;
 			}
@@ -466,7 +466,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void moveRight() {
-		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			if (velX + slideAccel <= maxSlideSpeed) {
 				newX = slideAccel;
 			}

@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.width = IceCreamOverlordGame.W_WIDTH;
 		config.height = IceCreamOverlordGame.W_HEIGHT;
 		config.foregroundFPS = IceCreamOverlordGame.FPS;
+		config.vSyncEnabled = true;
 		new LwjglApplication(new IceCreamOverlordGame(), config);
 	}
 }

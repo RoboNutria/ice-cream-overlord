@@ -20,13 +20,18 @@ public class PlayerInputHandler extends InputAdapter {
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
+		case Keys.LEFT:
 		case Keys.A:
 			left = true;
 			break;
+		case Keys.RIGHT:
 		case Keys.D:
 			right = true;
 			break;
 		case Keys.W:
+			jump = true;
+			break;
+		case Keys.UP:
 			jump = true;
 			break;
 		case Keys.SPACE:
@@ -39,9 +44,14 @@ public class PlayerInputHandler extends InputAdapter {
 	@Override
 	public boolean keyUp(int keycode) {
 		switch (keycode) {
+		case Keys.UP:
+			jump = false;
+			break;
+		case Keys.LEFT:
 		case Keys.A:
 			left = false;
 			break;
+		case Keys.RIGHT:
 		case Keys.D:
 			right = false;
 			break;

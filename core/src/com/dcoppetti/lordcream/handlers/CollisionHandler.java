@@ -71,7 +71,6 @@ public class CollisionHandler implements ContactListener {
 		if (faData != null && faData.equals(Overlord.PLAYER_SIDE)) {
 			// level boundary, don't stick to wall
 			if(fb.getUserData() != null && fb.getUserData().equals(CollisionHandler.LEVEL_BOUNDARY)) {
-				System.out.println("aca");
 				return;
 			}
 			// if it's an enemy don't do shit
@@ -84,7 +83,6 @@ public class CollisionHandler implements ContactListener {
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
 			// level boundary, don't stick to wall
 			if(fa.getUserData() != null && fa.getUserData().equals(CollisionHandler.LEVEL_BOUNDARY)) {
-				System.out.println("aca");
 				return;
 			}
 			// if it's an enemy don't do shit

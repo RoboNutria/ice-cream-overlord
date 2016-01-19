@@ -54,7 +54,7 @@ public class TitleScreen implements Screen {
 	private String creditsLabelText = "By Diego Coppetti & Marccio Silva";
 
 	private Label additionalLabel;
-	private String additionalLabelText = "Keys: WASD, Space and Esc. Take it easy!";
+	private String additionalLabelText = "Keys: Arrows/WASD, Space and Esc. Take it easy!";
 	
 	private IceCreamOverlordGame game;
 	
@@ -114,11 +114,19 @@ public class TitleScreen implements Screen {
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown(int keycode) {
+				if(keycode == Keys.UP) {
+					cursor.moveUp();
+				}
+				if(keycode == Keys.DOWN) {
+					cursor.moveDown();
+				}
 				if(keycode == Keys.W) {
 					cursor.moveUp();
-				} else if(keycode == Keys.S) {
+				}
+				if(keycode == Keys.S) {
 					cursor.moveDown();
-				} else if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
+				}
+				if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
 					if(cursor.getCurrentRow() == 1) {
 						game.setScreen(new LevelSelectScreen(game));
 					} else {
