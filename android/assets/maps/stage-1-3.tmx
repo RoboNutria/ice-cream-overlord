@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="8" tileheight="8" nextobjectid="149">
- <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400" columns="20">
+ <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
  <layer name="layer 1" width="60" height="60">
@@ -259,17 +259,12 @@
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="41" name="ground" type="fixture" x="144" y="112" width="160" height="8">
+  <object id="41" name="ground" type="fixture" x="160" y="112" width="144" height="8">
    <properties>
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="42" name="ground" type="fixture" x="136" y="56" width="8" height="64">
-   <properties>
-    <property name="body" value="env"/>
-   </properties>
-  </object>
-  <object id="43" name="ground" type="fixture" x="136" y="48" width="24" height="8">
+  <object id="42" name="ground" type="fixture" x="136" y="48" width="24" height="72">
    <properties>
     <property name="body" value="env"/>
    </properties>

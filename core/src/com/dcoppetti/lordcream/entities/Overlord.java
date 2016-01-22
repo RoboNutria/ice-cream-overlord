@@ -1,6 +1,8 @@
 package com.dcoppetti.lordcream.entities;
 
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
+
+import com.badlogic.gdx.physics.box2d.*;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 import aurelienribon.tweenengine.Timeline;
@@ -17,12 +19,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.dcoppetti.lordcream.IceCreamOverlordGame;
 import com.dcoppetti.lordcream.handlers.BulletFactory;
@@ -44,7 +40,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public static final String PLAYER_FOOTER = "PLAYER_FOOTER";
 	public static final String PLAYER_SIDE = "PLAYER_SIDE";
 	public int playerFootContanct;
-	public boolean playerSideContact = false;
+	public short playerSideContact = 0;
 
 	private PlayerInputHandler input;
 
@@ -187,9 +183,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void createLeftSensor() {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(colliderWidth / 8f, colliderHeight / 2.5f, new Vector2(
-				-colliderWidth / 2f, 0), 0);
+		//PolygonShape shape = new PolygonShape();
+		//shape.setAsBox(colliderWidth / 8f, colliderHeight / 2.5f, new Vector2(
+		//		-colliderWidth / 2f, 0), 0);
+		CircleShape shape = new CircleShape();
+		shape.setPosition(new Vector2(-colliderWidth/2f, 0));
+		shape.setRadius(colliderWidth/8f);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
@@ -201,9 +200,12 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void createRightSensor() {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(colliderWidth / 8f, colliderHeight / 2.5f, new Vector2(
-				colliderWidth / 2f, 0), 0);
+		//PolygonShape shape = new PolygonShape();
+		//shape.setAsBox(colliderWidth / 8f, colliderHeight / 2.5f, new Vector2(
+		//		colliderWidth / 2f, 0), 0);
+		CircleShape shape = new CircleShape();
+		shape.setPosition(new Vector2(colliderWidth/2f, 0));
+		shape.setRadius(colliderWidth/8f);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
@@ -350,7 +352,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void updateState(float delta) {
-		if (playerSideContact && !isGrounded()) {
+		if (playerSideContact > 0 && !isGrounded()) {
 			if (leftSide != null || rightSide != null) {
 				state = PlayerState.OnWall;
 				return;

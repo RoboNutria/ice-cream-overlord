@@ -77,7 +77,7 @@ public class CollisionHandler implements ContactListener {
 			if (fb.getUserData() instanceof Enemy) {
 				return;
 			}
-			player.playerSideContact = true;
+			player.playerSideContact++;
 			return;
 		}
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
@@ -89,7 +89,7 @@ public class CollisionHandler implements ContactListener {
 			if (fa.getUserData() instanceof Enemy) {
 				return;
 			}
-			player.playerSideContact = true;
+			player.playerSideContact++;
 			return;
 		}
 
@@ -180,11 +180,11 @@ public class CollisionHandler implements ContactListener {
 			player.playerFootContanct--;
 		}
 		if (faData != null && faData.equals(Overlord.PLAYER_SIDE)) {
-			player.playerSideContact = false;
+			player.playerSideContact--;
 			return;
 		}
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
-			player.playerSideContact = false;
+			player.playerSideContact--;
 			return;
 		}
 
