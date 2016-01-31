@@ -26,7 +26,7 @@ public class IceCreamOverlordGame extends Game {
 
 	public static final float PPM = 25;
 	public static final int FPS = 60;
-	public static boolean DEBUG_MODE = true;
+	public static boolean DEBUG_MODE = false;
 
 	public static final String SPRITES_PACK_FILE = "textures/sprites.pack";
 	private static final String SAVE_DATA_FILE = "data.dat";
