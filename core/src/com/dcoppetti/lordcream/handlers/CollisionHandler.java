@@ -180,12 +180,18 @@ public class CollisionHandler implements ContactListener {
 			player.playerFootContanct--;
 		}
 		if (faData != null && faData.equals(Overlord.PLAYER_SIDE)) {
-			player.playerSideContact--;
-			return;
+			if(fbData == null) {
+				player.playerSideContact--;
+			} else if(!fbData.equals(CollisionHandler.LEVEL_BOUNDARY)) {
+				return;
+			}
 		}
 		if (fbData != null && fbData.equals(Overlord.PLAYER_SIDE)) {
-			player.playerSideContact--;
-			return;
+			if(faData == null) {
+				player.playerSideContact--;
+			} else if(!fbData.equals(CollisionHandler.LEVEL_BOUNDARY)) {
+				return;
+			}
 		}
 
 		// AI behaviour trigger checks
