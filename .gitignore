@@ -65,3 +65,6 @@ build/
 
 *.orig
 *.dat
+
+## etc
+*.*~

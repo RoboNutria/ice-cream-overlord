@@ -97,7 +97,7 @@ public class TiledHandler {
 		}
 		MapLayer layer = map.getLayers().get(layerName);
 		parser.load(world, layer);
-		Body body = parser.getBodies().get("boundary");
+		Body body = parser.getBodies().get(CollisionHandler.LEVEL_BOUNDARY);
 		body.getFixtureList().first().setUserData(CollisionHandler.LEVEL_BOUNDARY);
 		ObjectMap<String, Fixture> omFixtures = parser.getFixtures();
 		Filter f = new Filter();

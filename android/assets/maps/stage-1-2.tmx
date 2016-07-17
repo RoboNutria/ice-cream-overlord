@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="8" tileheight="8" nextobjectid="197">
- <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400" columns="20">
+ <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
- <tileset firstgid="401" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024" columns="32">
+ <tileset firstgid="401" name="tiles-retro" tilewidth="8" tileheight="8" tilecount="1024">
   <image source="tiles-retro.png" width="256" height="256"/>
  </tileset>
  <layer name="tiles 1" width="40" height="40">
@@ -164,7 +164,7 @@
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="53" name="boundary" type="object" x="0" y="120">
+  <object id="53" name="levelBoundary" type="object" x="0" y="120">
    <polyline points="0,0 0,200 320,200 320,16"/>
   </object>
   <object id="55" name="ground" type="fixture" x="120" y="216" width="8" height="64">

@@ -439,7 +439,7 @@
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="78" name="boundary" type="object" x="0" y="136">
+  <object id="78" name="levelBoundary" type="object" x="0" y="136">
    <polyline points="0,0 0,-136 480,-136 480,-72"/>
   </object>
   <object id="146" name="ground" type="fixture" x="152" y="312" width="8" height="120">

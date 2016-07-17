@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.IceCreamOverlordGame;
 import com.dcoppetti.lordcream.Level;
 import com.dcoppetti.lordcream.handlers.CameraHandler;
+import com.dcoppetti.lordcream.handlers.InputHandler;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.GuiCursor;
 
@@ -46,6 +47,7 @@ public class LevelSelectScreen implements Screen {
 	private float scale = 3.5f;
 	
 	private GuiCursor cursor;
+	private InputHandler inputHandler;
 	
 	private Label timeLabel;
 	private String timeLabelText = "best";
@@ -69,6 +71,7 @@ public class LevelSelectScreen implements Screen {
 		font2 = Assets.loadBitmapFont("fonts/megaman-style.fnt");
 		font2.getData().setScale(0.5f);
 		font2.setColor(Color.WHITE);
+		inputHandler = new InputHandler();
 		viewport = new FitViewport(V_WIDTH * scale, V_HEIGHT * scale);
 		batch = new SpriteBatch();
 		stage = new Stage(viewport, batch);
@@ -101,7 +104,7 @@ public class LevelSelectScreen implements Screen {
 				if(keycode == Keys.S) {
 					cursor.moveDown();
 				}
-				if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
+				if(keycode == Keys.SPACE || keycode == Keys.ENTER || keycode == Keys.Z) {
 					if(game.levels.get(cursor.getCurrentRow()-1).getLevelData().isUnlocked()) {
 						int random = MathUtils.random(1);
 						if(random == 0) {
@@ -113,7 +116,7 @@ public class LevelSelectScreen implements Screen {
 						}
 						game.setPlayScreen(game.levels.get(cursor.getCurrentRow()-1));
 					}
-				} else if(keycode == Keys.ESCAPE) {
+				} else if(keycode == Keys.ESCAPE || keycode == Keys.X) {
 					game.setScreen(new TitleScreen(game));
 				}
 				return true;
@@ -172,10 +175,11 @@ public class LevelSelectScreen implements Screen {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		checkInput();
+
 		cam.position.set(cursor.getSpriteX() - labelPad/2 + V_WIDTH/2*scale, cursor.getSpriteY(), 0);
 		cam.update();
-		
-		
+
 		stage.act(delta);
 		stage.draw();
 
@@ -183,6 +187,39 @@ public class LevelSelectScreen implements Screen {
 		cursor.render(batch);
 		batch.end();
 
+	}
+
+	private void checkInput() {
+		if(inputHandler.y <= -1f) {
+			cursor.moveDown();
+			inputHandler.y = 0;
+			return;
+		}
+		if(inputHandler.y >= 1f) {
+			cursor.moveUp();
+			inputHandler.y = 0;
+			return;
+		}
+		if(inputHandler.accept == true) {
+			if(game.levels.get(cursor.getCurrentRow()-1).getLevelData().isUnlocked()) {
+				int random = MathUtils.random(1);
+				if(random == 0) {
+					Assets.stopAllMusic();
+					Assets.playMusic(IceCreamOverlordGame.levelMusic);
+				} else {
+					Assets.stopAllMusic();
+					Assets.playMusic(IceCreamOverlordGame.levelMusic2);
+				}
+				game.setPlayScreen(game.levels.get(cursor.getCurrentRow()-1));
+			}
+			inputHandler.fire = false;
+			return;
+		}
+		if(inputHandler.cancel == true) {
+			game.setScreen(new TitleScreen(game));
+			inputHandler.cancel = false;
+			return;
+		}
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.dcoppetti.lordcream.entities;
 import static com.dcoppetti.lordcream.IceCreamOverlordGame.PPM;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.dcoppetti.lordcream.handlers.InputHandler;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 import aurelienribon.tweenengine.Timeline;
@@ -24,7 +25,6 @@ import com.dcoppetti.lordcream.IceCreamOverlordGame;
 import com.dcoppetti.lordcream.handlers.BulletFactory;
 import com.dcoppetti.lordcream.handlers.BulletFactory.BulletType;
 import com.dcoppetti.lordcream.handlers.CollisionHandler;
-import com.dcoppetti.lordcream.handlers.PlayerInputHandler;
 import com.dcoppetti.lordcream.utils.SpriteAccessor;
 
 /**
@@ -42,7 +42,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	public int playerFootContanct;
 	public short playerSideContact = 0;
 
-	private PlayerInputHandler input;
+	private InputHandler input;
 
 	// experimental mechanic changes
 	boolean poopMode = false;
@@ -82,10 +82,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	// private float slideAccel = 6f;
 	private float slideAccel = 7.5f;
 	private float maxSlideSpeed = 10f;
-	private float jumpPower = 60f;
-	private float jumpLimit = 3f;
-	private float stickForce = 80f;
-	private float stickFallForce = -0.1f; // this force pulls you down when stick to walls,
+	private float jumpPower = 62f;
+	private float jumpLimit = 3.2f;
+	private float stickForce = 35f;
+	private float stickFallForce = -0.02f; // this force pulls you down when stick to walls,
 											// this could be changed in certain levels
 	// Animations
 	private Animation idleAnim;
@@ -111,7 +111,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 
 	public Overlord(World world, TextureRegion region, Vector2 position) {
 		super(region);
-		input = new PlayerInputHandler();
+		input = new InputHandler();
 		setZIndex(3);
 		createBody(world, position);
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
@@ -183,12 +183,9 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void createLeftSensor() {
-		//PolygonShape shape = new PolygonShape();
-		//shape.setAsBox(colliderWidth / 8f, colliderHeight / 2.5f, new Vector2(
-		//		-colliderWidth / 2f, 0), 0);
 		CircleShape shape = new CircleShape();
 		shape.setPosition(new Vector2(-colliderWidth/2f, 0));
-		shape.setRadius(colliderWidth/8f);
+		shape.setRadius(colliderWidth/2.3f);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
@@ -205,7 +202,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 		//		colliderWidth / 2f, 0), 0);
 		CircleShape shape = new CircleShape();
 		shape.setPosition(new Vector2(colliderWidth/2f, 0));
-		shape.setRadius(colliderWidth/8f);
+		shape.setRadius(colliderWidth/2.3f);
 		sensorFdef.isSensor = true;
 		sensorFdef.shape = shape;
 		sensorFdef.filter.categoryBits = CollisionHandler.CATEGORY_PLAYER_SENSORS;
@@ -229,6 +226,7 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			updateSideFixture();
 			checkWasHit(delta);
 			checkFire(delta);
+			input.checkDpad();
 			updateMovement();
 		}
 	}
@@ -387,10 +385,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			}
 			break;
 		case OnAir:
-			if (input.left) {
+			if (input.x < 0) {
 				moveLeft();
 			}
-			if (input.right) {
+			if (input.x > 0) {
 				moveRight();
 			}
 			break;
@@ -399,10 +397,10 @@ public class Overlord extends Box2DSprite implements GameEntity {
 			if (input.jump) {
 				jump();
 			}
-			if (input.left) {
+			if (input.x < 0) {
 				moveLeft();
 			}
-			if (input.right) {
+			if (input.x > 0) {
 				moveRight();
 			}
 			break;
@@ -442,9 +440,13 @@ public class Overlord extends Box2DSprite implements GameEntity {
 				newX = stickForce;
 			}
 		} else {
-			if (leftSide != null && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
+			if (leftSide != null && (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+					|| input.x <= -1f) {
+				System.out.println(input.x);
 				newX = -stickForce;
-			} else if (rightSide != null && (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
+			} else if (rightSide != null && (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
+					|| input.x >= 1f) {
+				System.out.println(input.x);
 				newX = stickForce;
 			}
 		}
@@ -460,7 +462,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void moveLeft() {
-		if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)
+				|| input.x < 0.2f) {
 			if (velX - slideAccel >= -maxSlideSpeed) {
 				newX = -slideAccel;
 			}
@@ -468,7 +471,8 @@ public class Overlord extends Box2DSprite implements GameEntity {
 	}
 
 	private void moveRight() {
-		if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)
+				|| input.x > 0.2f) {
 			if (velX + slideAccel <= maxSlideSpeed) {
 				newX = slideAccel;
 			}

@@ -5,6 +5,7 @@ import static com.dcoppetti.lordcream.IceCreamOverlordGame.V_HEIGHT;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dcoppetti.lordcream.IceCreamOverlordGame;
+import com.dcoppetti.lordcream.handlers.InputHandler;
 import com.dcoppetti.lordcream.utils.Assets;
 import com.dcoppetti.lordcream.utils.GuiCursor;
 
@@ -38,6 +40,7 @@ public class TitleScreen implements Screen {
 	private float scale = 3.5f;
 	
 	private GuiCursor cursor;
+	private InputHandler inputHandler;
 	
 	// Main menu stuff
 	private Table table;
@@ -54,7 +57,7 @@ public class TitleScreen implements Screen {
 	private String creditsLabelText = "By Diego Coppetti & Marccio Silva";
 
 	private Label additionalLabel;
-	private String additionalLabelText = "Keys: Arrows/WASD, Space and Esc. Take it easy!";
+	private String additionalLabelText = "Keys: Arrows: Move, Z: Accept/Fire, X: Cancel/Jump. Take it easy!";
 	
 	private IceCreamOverlordGame game;
 	
@@ -69,6 +72,7 @@ public class TitleScreen implements Screen {
 			Assets.stopAllMusic();
 			Assets.playMusic(IceCreamOverlordGame.menuMusic);
 		}
+		inputHandler = new InputHandler();
 		font = Assets.loadBitmapFont("fonts/minimal-4.fnt");
 		font.getData().setScale(1f);
 		font2 = Assets.loadBitmapFont("fonts/megaman-style.fnt");
@@ -110,30 +114,30 @@ public class TitleScreen implements Screen {
 		cursor.getSprite().setScale(2f);
 		
 		stage.addActor(table);
-		
+
 		Gdx.input.setInputProcessor(new InputAdapter() {
 			@Override
 			public boolean keyDown(int keycode) {
-				if(keycode == Keys.UP) {
+				if (keycode == Keys.UP) {
 					cursor.moveUp();
 				}
-				if(keycode == Keys.DOWN) {
+				if (keycode == Keys.DOWN) {
 					cursor.moveDown();
 				}
-				if(keycode == Keys.W) {
+				if (keycode == Keys.W) {
 					cursor.moveUp();
 				}
-				if(keycode == Keys.S) {
+				if (keycode == Keys.S) {
 					cursor.moveDown();
 				}
-				if(keycode == Keys.SPACE || keycode == Keys.ENTER) {
-					if(cursor.getCurrentRow() == 1) {
+				if (keycode == Keys.SPACE || keycode == Keys.ENTER || keycode == Keys.Z) {
+					if (cursor.getCurrentRow() == 1) {
 						game.setScreen(new LevelSelectScreen(game));
 					} else {
 						Gdx.app.exit();
 					}
-				} else if(keycode == Keys.ESCAPE) {
-						Gdx.app.exit();
+				} else if (keycode == Keys.ESCAPE) {
+					Gdx.app.exit();
 				}
 				return true;
 			}
@@ -144,13 +148,35 @@ public class TitleScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(backColor.r, backColor.g, backColor.b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
+		checkInput();
 		batch.begin();
 		cursor.render(batch);
 		batch.end();
 		
 		stage.act(delta);
 		stage.draw();
+	}
+
+	private void checkInput() {
+		if(inputHandler.y == -1f) {
+			cursor.moveDown();
+			inputHandler.y = 0;
+			return;
+		}
+		if(inputHandler.y == 1f) {
+			cursor.moveUp();
+			inputHandler.y = 0;
+			return;
+		}
+		if(inputHandler.accept == true) {
+			if(cursor.getCurrentRow() == 1) {
+				game.setScreen(new LevelSelectScreen(game));
+			} else {
+				Gdx.app.exit();
+			}
+			inputHandler.accept = false;
+		}
 	}
 
 	@Override

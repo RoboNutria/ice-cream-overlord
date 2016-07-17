@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="8" tileheight="8" nextobjectid="95">
- <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400" columns="20">
+ <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="400">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
  <layer name="layer 1" width="60" height="60">
@@ -363,7 +363,7 @@
     <property name="body" value="env"/>
    </properties>
   </object>
-  <object id="60" name="boundary" type="object" x="-8" y="0">
+  <object id="60" name="levelBoundary" type="object" x="-8" y="0">
    <polyline points="0,0 488,0 488,72"/>
   </object>
   <object id="61" name="ground" type="fixture" x="232" y="328" width="8" height="8">
